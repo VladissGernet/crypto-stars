@@ -9,13 +9,13 @@ const onNavigationButtonClick = (evt) => {
   if (selectedButton !== null) {
     const isSelectedButtonNotActivated = selectedButton.classList.contains('is-active') === false;
     if (isSelectedButtonNotActivated) {
-      const debounced = debounce(() => {
+      const debouncedClick = debounce(() => {
         renderTable(receivedData, filterValues[selectedButton.textContent]);
         const activeButton = navigationControls.querySelector('.is-active');
         activeButton.classList.remove('is-active');
         selectedButton.classList.add('is-active');
       });
-      debounced();
+      debouncedClick();
     }
   }
 };
