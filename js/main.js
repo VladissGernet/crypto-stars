@@ -10,9 +10,9 @@ const trimNumber = (value) => addSpacesToNumber(value.toFixed(2));
 getContractors().
   then((data) => {
     const filteredData = data.filter((element) => element.status === 'seller');
-
+    const userTableRowFragment = document.createDocumentFragment();
     filteredData.forEach((element) => {
-      const {userName, isVerified, balance, exchangeRate, minAmount} = element;
+      const {userName, isVerified, balance, exchangeRate, minAmount, paymentMethods} = element;
       const userTableRow = userTableRowTemplate.cloneNode(true);
       const rowUsername = userTableRow.querySelector('.users-list__table-name span');
       const verifiedIcon = userTableRow.querySelector('.users-list__table-name svg');
@@ -29,6 +29,9 @@ getContractors().
       currency.textContent = balance.currency;
       rowExchangeRate.textContent = `${trimNumber(exchangeRate)} ₽`;
       cashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
-      tableBody.appendChild(userTableRow);
+      console.log(paymentMethods)
+
+      userTableRowFragment.appendChild(userTableRow);
     });
+    tableBody.appendChild(userTableRowFragment);
   });
