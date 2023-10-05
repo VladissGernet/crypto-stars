@@ -4,11 +4,9 @@ import {renderTable} from './render-table.js';
 import {onNavigationButtonClick} from './navigation-controls.js';
 import {debounce} from './util.js';
 
-//Не забудь добавить debounce
-
 //Если выбрано "Купить"
 const debouncedOnNavigationButtonClick = debounce(onNavigationButtonClick);
-
+//Не знаю как реализовать показ только проверенных
 let receivedData = [];
 getContractors().
   then((data) => {
