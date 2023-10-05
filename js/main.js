@@ -19,6 +19,9 @@ getContractors().
       const currency = userTableRow.querySelector('.users-list__table-currency');
       const rowExchangeRate = userTableRow.querySelector('.users-list__table-exchangerate');
       const cashlimit = userTableRow.querySelector('.users-list__table-cashlimit');
+      const badgesList = userTableRow.querySelector('.users-list__badges-list');
+      const badgeItem = badgesList.querySelector('.users-list__badges-item');
+      const badgeItemCopy = badgeItem.cloneNode();
       const minCurrencyAmount = trimNumber(minAmount * exchangeRate);
       const maxCurrencyAmount = trimNumber(balance.amount * exchangeRate);
       rowUsername.textContent = userName;
@@ -29,8 +32,12 @@ getContractors().
       currency.textContent = balance.currency;
       rowExchangeRate.textContent = `${trimNumber(exchangeRate)} ₽`;
       cashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
-      console.log(paymentMethods)
-
+      badgesList.innerHTML = '';
+      paymentMethods.forEach((payment) => {
+        const newItem = badgeItemCopy.cloneNode();
+        newItem.textContent = payment.provider;
+        badgesList.appendChild(newItem);
+      });
       userTableRowFragment.appendChild(userTableRow);
     });
     tableBody.appendChild(userTableRowFragment);
