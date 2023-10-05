@@ -10,6 +10,7 @@
     <link rel="preload" href="fonts/exo2-regular.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="fonts/exo2-semibold.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="fonts/exo2-bold.woff2" as="font" crossorigin="anonymous">
+    <link rel="stylesheet" href="leaflet/leaflet.css">
     <link rel="stylesheet" href="css/style.min.css">
 </head>
 
@@ -253,7 +254,7 @@
 
             <!-- При переключении на карту нужно отобразить данный контейнер -->
             <div class="container" style="display: none">
-                <div class="map">
+                <div class="map" id="map">
                     <!--
                         Карту нужно отрисовать в этот контейнер. Иконки для карты -
                         img/pin.svg и img/pin-verified.svg для обычных пользователей
@@ -299,7 +300,7 @@
                 <h2 class="modal__description">Покупка криптовалюты</h2>
                 <!-- Не забудьте указать верный action-атрибут -->
                 <form class="modal-buy" method="post">
-                    <!-- 
+                    <!--
                         Обратите внимание, что всем полям для отправки на сервер нужно указать
                         атрибуты name (их список вы найдёте в техзадании), а часть полей
                         вообще отправляется скрытыми
@@ -427,7 +428,7 @@
                 <h2 class="modal__description">Продажа криптовалюты</h2>
                 <!-- Не забудьте указать верный action-атрибут -->
                 <form class="modal-sell" method="post">
-                    <!-- 
+                    <!--
                         Обратите внимание, что всем полям для отправки на сервер нужно указать
                         атрибуты name (их список вы найдёте в техзадании), а часть полей
                         вообще отправляется скрытыми
@@ -611,6 +612,7 @@
         </div>
     </template>
 
+    <script src="./leaflet/leaflet.js" type="module"></script>
     <script src="./js/main.js" type="module"></script>
 
 </body>
