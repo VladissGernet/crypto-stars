@@ -13,10 +13,17 @@ const ErrorText = {
   GET_USERS: 'Не удалось загрузить данные пользователей. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
+const initialFilterValue = 'seller';
+const filterValues = {
+  'Купить': 'seller',
+  'Продать': 'buyer'
+};
 
 export {
   BASE_URL,
   Route,
   Method,
   ErrorText,
+  initialFilterValue,
+  filterValues,
 };
