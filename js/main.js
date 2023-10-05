@@ -1,10 +1,22 @@
 import {getContractors} from './load-data.js';
-import {tableBody, userTableRowTemplate} from './variables.js';
+import {navigationControls, tableBody, userTableRowTemplate} from './variables.js';
+
+navigationControls.addEventListener('click', (evt) => {
+  const selectedButton = evt.target.closest('.tabs__control');
+  if (selectedButton !== null) {
+    const isSelectedButtonNotActivated = selectedButton.classList.contains('is-active') === false;
+    if (isSelectedButtonNotActivated) {
+      console.log('click')
+    }
+  }
+});
 
 const addSpacesToNumber = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 
 // Округление числа и добавление пробелов
 const trimNumber = (value) => addSpacesToNumber(value.toFixed(2));
+
+//Не забудь добавить debounce
 
 //Если выбрано "Купить"
 getContractors().
