@@ -14,13 +14,16 @@ getContractors().
       true: receivedData.filter((element) => element.isVerified === true),
       false: data,
     };
-    const onCheckedUsersInputChange = () => debounce(() => {
-      const activeTabButton = navigationControls.querySelector('.is-active');
-      receivedData = checkedUsersInputValues[checkedUsersInput.checked];
-      renderTable(receivedData, filterValues[activeTabButton.textContent]);
-    });
+    const onCheckedUsersInputChange = () => {
+      const debouncedChange = debounce(() => {
+        const activeTabButton = navigationControls.querySelector('.is-active');
+        receivedData = checkedUsersInputValues[checkedUsersInput.checked];
+        renderTable(receivedData, filterValues[activeTabButton.textContent]);
+      });
+      debouncedChange();
+    };
     navigationControls.addEventListener('click', onNavigationButtonClick);
-    checkedUsersInput.addEventListener('change', onCheckedUsersInputChange());
+    checkedUsersInput.addEventListener('change', onCheckedUsersInputChange);
   });
 
 export {receivedData};
