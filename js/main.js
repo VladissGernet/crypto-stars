@@ -5,9 +5,6 @@ import {onNavigationButtonClick} from './navigation-controls.js';
 import {debounce} from './util.js';
 import {filterValues} from './constants.js';
 
-//Если выбрано "Купить"
-const debouncedOnNavigationButtonClick = debounce(onNavigationButtonClick);
-
 let receivedData = [];
 getContractors().
   then((data) => {
@@ -17,14 +14,13 @@ getContractors().
       true: receivedData.filter((element) => element.isVerified === true),
       false: data,
     };
-    const onCheckedUsersInputChange = () => {
+    const onCheckedUsersInputChange = () => debounce(() => {
       const activeTabButton = navigationControls.querySelector('.is-active');
       receivedData = checkedUsersInputValues[checkedUsersInput.checked];
       renderTable(receivedData, filterValues[activeTabButton.textContent]);
-    };
-    const devouncedOnCheckedUsersInputChange = debounce(onCheckedUsersInputChange);
-    navigationControls.addEventListener('click', debouncedOnNavigationButtonClick);
-    checkedUsersInput.addEventListener('change', devouncedOnCheckedUsersInputChange);
+    });
+    navigationControls.addEventListener('click', onNavigationButtonClick);
+    checkedUsersInput.addEventListener('change', onCheckedUsersInputChange());
   });
 
 export {receivedData};
