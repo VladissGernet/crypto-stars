@@ -21,12 +21,11 @@ getContractors().
       const isCheckUsersInputNotSelected = checkedUsersInput.checked === false;
       if (isCheckUsersInputSelected) {
         receivedData = receivedData.filter((element) => element.isVerified === true);
-        renderTable(receivedData, filterValues[activeTabButton.textContent]);
       }
       if (isCheckUsersInputNotSelected) {
         receivedData = data;
-        renderTable(receivedData, filterValues[activeTabButton.textContent]);
       }
+      renderTable(receivedData, filterValues[activeTabButton.textContent]);
     });
   });
 
