@@ -1,5 +1,5 @@
 import {getContractors} from './load-data.js';
-import {navigationControls, checkedUsersInput} from './variables.js';
+import {buySellContainer, checkedUsersCheckbox} from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick} from './navigation-controls.js';
 import {debounce} from './util.js';
@@ -17,23 +17,21 @@ getContractors().
     };
     const onCheckedUsersInputChange = () => {
       const debouncedChange = debounce(() => {
-        const activeTabButton = navigationControls.querySelector('.is-active');
-        receivedData = checkedUsersInputValues[checkedUsersInput.checked];
+        const activeTabButton = buySellContainer.querySelector('.is-active');
+        receivedData = checkedUsersInputValues[checkedUsersCheckbox.checked];
         renderTable(receivedData, filterValues[activeTabButton.textContent]);
       });
       debouncedChange();
     };
-    navigationControls.addEventListener('click', onNavigationButtonClick);
-    checkedUsersInput.addEventListener('change', onCheckedUsersInputChange);
+    buySellContainer.addEventListener('click', onNavigationButtonClick);
+    checkedUsersCheckbox.addEventListener('change', onCheckedUsersInputChange);
 
 
     //MAP
 
     //Temporary values
-    const usersList = document.querySelector('.users-list');
-    const mapContainer = document.querySelector('#map').closest('.container');
-    usersList.style.display = 'none';
-    mapContainer.style.display = 'block';
+    // usersList.style.display = 'none';
+    // mapContainer.style.display = 'block';
 
     initMap(receivedData);
   });

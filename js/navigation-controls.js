@@ -1,4 +1,4 @@
-import {navigationControls} from './variables.js';
+import {buySellContainer} from './variables.js';
 import {renderTable} from './render-table.js';
 import {filterValues} from './constants.js';
 import {receivedData} from './main.js';
@@ -11,7 +11,7 @@ const onNavigationButtonClick = (evt) => {
     if (isSelectedButtonNotActivated) {
       const debouncedClick = debounce(() => {
         renderTable(receivedData, filterValues[selectedButton.textContent]);
-        const activeButton = navigationControls.querySelector('.is-active');
+        const activeButton = buySellContainer.querySelector('.is-active');
         activeButton.classList.remove('is-active');
         selectedButton.classList.add('is-active');
       });

@@ -1,7 +1,9 @@
 // Page elements
 const usersNavigation = document.querySelector('.users-nav');
-const navigationControls = usersNavigation.querySelector('.tabs__controls');
-const checkedUsersInput = usersNavigation.querySelector('#checked-users');
+const buySellContainer = usersNavigation.querySelector('.tabs--toggle-buy-sell');
+const checkedUsersCheckbox = usersNavigation.querySelector('#checked-users');
+const usersList = document.querySelector('.users-list');
+const mapContainer = document.querySelector('#map').closest('.container');
 
 const tableBody = document.querySelector('.users-list__table-body');
 
@@ -11,8 +13,10 @@ const userTableRowTemplate = document.querySelector('#user-table-row__template')
   .querySelector('.users-list__table-row');
 
 export {
-  navigationControls,
+  buySellContainer,
   tableBody,
   userTableRowTemplate,
-  checkedUsersInput
+  checkedUsersCheckbox,
+  usersList,
+  mapContainer
 };
