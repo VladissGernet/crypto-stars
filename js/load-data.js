@@ -21,7 +21,6 @@ const load = (route, errorText, method = Method.GET, body = null) =>
 
 const getContractors = () => load(Route.GET_CONTRACTORS, ErrorText.GET_CONTRACTORS);
 const getUsers = () => load(Route.GET_USERS, ErrorText.GET_USERS);
-
 const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);
 
 export {getContractors, getUsers, sendData};

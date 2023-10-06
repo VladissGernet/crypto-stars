@@ -1,6 +1,11 @@
 import {getContractors} from './load-data.js';
-import {buySellContainer, checkedUsersCheckbox, toggleListMapContainer, usersList,
-  mapContainer} from './variables.js';
+import {
+  buySellContainer,
+  checkedUsersCheckbox,
+  toggleListMapContainer,
+  usersList,
+  mapContainer
+} from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick} from './navigation-controls.js';
 import {debounce} from './util.js';
@@ -16,8 +21,6 @@ getContractors().
       true: receivedData.filter((element) => element.isVerified === true),
       false: data,
     };
-
-
     const onCheckedUsersInputChange = () => {
       const debouncedChange = debounce(() => {
         const activeTabButton = buySellContainer.querySelector('.is-active');
@@ -26,11 +29,8 @@ getContractors().
       });
       debouncedChange();
     };
-
-
     buySellContainer.addEventListener('click', onNavigationButtonClick);
     checkedUsersCheckbox.addEventListener('change', onCheckedUsersInputChange);
-
     toggleListMapContainer.addEventListener('click', (evt) => {
       const selectedButton = evt.target.closest('.tabs__control');
       if (selectedButton !== null) {
@@ -48,7 +48,6 @@ getContractors().
             }
             activeButton.classList.remove('is-active');
             selectedButton.classList.add('is-active');
-
           });
           debouncedClick();
         }
@@ -56,6 +55,5 @@ getContractors().
     });
     initMap(receivedData);
   });
-
 
 export {receivedData};
