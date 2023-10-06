@@ -1,4 +1,4 @@
-import {COPYRIGHT, pinIcon, startCoordinates, TILE_LAYER, verifiedPinIcon, ZOOM} from "./constants.js";
+import {COPYRIGHT, pinIcon, startCoordinates, TILE_LAYER, verifiedPinIcon, ZOOM} from './constants.js';
 import {createMarker} from './map-marker-creator.js';
 
 const initMap = (serverData) => {
