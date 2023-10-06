@@ -76,28 +76,45 @@ getContractors().
       attribution: COPYRIGHT
     }).addTo(map);
 
-    const markerGroup = L.layerGroup().addTo(map);
-    const createMarkers = (markersData, markers) => {
+    const defaultMarkerGroup = L.layerGroup().addTo(map);
+    const verifiedMarkerGroup = L.layerGroup().addTo(map);
+
+    const createMarkers = (markersData, defaultMarkers, verifiedMarkers) => {
       markersData.filter((dataElement) => {
         if (dataElement.coords !== undefined) {
-          const {lat, lng} = dataElement.coords;
-          const marker = L.marker(
-            {
-              lat,
-              lng,
-            },
-            {
-              icon: pinIcon
-            },
-          );
-          marker
-            .addTo(markers);
+          if (dataElement.isVerified) {
+            const {lat, lng} = dataElement.coords;
+            const marker = L.marker(
+              {
+                lat,
+                lng,
+              },
+              {
+                icon: verifiedPinIcon
+              },
+            );
+            marker
+              .addTo(verifiedMarkers);
+          } else {
+            const {lat, lng} = dataElement.coords;
+            const marker = L.marker(
+              {
+                lat,
+                lng,
+              },
+              {
+                icon: pinIcon
+              },
+            );
+            marker
+              .addTo(defaultMarkers);
+          }
           return true;
         }
       });
     };
 
-    createMarkers(receivedData, markerGroup);
+    createMarkers(receivedData, defaultMarkerGroup, verifiedMarkerGroup);
   });
 
 
