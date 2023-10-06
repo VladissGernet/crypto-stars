@@ -7,8 +7,8 @@ import {
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
 import {debounce} from './util.js';
-import {COPYRIGHT, filterValues, pinIcon, startCoordinates, TILE_LAYER, verifiedPinIcon, ZOOM} from './constants.js';
-import {createMarker} from './map-marker-creator.js';
+import {COPYRIGHT, filterValues, startCoordinates, TILE_LAYER, ZOOM} from './constants.js';
+import {createMarkers} from './create-markers.js';
 
 let receivedData = [];
 getContractors().
@@ -27,20 +27,7 @@ getContractors().
     }).addTo(map);
     const defaultMarkerGroup = L.layerGroup().addTo(map);
     const verifiedMarkerGroup = L.layerGroup().addTo(map);
-    const createMarkers = (markersData, defaultMarkers, verifiedMarkers) => {
-      markersData.filter((dataElement) => {
-        if (dataElement.coords !== undefined) {
-          if (dataElement.isVerified) {
-            createMarker(dataElement.coords, verifiedPinIcon, verifiedMarkers);
-          } else {
-            createMarker(dataElement.coords, pinIcon, defaultMarkers);
-          }
-          return true;
-        }
-      });
-    };
     createMarkers(receivedData, defaultMarkerGroup, verifiedMarkerGroup);
-
     const onCheckedUsersInputChange = () => {
       const debouncedChange = debounce(() => {
         const activeTabButton = buySellContainer.querySelector('.is-active');
