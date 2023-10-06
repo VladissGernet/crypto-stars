@@ -1,6 +1,7 @@
 // Page elements
 const usersNavigation = document.querySelector('.users-nav');
 const buySellContainer = usersNavigation.querySelector('.tabs--toggle-buy-sell');
+const toggleListMapContainer = usersNavigation.querySelector('.tabs--toggle-list-map');
 const checkedUsersCheckbox = usersNavigation.querySelector('#checked-users');
 const usersList = document.querySelector('.users-list');
 const mapContainer = document.querySelector('#map').closest('.container');
@@ -18,5 +19,6 @@ export {
   userTableRowTemplate,
   checkedUsersCheckbox,
   usersList,
-  mapContainer
+  mapContainer,
+  toggleListMapContainer
 };

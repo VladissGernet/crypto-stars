@@ -1,7 +1,10 @@
 import {COPYRIGHT, pinIcon, startCoordinates, TILE_LAYER, verifiedPinIcon, ZOOM} from './constants.js';
 import {createMarker} from './map-marker-creator.js';
+import {mapContainer} from './variables.js';
 
 const initMap = (serverData) => {
+  mapContainer.style.display = 'block';
+  mapContainer.classList.add('visually-hidden');
   const map = L.map('map').setView([startCoordinates.lat, startCoordinates.lng], ZOOM);
 
   L.tileLayer(TILE_LAYER, {
