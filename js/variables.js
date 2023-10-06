@@ -12,6 +12,9 @@ const tableBody = document.querySelector('.users-list__table-body');
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
   .content
   .querySelector('.users-list__table-row');
+const mapBaloonTemplate = document.querySelector('#map-baloon__template')
+  .content
+  .querySelector('.user-card');
 
 export {
   buySellContainer,
@@ -20,5 +23,6 @@ export {
   checkedUsersCheckbox,
   usersList,
   mapContainer,
-  toggleListMapContainer
+  toggleListMapContainer,
+  mapBaloonTemplate
 };

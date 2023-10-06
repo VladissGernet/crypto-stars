@@ -1,8 +1,10 @@
 import {getContractors} from './load-data.js';
 import {
   buySellContainer,
-  checkedUsersCheckbox, mapContainer,
-  toggleListMapContainer, usersList,
+  checkedUsersCheckbox,
+  mapContainer,
+  toggleListMapContainer,
+  usersList,
 } from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
