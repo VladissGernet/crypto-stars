@@ -3,6 +3,7 @@ import {navigationControls, checkedUsersInput} from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick} from './navigation-controls.js';
 import {debounce} from './util.js';
+import {createMarker} from './map-marker-creator.js';
 import {
   filterValues,
   ZOOM,
@@ -51,20 +52,6 @@ getContractors().
 
     const defaultMarkerGroup = L.layerGroup().addTo(map);
     const verifiedMarkerGroup = L.layerGroup().addTo(map);
-    const createMarker = (markerCoords, icon, layer) => {
-      const {lat, lng} = markerCoords;
-      const marker = L.marker(
-        {
-          lat,
-          lng,
-        },
-        {
-          icon: icon
-        },
-      );
-      marker
-        .addTo(layer);
-    };
 
     const createMarkers = (markersData, defaultMarkers, verifiedMarkers) => {
       markersData.filter((dataElement) => {
