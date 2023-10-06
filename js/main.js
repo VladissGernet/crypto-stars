@@ -44,29 +44,33 @@ getContractors().
     mapContainer.style.display = 'block';
 
     //Main code
-    const map = L.map('map').setView([startCoordinates.lat, startCoordinates.lng], ZOOM);
+    const initMap = () => {
+      const map = L.map('map').setView([startCoordinates.lat, startCoordinates.lng], ZOOM);
 
-    L.tileLayer(TILE_LAYER, {
-      attribution: COPYRIGHT
-    }).addTo(map);
+      L.tileLayer(TILE_LAYER, {
+        attribution: COPYRIGHT
+      }).addTo(map);
 
-    const defaultMarkerGroup = L.layerGroup().addTo(map);
-    const verifiedMarkerGroup = L.layerGroup().addTo(map);
+      const defaultMarkerGroup = L.layerGroup().addTo(map);
+      const verifiedMarkerGroup = L.layerGroup().addTo(map);
 
-    const createMarkers = (markersData, defaultMarkers, verifiedMarkers) => {
-      markersData.filter((dataElement) => {
-        if (dataElement.coords !== undefined) {
-          if (dataElement.isVerified) {
-            createMarker(dataElement.coords, verifiedPinIcon, verifiedMarkers);
-          } else {
-            createMarker(dataElement.coords, pinIcon, defaultMarkers);
+      const createMarkers = (markersData, defaultMarkers, verifiedMarkers) => {
+        markersData.filter((dataElement) => {
+          if (dataElement.coords !== undefined) {
+            if (dataElement.isVerified) {
+              createMarker(dataElement.coords, verifiedPinIcon, verifiedMarkers);
+            } else {
+              createMarker(dataElement.coords, pinIcon, defaultMarkers);
+            }
+            return true;
           }
-          return true;
-        }
-      });
+        });
+      };
+
+      createMarkers(receivedData, defaultMarkerGroup, verifiedMarkerGroup);
     };
 
-    createMarkers(receivedData, defaultMarkerGroup, verifiedMarkerGroup);
+    initMap();
   });
 
 
