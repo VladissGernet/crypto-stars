@@ -78,36 +78,28 @@ getContractors().
 
     const defaultMarkerGroup = L.layerGroup().addTo(map);
     const verifiedMarkerGroup = L.layerGroup().addTo(map);
+    const createMarker = (markerCoords, icon, layer) => {
+      const {lat, lng} = markerCoords;
+      const marker = L.marker(
+        {
+          lat,
+          lng,
+        },
+        {
+          icon: icon
+        },
+      );
+      marker
+        .addTo(layer);
+    };
 
     const createMarkers = (markersData, defaultMarkers, verifiedMarkers) => {
       markersData.filter((dataElement) => {
         if (dataElement.coords !== undefined) {
           if (dataElement.isVerified) {
-            const {lat, lng} = dataElement.coords;
-            const marker = L.marker(
-              {
-                lat,
-                lng,
-              },
-              {
-                icon: verifiedPinIcon
-              },
-            );
-            marker
-              .addTo(verifiedMarkers);
+            createMarker(dataElement.coords, verifiedPinIcon, verifiedMarkers);
           } else {
-            const {lat, lng} = dataElement.coords;
-            const marker = L.marker(
-              {
-                lat,
-                lng,
-              },
-              {
-                icon: pinIcon
-              },
-            );
-            marker
-              .addTo(defaultMarkers);
+            createMarker(dataElement.coords, pinIcon, defaultMarkers);
           }
           return true;
         }
