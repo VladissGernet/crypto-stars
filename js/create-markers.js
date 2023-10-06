@@ -5,8 +5,19 @@ const createPopup = (markerData) => {
   const popupElement = mapBaloonTemplate.cloneNode(true);
   const titleWrapper = popupElement.querySelector('.user-card__user-name');
   const title = titleWrapper.querySelector('span');
+  const currencyValue = popupElement.querySelector('.user-card__cash-item--currency .user-card__cash-data');
+  const rate = popupElement.querySelector('.user-card__cash-item--rate .user-card__cash-data');
+  const limit = popupElement.querySelector('.user-card__cash-item--limit .user-card__cash-data');
+  const {amount, currency} = markerData.balance;
   titleWrapper.style.width = mapPopupTitleFixedWidth;
   title.textContent = markerData.userName;
+  currencyValue.textContent = currency;
+  rate.textContent = markerData.exchangeRate;
+  limit.textContent = `${markerData.minAmount} ₽`;
+  // console.log(markerData)
+
+// исправить округление до целого.
+  //Остановился здесь
   return popupElement;
 };
 

@@ -2,7 +2,7 @@ import {tableBody, userTableRowTemplate} from './variables.js';
 import {initialFilterValue} from './constants.js';
 
 const addSpacesToNumber = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-const trimNumber = (value) => addSpacesToNumber(value.toFixed(2));
+const trimNumber = (value) => addSpacesToNumber(value.toFixed());
 const renderTable = (data, filterValue = initialFilterValue) => {
   tableBody.innerHTML = '';
   const filteredData = data.filter((element) => element.status === filterValue);

@@ -22,7 +22,7 @@ getContractors().
       false: data,
     };
     mapContainer.style.display = 'block'; //Необходимо для правильного отображения краты.
-    // mapContainer.classList.add('visually-hidden');
+    mapContainer.classList.add('visually-hidden');
     const map = L.map('map').setView([startCoordinates.lat, startCoordinates.lng], ZOOM);
     L.tileLayer(TILE_LAYER, {
       attribution: COPYRIGHT
@@ -51,6 +51,6 @@ getContractors().
 
 // временное
 // расскоментировать mapContainer.classList.add('visually-hidden');
-usersList.classList.add('visually-hidden');
+// usersList.classList.add('visually-hidden');
 
 export {receivedData};
