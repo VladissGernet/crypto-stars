@@ -68,9 +68,8 @@ getContractors().
       iconSize: [iconConfig.verified.width, iconConfig.verified.height],
       iconAnchor: [iconConfig.verified.anchorX, iconConfig.verified.anchorY],
     });
+
     //Main code
-
-
     const map = L.map('map').setView([startCoordinates.lat, startCoordinates.lng], ZOOM);
 
     L.tileLayer(TILE_LAYER, {
@@ -78,7 +77,6 @@ getContractors().
     }).addTo(map);
 
     const markerGroup = L.layerGroup().addTo(map);
-  console.log(pinIcon)
     const createMarkers = (markersData, markers) => {
       markersData.filter((dataElement) => {
         if (dataElement.coords !== undefined) {
@@ -89,7 +87,7 @@ getContractors().
               lng,
             },
             {
-              pinIcon
+              icon: pinIcon
             },
           );
           marker
