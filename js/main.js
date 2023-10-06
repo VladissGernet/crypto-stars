@@ -2,7 +2,7 @@ import {getContractors} from './load-data.js';
 import {
   buySellContainer,
   checkedUsersCheckbox, mapContainer,
-  toggleListMapContainer,
+  toggleListMapContainer, usersList,
 } from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
@@ -20,7 +20,7 @@ getContractors().
       false: data,
     };
     mapContainer.style.display = 'block'; //Необходимо для правильного отображения краты.
-    mapContainer.classList.add('visually-hidden');
+    // mapContainer.classList.add('visually-hidden');
     const map = L.map('map').setView([startCoordinates.lat, startCoordinates.lng], ZOOM);
     L.tileLayer(TILE_LAYER, {
       attribution: COPYRIGHT
@@ -46,5 +46,9 @@ getContractors().
     checkedUsersCheckbox.addEventListener('change', onCheckedUsersInputChange);
     toggleListMapContainer.addEventListener('click', onToggleListMapContainerClick);
   });
+
+// временное
+// расскоментировать mapContainer.classList.add('visually-hidden');
+usersList.classList.add('visually-hidden');
 
 export {receivedData};
