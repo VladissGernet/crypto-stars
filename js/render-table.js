@@ -48,4 +48,4 @@ const renderTable = (data, filterValue = initialFilterValue) => {
   tableBody.appendChild(userTableRowFragment);
 };
 
-export {renderTable};
+export {renderTable, trimNumber};

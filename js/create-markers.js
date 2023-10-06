@@ -1,6 +1,8 @@
 import {pinIcon, verifiedPinIcon, mapPopupTitleFixedWidth} from './constants.js';
 import {mapBaloonTemplate} from './variables.js';
+import {trimNumber} from './render-table.js';
 
+//Переместить функцию ниже в новый модуль.
 const createPopup = (markerData) => {
   const popupElement = mapBaloonTemplate.cloneNode(true);
   const titleWrapper = popupElement.querySelector('.user-card__user-name');
@@ -12,11 +14,10 @@ const createPopup = (markerData) => {
   titleWrapper.style.width = mapPopupTitleFixedWidth;
   title.textContent = markerData.userName;
   currencyValue.textContent = currency;
-  rate.textContent = markerData.exchangeRate;
-  limit.textContent = `${markerData.minAmount} ₽`;
-  // console.log(markerData)
-
-// исправить округление до целого.
+  rate.textContent = `${trimNumber(markerData.exchangeRate)} ₽`;
+  limit.textContent = `${trimNumber(markerData.minAmount * markerData.exchangeRate)} ₽ – ${trimNumber(amount * markerData.exchangeRate)} ₽`;
+   // укоротить функцию выше
+  //Исправить платежные системы покупателей в списке
   //Остановился здесь
   return popupElement;
 };
