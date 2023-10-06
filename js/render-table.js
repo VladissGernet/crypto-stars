@@ -3,6 +3,13 @@ import {initialFilterValue} from './constants.js';
 
 const addSpacesToNumber = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 const trimNumber = (value) => addSpacesToNumber(value.toFixed());
+const transformCurrencyAmount = (currencyValue, rate, filter) => {
+  if (filter === 'seller') {
+    return trimNumber(currencyValue * rate);
+  }
+  return trimNumber(currencyValue);
+};
+
 const renderTable = (data, filterValue = initialFilterValue) => {
   tableBody.innerHTML = '';
   const filteredData = data.filter((element) => element.status === filterValue);
@@ -18,12 +25,6 @@ const renderTable = (data, filterValue = initialFilterValue) => {
     const badgesList = userTableRow.querySelector('.users-list__badges-list');
     const badgeItem = badgesList.querySelector('.users-list__badges-item');
     const badgeItemCopy = badgeItem.cloneNode();
-    const transformCurrencyAmount = (currencyValue, rate, filter) => {
-      if (filter === 'seller') {
-        return trimNumber(currencyValue * rate);
-      }
-      return trimNumber(currencyValue);
-    };
     const minCurrencyAmount = transformCurrencyAmount(minAmount, exchangeRate, filterValue);
     const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, filterValue);
     rowUsername.textContent = userName;
