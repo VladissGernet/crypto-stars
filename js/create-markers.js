@@ -37,9 +37,11 @@ const createMarker = (markerData, icon, layer) => {
     .bindPopup(createPopup(markerData));
 };
 
+const checkCashInPerson = (array) => array.some((arrayItem) => arrayItem.provider === 'Cash in person');
+
 const createMarkers = (markersData, defaultMarkers, verifiedMarkers) => {
   markersData.filter((dataElement) => {
-    if (dataElement.coords !== undefined) {
+    if (dataElement.coords !== undefined && checkCashInPerson(dataElement.paymentMethods)) {
       if (dataElement.isVerified) {
         createMarker(dataElement, verifiedPinIcon, verifiedMarkers);
       } else {
