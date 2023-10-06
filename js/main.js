@@ -3,16 +3,8 @@ import {navigationControls, checkedUsersInput} from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick} from './navigation-controls.js';
 import {debounce} from './util.js';
-import {createMarker} from './map-marker-creator.js';
-import {
-  filterValues,
-  ZOOM,
-  TILE_LAYER,
-  COPYRIGHT,
-  startCoordinates,
-  pinIcon,
-  verifiedPinIcon
-} from './constants.js';
+import {initMap} from './map.js';
+import {filterValues} from './constants.js';
 
 let receivedData = [];
 getContractors().
@@ -43,34 +35,7 @@ getContractors().
     usersList.style.display = 'none';
     mapContainer.style.display = 'block';
 
-    //Main code
-    const initMap = () => {
-      const map = L.map('map').setView([startCoordinates.lat, startCoordinates.lng], ZOOM);
-
-      L.tileLayer(TILE_LAYER, {
-        attribution: COPYRIGHT
-      }).addTo(map);
-
-      const defaultMarkerGroup = L.layerGroup().addTo(map);
-      const verifiedMarkerGroup = L.layerGroup().addTo(map);
-
-      const createMarkers = (markersData, defaultMarkers, verifiedMarkers) => {
-        markersData.filter((dataElement) => {
-          if (dataElement.coords !== undefined) {
-            if (dataElement.isVerified) {
-              createMarker(dataElement.coords, verifiedPinIcon, verifiedMarkers);
-            } else {
-              createMarker(dataElement.coords, pinIcon, defaultMarkers);
-            }
-            return true;
-          }
-        });
-      };
-
-      createMarkers(receivedData, defaultMarkerGroup, verifiedMarkerGroup);
-    };
-
-    initMap();
+    initMap(receivedData);
   });
 
 
