@@ -1,4 +1,10 @@
 import {pinIcon, verifiedPinIcon} from './constants.js';
+import {mapBaloonTemplate} from './variables.js';
+
+const createPopup = () => {
+  const popupElement = mapBaloonTemplate.cloneNode(true);
+  return popupElement;
+};
 
 const createMarker = (markerCoords, icon, layer) => {
   const {lat, lng} = markerCoords;
@@ -12,7 +18,8 @@ const createMarker = (markerCoords, icon, layer) => {
     },
   );
   marker
-    .addTo(layer);
+    .addTo(layer)
+    .bindPopup(createPopup());
 };
 
 const createMarkers = (markersData, defaultMarkers, verifiedMarkers) => {
