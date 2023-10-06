@@ -18,8 +18,12 @@ const renderTable = (data, filterValue = initialFilterValue) => {
     const badgesList = userTableRow.querySelector('.users-list__badges-list');
     const badgeItem = badgesList.querySelector('.users-list__badges-item');
     const badgeItemCopy = badgeItem.cloneNode();
-    const minCurrencyAmount = trimNumber(minAmount * exchangeRate);
-    const maxCurrencyAmount = trimNumber(balance.amount * exchangeRate);
+    let minCurrencyAmount = trimNumber(minAmount);
+    let maxCurrencyAmount = trimNumber(balance.amount);
+    if (filterValue === 'seller') {
+      minCurrencyAmount = trimNumber(minAmount * exchangeRate);
+      maxCurrencyAmount = trimNumber(balance.amount * exchangeRate);
+    }
     rowUsername.textContent = userName;
     const isNotVerified = Boolean(isVerified) === false;
     if (isNotVerified) {

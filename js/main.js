@@ -4,7 +4,6 @@ import {
   checkedUsersCheckbox,
   mapContainer,
   toggleListMapContainer,
-  usersList,
 } from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
