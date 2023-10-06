@@ -1,13 +1,17 @@
-import {pinIcon, verifiedPinIcon} from './constants.js';
+import {pinIcon, verifiedPinIcon, mapPopupTitleFixedWidth} from './constants.js';
 import {mapBaloonTemplate} from './variables.js';
 
-const createPopup = () => {
+const createPopup = (markerData) => {
   const popupElement = mapBaloonTemplate.cloneNode(true);
+  const titleWrapper = popupElement.querySelector('.user-card__user-name');
+  const title = titleWrapper.querySelector('span');
+  titleWrapper.style.width = mapPopupTitleFixedWidth;
+  title.textContent = markerData.userName;
   return popupElement;
 };
 
-const createMarker = (markerCoords, icon, layer) => {
-  const {lat, lng} = markerCoords;
+const createMarker = (markerData, icon, layer) => {
+  const {lat, lng} = markerData.coords;
   const marker = L.marker(
     {
       lat,
@@ -19,16 +23,16 @@ const createMarker = (markerCoords, icon, layer) => {
   );
   marker
     .addTo(layer)
-    .bindPopup(createPopup());
+    .bindPopup(createPopup(markerData));
 };
 
 const createMarkers = (markersData, defaultMarkers, verifiedMarkers) => {
   markersData.filter((dataElement) => {
     if (dataElement.coords !== undefined) {
       if (dataElement.isVerified) {
-        createMarker(dataElement.coords, verifiedPinIcon, verifiedMarkers);
+        createMarker(dataElement, verifiedPinIcon, verifiedMarkers);
       } else {
-        createMarker(dataElement.coords, pinIcon, defaultMarkers);
+        createMarker(dataElement, pinIcon, defaultMarkers);
       }
       return true;
     }

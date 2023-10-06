@@ -51,6 +51,7 @@ const verifiedPinIcon = L.icon({
   iconSize: [iconConfig.verified.width, iconConfig.verified.height],
   iconAnchor: [iconConfig.verified.anchorX, iconConfig.verified.anchorY],
 });
+const mapPopupTitleFixedWidth = '100%';
 
 export {
   BASE_URL,
@@ -65,4 +66,5 @@ export {
   startCoordinates,
   pinIcon,
   verifiedPinIcon,
+  mapPopupTitleFixedWidth
 };
