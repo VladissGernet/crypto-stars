@@ -1,6 +1,6 @@
 import {COPYRIGHT, pinIcon, startCoordinates, TILE_LAYER, verifiedPinIcon, ZOOM} from './constants.js';
 import {createMarker} from './map-marker-creator.js';
-import {checkedUsersCheckbox, mapContainer, usersList} from './variables.js';
+import {checkedUsersCheckbox, mapContainer} from './variables.js';
 
 const initMap = (serverData) => {
   mapContainer.style.display = 'block';
