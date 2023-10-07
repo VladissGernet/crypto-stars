@@ -16,6 +16,8 @@ const renderTable = (data, filterValue = initialFilterValue) => {
     usersList.style.display = 'none';
     noAdvertisementsContainer.style.display = 'block';
   } else {
+    usersList.style.display = 'block';
+    noAdvertisementsContainer.style.display = 'none';
     tableBody.innerHTML = '';
     const filteredData = data.filter((element) => element.status === filterValue);
     const userTableRowFragment = document.createDocumentFragment();
