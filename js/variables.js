@@ -7,7 +7,7 @@ const checkedUsersCheckbox = usersNavigation.querySelector('#checked-users');
 const usersList = document.querySelector('.users-list');
 const mapContainer = document.querySelector('#map').closest('.container');
 const serverErrorContainer = document.querySelector('.message--server-error').closest('.container');
-
+const noAdvertisementsContainer = document.querySelector('.container--lightbackground');
 const tableBody = document.querySelector('.users-list__table-body');
 
 //Templates
@@ -28,5 +28,6 @@ export {
   toggleListMapContainer,
   mapBaloonTemplate,
   serverErrorContainer,
-  usersNavigationContainer
+  usersNavigationContainer,
+  noAdvertisementsContainer
 };
