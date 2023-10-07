@@ -8,7 +8,7 @@ import {
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
 import {debounce} from './util.js';
-import {COPYRIGHT, filterValues, startCoordinates, TILE_LAYER, ZOOM} from './constants.js';
+import {COPYRIGHT, filterValues, startCoordinates, TILE_LAYER, ZOOM, changeButtonClassName} from './constants.js';
 import {createMarkers} from './create-markers.js';
 
 let receivedData = [];
@@ -47,5 +47,15 @@ getContractors().
     checkedUsersCheckbox.addEventListener('change', onCheckedUsersInputChange);
     toggleListMapContainer.addEventListener('click', onToggleListMapContainerClick);
   });
+
+//Остановился здесь на добавлении модалки. делаю ниже слушатель событий клика на кнопки обменять.
+const main = document.querySelector('main');
+main.addEventListener('click', (evt) => {
+  const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
+  if (selectedElement !== null) {
+    evt.preventDefault();
+    console.log('click')
+  }
+});
 
 export {receivedData};

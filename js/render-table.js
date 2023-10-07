@@ -1,5 +1,5 @@
 import {noAdvertisementsContainer, tableBody, usersList, userTableRowTemplate} from './variables.js';
-import {initialFilterValue} from './constants.js';
+import {initialFilterValue, changeButtonClassName} from './constants.js';
 
 const addSpacesToNumber = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 const trimNumber = (value) => addSpacesToNumber(value.toFixed());
@@ -31,6 +31,7 @@ const renderTable = (data, filterValue = initialFilterValue) => {
       const cashlimit = userTableRow.querySelector('.users-list__table-cashlimit');
       const badgesList = userTableRow.querySelector('.users-list__badges-list');
       const badgeItem = badgesList.querySelector('.users-list__badges-item');
+      const tableButton = userTableRow.querySelector('.users-list__table-btn button');
       const badgeItemCopy = badgeItem.cloneNode();
       const minCurrencyAmount = transformCurrencyAmount(minAmount, exchangeRate, filterValue);
       const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, filterValue);
@@ -50,6 +51,7 @@ const renderTable = (data, filterValue = initialFilterValue) => {
           badgesList.appendChild(newItem);
         });
       }
+      tableButton.classList.add(changeButtonClassName);
       userTableRowFragment.appendChild(userTableRow);
     });
     tableBody.appendChild(userTableRowFragment);
