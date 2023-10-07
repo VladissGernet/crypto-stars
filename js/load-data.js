@@ -4,6 +4,7 @@ import {
   Method,
   ErrorText
 } from './constants.js';
+import {serverErrorContainer, usersNavigationContainer} from './variables.js';
 
 const load = (route, errorText, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, {method, body})
@@ -14,13 +15,13 @@ const load = (route, errorText, method = Method.GET, body = null) =>
       return response.json();
     })
     .catch(() => {
-      // showError(errorText);
-      console.log('error');
+      usersNavigationContainer.style.display = 'none';
+      serverErrorContainer.style.display = 'block';
       throw new Error(errorText);
     });
 
-const getContractors = () => load(Route.GET_CONTRACTORS, ErrorText.GET_CONTRACTORS);
-const getUsers = () => load(Route.GET_USERS, ErrorText.GET_USERS);
+const getContractors = () => load(Route.GET_CONTRACTORS, ErrorText.GET_DATA);
+const getUsers = () => load(Route.GET_USERS, ErrorText.GET_DATA);
 const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);
 
 export {getContractors, getUsers, sendData};
