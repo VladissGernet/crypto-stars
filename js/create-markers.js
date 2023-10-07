@@ -7,6 +7,7 @@ const createPopup = (markerData) => {
   const popupElement = mapBaloonTemplate.cloneNode(true);
   const titleWrapper = popupElement.querySelector('.user-card__user-name');
   const title = titleWrapper.querySelector('span');
+  const verifiedIcon = titleWrapper.querySelector('svg');
   const currencyValue = popupElement.querySelector('.user-card__cash-item--currency .user-card__cash-data');
   const rate = popupElement.querySelector('.user-card__cash-item--rate .user-card__cash-data');
   const limit = popupElement.querySelector('.user-card__cash-item--limit .user-card__cash-data');
@@ -15,9 +16,13 @@ const createPopup = (markerData) => {
   title.textContent = markerData.userName;
   currencyValue.textContent = currency;
   rate.textContent = `${trimNumber(markerData.exchangeRate)} ₽`;
-  limit.textContent = `${trimNumber(markerData.minAmount * markerData.exchangeRate)} ₽ – ${trimNumber(amount * markerData.exchangeRate)} ₽`;
-   // укоротить функцию выше
-  //Исправить платежные системы покупателей в списке
+  const getMinAmount = () => trimNumber(markerData.minAmount * markerData.exchangeRate);
+  const getMaxAmount = () => trimNumber(amount * markerData.exchangeRate);
+  limit.textContent = `${getMinAmount()} ₽ – ${getMaxAmount()} ₽`;
+  const isSellerNotVerified = markerData.isVerified === false;
+  if (isSellerNotVerified) {
+    verifiedIcon.remove();
+  }
   //Остановился здесь
   return popupElement;
 };
