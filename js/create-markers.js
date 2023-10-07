@@ -13,7 +13,6 @@ const createPopup = (markerData) => {
   const limit = popupElement.querySelector('.user-card__cash-item--limit .user-card__cash-data');
   const badgesList = popupElement.querySelector('.user-card__badges-list');
   const badge = badgesList.querySelector('.badge');
-  const badgeCopy = badge.cloneNode();
   const {amount, currency} = markerData.balance;
   titleWrapper.style.width = mapPopupTitleFixedWidth;
   title.textContent = markerData.userName;
@@ -26,14 +25,15 @@ const createPopup = (markerData) => {
   if (isSellerNotVerified) {
     verifiedIcon.remove();
   }
-  badgesList.innerHTML = '';
 
-  const paymentMethodsArray = markerData.paymentMethods;
-  paymentMethodsArray.forEach((paymentMethod) => {
-    const newBadge = badgeCopy.cloneNode();
+  const badgesListFragment = document.createDocumentFragment();
+  markerData.paymentMethods.forEach((paymentMethod) => {
+    const newBadge = badge.cloneNode();
     newBadge.textContent = paymentMethod.provider;
-    badgesList.appendChild(newBadge);
+    badgesListFragment.appendChild(newBadge);
   });
+  badgesList.innerHTML = '';
+  badgesList.appendChild(badgesListFragment);
 
   //Остановился здесь
   return popupElement;
