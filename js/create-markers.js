@@ -11,6 +11,9 @@ const createPopup = (markerData) => {
   const currencyValue = popupElement.querySelector('.user-card__cash-item--currency .user-card__cash-data');
   const rate = popupElement.querySelector('.user-card__cash-item--rate .user-card__cash-data');
   const limit = popupElement.querySelector('.user-card__cash-item--limit .user-card__cash-data');
+  const badgesList = popupElement.querySelector('.user-card__badges-list');
+  const badge = badgesList.querySelector('.badge');
+  const badgeCopy = badge.cloneNode();
   const {amount, currency} = markerData.balance;
   titleWrapper.style.width = mapPopupTitleFixedWidth;
   title.textContent = markerData.userName;
@@ -23,6 +26,15 @@ const createPopup = (markerData) => {
   if (isSellerNotVerified) {
     verifiedIcon.remove();
   }
+  badgesList.innerHTML = '';
+
+  const paymentMethodsArray = markerData.paymentMethods;
+  paymentMethodsArray.forEach((paymentMethod) => {
+    const newBadge = badgeCopy.cloneNode();
+    newBadge.textContent = paymentMethod.provider;
+    badgesList.appendChild(newBadge);
+  });
+
   //Остановился здесь
   return popupElement;
 };
