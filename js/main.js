@@ -11,6 +11,15 @@ import {debounce} from './util.js';
 import {COPYRIGHT, filterValues, startCoordinates, TILE_LAYER, ZOOM, changeButtonClassName} from './constants.js';
 import {createMarkers} from './create-markers.js';
 
+//Переместить в другой модуль
+const getSelectedDataId = (data, elementId) => {
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].id === elementId) {
+      return data[i];
+    }
+  }
+};
+
 let receivedData = [];
 getContractors().
   then((data) => {
@@ -46,64 +55,60 @@ getContractors().
     buySellContainer.addEventListener('click', onNavigationButtonClick);
     checkedUsersCheckbox.addEventListener('change', onCheckedUsersInputChange);
     toggleListMapContainer.addEventListener('click', onToggleListMapContainerClick);
-  });
 
-//Variables
-const body = document.querySelector('body');
+    //modal
 
-const modalBuy = document.querySelector('.modal--buy');
-const modalUsernameWrapper = modalBuy.querySelector('.transaction-info__data');
-const modalVerifiedIconCopy = modalUsernameWrapper.querySelector('svg').cloneNode(true);
-const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
+    //Variables
+    const body = document.querySelector('body');
+    const main = document.querySelector('main');
 
-//Constants
-const scrollLockClass = 'scroll-lock';
-const modalZIndex = '400'; //Для перекрытия карты.
+    const modalBuy = document.querySelector('.modal--buy');
+    const modalCloseButton = modalBuy.querySelector('.modal__close-btn');
+    const modalUsernameWrapper = modalBuy.querySelector('.transaction-info__data');
+    const modalVerifiedIconCopy = modalUsernameWrapper.querySelector('svg').cloneNode(true);
+    const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
 
-//После окончания разработки модалки удалить
-modalBuy.style.display = 'block';
+    //После окончания разработки модалки удалить
+    // modalBuy.style.display = 'block';
 
-//main code
+    //Constants
+    const scrollLockClass = 'scroll-lock';
+    const modalZIndex = '400'; //Для перекрытия карты.
 
-const modalCloseButton = modalBuy.querySelector('.modal__close-btn');
-modalCloseButton.addEventListener('click', () => {
-  body.classList.remove(scrollLockClass);
-  modalBuy.style.display = 'none';
-})
-
-const main = document.querySelector('main');
-main.addEventListener('click', (evt) => {
-  const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
-  if (selectedElement !== null) {
-    const selectedItem = evt.target.closest('.users-list__table-row');
-    const nameWrapper = selectedItem.querySelector('.users-list__table-name');
-    const name = nameWrapper.querySelector('span').textContent;
-    const isUserStatusVerified = nameWrapper.querySelector('svg') !== null;
-    const currency = selectedItem.querySelector('.users-list__table-currency').textContent;
-    const exchangeRate = selectedItem.querySelector('.users-list__table-exchangerate').textContent;
-    const cashLimit = selectedItem.querySelector('.users-list__table-cashlimit').textContent;
-    const badgesList = selectedItem.querySelector('.users-list__badges-list');
-    const badgesItemsArray = badgesList.querySelectorAll('.users-list__badges-item');
-    for (const badgeItem of badgesItemsArray) {
-      console.log(badgeItem.textContent)
-    }
-    evt.preventDefault();
-    body.classList.add(scrollLockClass);
+    //main code
     modalBuy.style.zIndex = modalZIndex;
 
-    modalUsernameWrapper.innerHTML = '';
-    const modalNameSpan = document.createElement('span');
-    modalNameSpan.textContent = name;
-    if (isUserStatusVerified) {
-      modalUsernameWrapper.appendChild(modalVerifiedIconCopy);
-    }
-    modalUsernameWrapper.appendChild(modalNameSpan);
-    modalRate.textContent = exchangeRate;
+    modalCloseButton.addEventListener('click', () => {
+      body.classList.remove(scrollLockClass);
+      modalBuy.style.display = 'none';
+    });
 
-    //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
-    modalBuy.style.display = 'block';
-    // modalBuy.style.display = 'block'; <---- после разработки разблокировать.
-  }
-});
+
+    main.addEventListener('click', (evt) => {
+      const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
+      if (selectedElement !== null) {
+        const selectedElementId = evt.target.closest('.users-list__table-row').id;
+        const selectedData = getSelectedDataId(receivedData, selectedElementId);
+        const {userName, isVerified} = selectedData;
+        evt.preventDefault();
+        body.classList.add(scrollLockClass);
+
+        console.log(selectedData)
+
+        modalUsernameWrapper.innerHTML = '';
+        const modalNameSpan = document.createElement('span');
+        modalNameSpan.textContent = userName;
+        if (isVerified) {
+          modalUsernameWrapper.appendChild(modalVerifiedIconCopy);
+        }
+        modalUsernameWrapper.appendChild(modalNameSpan);
+
+
+        //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
+        modalBuy.style.display = 'block';
+        // modalBuy.style.display = 'block'; <---- после разработки разблокировать.
+      }
+    });
+  });
 
 export {receivedData};

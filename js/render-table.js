@@ -35,6 +35,7 @@ const renderTable = (data, filterValue = initialFilterValue) => {
       const badgeItemCopy = badgeItem.cloneNode();
       const minCurrencyAmount = transformCurrencyAmount(minAmount, exchangeRate, filterValue);
       const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, filterValue);
+      userTableRow.id = element.id;
       rowUsername.textContent = userName;
       const isNotVerified = Boolean(isVerified) === false;
       if (isNotVerified) {
