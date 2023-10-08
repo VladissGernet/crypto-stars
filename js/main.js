@@ -12,6 +12,7 @@ import {COPYRIGHT, filterValues, startCoordinates, TILE_LAYER, ZOOM, changeButto
 import {createMarkers} from './create-markers.js';
 
 //Переместить в другой модуль
+import {transformCurrencyAmount, trimNumber} from './render-table.js';
 const getSelectedDataId = (data, elementId) => {
   for (let i = 0; i < data.length; i++) {
     if (data[i].id === elementId) {
@@ -67,6 +68,7 @@ getContractors().
     const modalUsernameWrapper = modalBuy.querySelector('.transaction-info__data');
     const modalVerifiedIconCopy = modalUsernameWrapper.querySelector('svg').cloneNode(true);
     const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
+    const modalCashlimit = modalBuy.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
 
     //После окончания разработки модалки удалить
     // modalBuy.style.display = 'block';
@@ -89,12 +91,11 @@ getContractors().
       if (selectedElement !== null) {
         const selectedElementId = evt.target.closest('.users-list__table-row').id;
         const selectedData = getSelectedDataId(receivedData, selectedElementId);
-        const {userName, isVerified} = selectedData;
+        const {userName, isVerified, exchangeRate, minAmount, status, balance} = selectedData;
+        const minCurrencyAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
+        const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
         evt.preventDefault();
         body.classList.add(scrollLockClass);
-
-        console.log(selectedData)
-
         modalUsernameWrapper.innerHTML = '';
         const modalNameSpan = document.createElement('span');
         modalNameSpan.textContent = userName;
@@ -102,7 +103,9 @@ getContractors().
           modalUsernameWrapper.appendChild(modalVerifiedIconCopy);
         }
         modalUsernameWrapper.appendChild(modalNameSpan);
-
+        modalRate.textContent = `${trimNumber(exchangeRate)} ₽`;
+        modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
+        // добавил лимит
 
         //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
         modalBuy.style.display = 'block';

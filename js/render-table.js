@@ -59,4 +59,4 @@ const renderTable = (data, filterValue = initialFilterValue) => {
   }
 };
 
-export {renderTable, trimNumber};
+export {renderTable, trimNumber, transformCurrencyAmount};
