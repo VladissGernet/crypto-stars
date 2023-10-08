@@ -48,13 +48,61 @@ getContractors().
     toggleListMapContainer.addEventListener('click', onToggleListMapContainerClick);
   });
 
-//Остановился здесь на добавлении модалки. делаю ниже слушатель событий клика на кнопки обменять.
+//Variables
+const body = document.querySelector('body');
+
+const modalBuy = document.querySelector('.modal--buy');
+const modalUsernameWrapper = modalBuy.querySelector('.transaction-info__data');
+const modalVerifiedIconCopy = modalUsernameWrapper.querySelector('svg').cloneNode(true);
+const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
+
+//Constants
+const scrollLockClass = 'scroll-lock';
+const modalZIndex = '400'; //Для перекрытия карты.
+
+//После окончания разработки модалки удалить
+modalBuy.style.display = 'block';
+
+//main code
+
+const modalCloseButton = modalBuy.querySelector('.modal__close-btn');
+modalCloseButton.addEventListener('click', () => {
+  body.classList.remove(scrollLockClass);
+  modalBuy.style.display = 'none';
+})
+
 const main = document.querySelector('main');
 main.addEventListener('click', (evt) => {
   const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
   if (selectedElement !== null) {
+    const selectedItem = evt.target.closest('.users-list__table-row');
+    const nameWrapper = selectedItem.querySelector('.users-list__table-name');
+    const name = nameWrapper.querySelector('span').textContent;
+    const isUserStatusVerified = nameWrapper.querySelector('svg') !== null;
+    const currency = selectedItem.querySelector('.users-list__table-currency').textContent;
+    const exchangeRate = selectedItem.querySelector('.users-list__table-exchangerate').textContent;
+    const cashLimit = selectedItem.querySelector('.users-list__table-cashlimit').textContent;
+    const badgesList = selectedItem.querySelector('.users-list__badges-list');
+    const badgesItemsArray = badgesList.querySelectorAll('.users-list__badges-item');
+    for (const badgeItem of badgesItemsArray) {
+      console.log(badgeItem.textContent)
+    }
     evt.preventDefault();
-    console.log('click')
+    body.classList.add(scrollLockClass);
+    modalBuy.style.zIndex = modalZIndex;
+
+    modalUsernameWrapper.innerHTML = '';
+    const modalNameSpan = document.createElement('span');
+    modalNameSpan.textContent = name;
+    if (isUserStatusVerified) {
+      modalUsernameWrapper.appendChild(modalVerifiedIconCopy);
+    }
+    modalUsernameWrapper.appendChild(modalNameSpan);
+    modalRate.textContent = exchangeRate;
+
+    //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
+    modalBuy.style.display = 'block';
+    // modalBuy.style.display = 'block'; <---- после разработки разблокировать.
   }
 });
 
