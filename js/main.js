@@ -69,6 +69,7 @@ getContractors().
     const modalVerifiedIconCopy = modalUsernameWrapper.querySelector('svg').cloneNode(true);
     const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
     const modalCashlimit = modalBuy.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
+    const modalMinAmountError = modalBuy.querySelector('.custom-input__error');
 
     //После окончания разработки модалки удалить
     // modalBuy.style.display = 'block';
@@ -105,7 +106,8 @@ getContractors().
         modalUsernameWrapper.appendChild(modalNameSpan);
         modalRate.textContent = `${trimNumber(exchangeRate)} ₽`;
         modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
-        // добавил лимит
+        modalMinAmountError.textContent = `Минимальная сумма — ${minCurrencyAmount} ₽`;
+        // добавить платежные системы
 
         //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
         modalBuy.style.display = 'block';
