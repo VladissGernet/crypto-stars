@@ -128,7 +128,6 @@ getContractors().
         modalMinAmountError.textContent = `Минимальная сумма — ${minCurrencyAmount} ₽`;
         clearModalSelectOptions();
         fillPaymentMethods(paymentMethods);
-
         const onPaymentInputEnterNewValue = () => {
           const debouncedEnter = debounce(() => {
             modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);
@@ -141,8 +140,6 @@ getContractors().
           });
           debouncedEnter();
         };
-
-        //Надо удалять добавление liatener
         modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
         modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
 
@@ -153,13 +150,8 @@ getContractors().
           modalPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
           modalEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
         };
-
         modalCloseButton.addEventListener('click', onCloseModalButtonClick);
-
-
-        //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
         modalBuy.style.display = 'block';
-        // modalBuy.style.display = 'block'; <---- после разработки разблокировать.
       }
     });
   });
