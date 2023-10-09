@@ -1,4 +1,33 @@
-import {modalSelect} from './variables.js';
+import {exchangeAllButton, modalEnrollmentInput, modalPaymentInput, modalSelect} from './variables.js';
+import {debounce} from './util.js';
+
+const addPaymentInputListener = (rate) => {
+  const onPaymentInputEnterNewValue = () => {
+    const debouncedEnter = debounce(() => {
+      modalEnrollmentInput.value = (modalPaymentInput.value / rate).toFixed(2);
+    });
+    debouncedEnter();
+  };
+  modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
+};
+
+const addEnrollmentInputListener = (rate) => {
+  const onEnrollmentInputEnterNewValue = () => {
+    const debouncedEnter = debounce(() => {
+      modalPaymentInput.value = Math.floor(modalEnrollmentInput.value * rate);
+    });
+    debouncedEnter();
+  };
+  modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
+};
+
+const addExchangeAllButtonListener = (balanceAmount, rate) => {
+  const onExchangeAllButtonClick = () => {
+    modalEnrollmentInput.value = balanceAmount;
+    modalPaymentInput.value = Math.floor(balanceAmount * rate);
+  };
+  exchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
+};
 
 const getSelectedDataId = (data, elementId) => {
   for (let i = 0; i < data.length; i++) {
@@ -39,6 +68,9 @@ const fillPaymentMethods = (methodsArray) => {
 };
 
 export {
+  addPaymentInputListener,
+  addEnrollmentInputListener,
+  addExchangeAllButtonListener,
   getSelectedDataId,
   clearModalSelectOptions,
   fillUsernameWrapper,
