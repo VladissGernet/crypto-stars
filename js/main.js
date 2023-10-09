@@ -69,6 +69,8 @@ getContractors().
     const modalVerifiedIconCopy = modalUsernameWrapper.querySelector('svg').cloneNode(true);
     const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
     const modalCashlimit = modalBuy.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
+    const modalPaymentInput = modalBuy.querySelector('.modal__input-wrapper--payment input');
+    const modalEnrollmentInput = modalBuy.querySelector('.modal__input-wrapper--enrollment input');
     const modalMinAmountError = modalBuy.querySelector('.custom-input__error');
     const modalSelect = modalBuy.querySelector('.modal__select-wrapper select');
 
@@ -83,7 +85,7 @@ getContractors().
     };
 
     //После окончания разработки модалки удалить
-    modalBuy.style.display = 'block';
+    // modalBuy.style.display = 'block';
 
     //Constants
     const scrollLockClass = 'scroll-lock';
@@ -135,6 +137,17 @@ getContractors().
         // добавить платежные системы
         clearModalSelectOptions();
         fillPaymentMethods(paymentMethods);
+
+        //listener при закрытии модалки нужно удалять и поле очищать.
+        //Добавить debounce oninput
+        const oneUnitOfKeks = 1;
+        const rubToKeks = oneUnitOfKeks / exchangeRate;
+        modalPaymentInput.addEventListener('keydown', (keydownEvent) => {
+          if (keydownEvent.key === '-' || keydownEvent.key === '+' || keydownEvent.key === 'e' || keydownEvent.key === 'E') {
+            keydownEvent.preventDefault();
+          }
+          modalEnrollmentInput.value = modalPaymentInput.value * rubToKeks;
+        });
         //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
         modalBuy.style.display = 'block';
         // modalBuy.style.display = 'block'; <---- после разработки разблокировать.
