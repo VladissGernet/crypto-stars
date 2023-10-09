@@ -1,11 +1,8 @@
 import {
   body,
-  exchangeAllButton,
   main,
   modalBuy,
-  modalBuyContentContainer,
   modalCashlimit,
-  modalCloseButton,
   modalEnrollmentInput,
   modalMinAmountError,
   modalPaymentInput,
@@ -15,16 +12,14 @@ import {
 } from './variables.js';
 import {changeButtonClassName, modalZIndex, scrollLockClass} from './constants.js';
 import {transformCurrencyAmount, trimNumber} from './render-table.js';
-import {isEscapeKey, onNumberInputKeydownCheckKey} from './util.js';
+import {onNumberInputKeydownCheckKey} from './util.js';
 import {
-  addPaymentInputListener,
-  addEnrollmentInputListener,
-  addExchangeAllButtonListener,
   getSelectedDataId,
   clearModalSelectOptions,
   fillUsernameWrapper,
   fillPaymentMethods
 } from './modal-functions.js';
+import {addModalListeners} from './modal-listeners.js';
 
 modalBuy.style.zIndex = modalZIndex;
 modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
@@ -53,46 +48,7 @@ const addModalWindowOpener = (contractorsData) => {
       modalMinAmountError.textContent = `Минимальная сумма — ${minCurrencyAmount} ₽`;
       clearModalSelectOptions();
       fillPaymentMethods(paymentMethods);
-      addPaymentInputListener(exchangeRate);
-      addEnrollmentInputListener(exchangeRate);
-      addExchangeAllButtonListener(balance.amount, exchangeRate);
-
-      // let onCloseModalButtonClick = {};
-      // let onKeydownCloseModalWindow = {};
-      // let onOutsideModalWindowClick = {};
-      // const closeModalWindow = () => {
-      //   body.classList.remove(scrollLockClass);
-      //   modalBuy.style.display = 'none';
-      //   modalPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
-      //   modalEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
-      //   exchangeAllButton.removeEventListener('click', onExchangeAllButtonClick);
-      //   document.removeEventListener('keydown', onKeydownCloseModalWindow);
-      //   modalCloseButton.removeEventListener('click', onCloseModalButtonClick);
-      //   modalBuy.removeEventListener('click', onOutsideModalWindowClick);
-      //   modalEnrollmentInput.value = '';
-      //   modalPaymentInput.value = '';
-      // };
-      //
-      // onKeydownCloseModalWindow = (event) => {
-      //   if (isEscapeKey(event)) {
-      //     closeModalWindow();
-      //   }
-      // };
-      //
-      // onCloseModalButtonClick = () => {
-      //   closeModalWindow();
-      // };
-      //
-      // onOutsideModalWindowClick = (event) => {
-      //   const outsideErrorContainerClick = event.composedPath().includes(modalBuyContentContainer) === false;
-      //   if (outsideErrorContainerClick) {
-      //     closeModalWindow();
-      //   }
-      // };
-
-      // modalBuy.addEventListener('click', onOutsideModalWindowClick);
-      // document.addEventListener('keydown', onKeydownCloseModalWindow);
-      // modalCloseButton.addEventListener('click', onCloseModalButtonClick);
+      addModalListeners(exchangeRate, balance.amount);
       modalBuy.style.display = 'block';
     }
   });
