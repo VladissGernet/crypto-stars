@@ -4,14 +4,27 @@ import {
   checkedUsersCheckbox,
   mapContainer,
   toggleListMapContainer,
+  body,
+  main,
+  modalBuy,
+  modalUsernameWrapper,
+  modalCloseButton,
+  modalVerifiedIconCopy,
+  modalRate,
+  modalCashlimit,
+  modalPaymentInput,
+  modalEnrollmentInput,
+  modalMinAmountError,
+  modalSelect,
+  // exchangeAllButton
 } from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
 import {debounce, onNumberInputKeydownCheckKey} from './util.js';
-import {COPYRIGHT, filterValues, startCoordinates, TILE_LAYER, ZOOM, changeButtonClassName} from './constants.js';
+import {COPYRIGHT, filterValues, startCoordinates, TILE_LAYER, ZOOM, changeButtonClassName, scrollLockClass, modalZIndex} from './constants.js';
 import {createMarkers} from './create-markers.js';
 
-//Переместить в другой модуль
+//Переместить в другой модуль ======================================================================================
 import {transformCurrencyAmount, trimNumber} from './render-table.js';
 const getSelectedDataId = (data, elementId) => {
   for (let i = 0; i < data.length; i++) {
@@ -20,6 +33,38 @@ const getSelectedDataId = (data, elementId) => {
     }
   }
 };
+
+const clearModalSelectOptions = () => {
+  const modalOptions = modalSelect.querySelectorAll('.modal__select-wrapper option');
+  modalOptions.forEach((option) => {
+    const isModalOptionNotDisabled = option.disabled === false;
+    if (isModalOptionNotDisabled) {
+      option.remove();
+    }
+  });
+};
+
+const fillUsernameWrapper = (wrapper, name, verifiedStatus, icon) => {
+  wrapper.innerHTML = '';
+  const modalNameSpan = document.createElement('span');
+  modalNameSpan.textContent = name;
+  if (verifiedStatus) {
+    wrapper.appendChild(icon);
+  }
+  wrapper.appendChild(modalNameSpan);
+};
+
+const fillPaymentMethods = (methodsArray) => {
+  if (methodsArray !== undefined) {
+    methodsArray.forEach((payment) => {
+      const newOption = document.createElement('option');
+      newOption.textContent = payment.provider;
+      modalSelect.appendChild(newOption);
+    });
+  }
+};
+
+// ===========================================================================================================
 
 let receivedData = [];
 getContractors().
@@ -57,68 +102,15 @@ getContractors().
     checkedUsersCheckbox.addEventListener('change', onCheckedUsersInputChange);
     toggleListMapContainer.addEventListener('click', onToggleListMapContainerClick);
 
-    //modal
-
-    //Variables
-    const body = document.querySelector('body');
-    const main = document.querySelector('main');
-
-    const modalBuy = document.querySelector('.modal--buy');
-    const modalCloseButton = modalBuy.querySelector('.modal__close-btn');
-    const modalUsernameWrapper = modalBuy.querySelector('.transaction-info__data');
-    const modalVerifiedIconCopy = modalUsernameWrapper.querySelector('svg').cloneNode(true);
-    const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
-    const modalCashlimit = modalBuy.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
-    const modalPaymentInput = modalBuy.querySelector('.modal__input-wrapper--payment input');
-    const modalEnrollmentInput = modalBuy.querySelector('.modal__input-wrapper--enrollment input');
-    const modalMinAmountError = modalBuy.querySelector('.custom-input__error');
-    const modalSelect = modalBuy.querySelector('.modal__select-wrapper select');
-
-    const clearModalSelectOptions = () => {
-      const modalOptions = modalSelect.querySelectorAll('.modal__select-wrapper option');
-      modalOptions.forEach((option) => {
-        const isModalOptionNotDisabled = option.disabled === false;
-        if (isModalOptionNotDisabled) {
-          option.remove();
-        }
-      });
-    };
+    //modal ===========================================================================================================
+    modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+    modalEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 
     //После окончания разработки модалки удалить
     // modalBuy.style.display = 'block';
 
-    //Constants
-    const scrollLockClass = 'scroll-lock';
-    const modalZIndex = '400'; //Для перекрытия карты.
-
     //main code
     modalBuy.style.zIndex = modalZIndex;
-
-    modalCloseButton.addEventListener('click', () => {
-      body.classList.remove(scrollLockClass);
-      modalBuy.style.display = 'none';
-    });
-
-    const fillUsernameWrapper = (wrapper, name, verifiedStatus, icon) => {
-      wrapper.innerHTML = '';
-      const modalNameSpan = document.createElement('span');
-      modalNameSpan.textContent = name;
-      if (verifiedStatus) {
-        wrapper.appendChild(icon);
-      }
-      wrapper.appendChild(modalNameSpan);
-    };
-
-    const fillPaymentMethods = (methodsArray) => {
-      if (methodsArray !== undefined) {
-        methodsArray.forEach((payment) => {
-          const newOption = document.createElement('option');
-          newOption.textContent = payment.provider;
-          modalSelect.appendChild(newOption);
-        });
-      }
-    };
-
 
     main.addEventListener('click', (evt) => {
       const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
@@ -134,12 +126,8 @@ getContractors().
         modalRate.textContent = `${trimNumber(exchangeRate)} ₽`;
         modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
         modalMinAmountError.textContent = `Минимальная сумма — ${minCurrencyAmount} ₽`;
-        // добавить платежные системы
         clearModalSelectOptions();
         fillPaymentMethods(paymentMethods);
-
-        //listener при закрытии модалки нужно удалять и поле очищать.
-        //Добавить debounce oninput
 
         const onPaymentInputEnterNewValue = () => {
           const debouncedEnter = debounce(() => {
@@ -147,7 +135,6 @@ getContractors().
           });
           debouncedEnter();
         };
-
         const onEnrollmentInputEnterNewValue = () => {
           const debouncedEnter = debounce(() => {
             modalPaymentInput.value = Math.floor(modalEnrollmentInput.value * exchangeRate);
@@ -155,10 +142,20 @@ getContractors().
           debouncedEnter();
         };
 
-        modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
-        modalEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+        //Надо удалять добавление liatener
         modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
         modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
+
+        const onCloseModalButtonClick = () => {
+          body.classList.remove(scrollLockClass);
+          modalBuy.style.display = 'none';
+          modalCloseButton.removeEventListener('click', onCloseModalButtonClick);
+          modalPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
+          modalEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
+        };
+
+        modalCloseButton.addEventListener('click', onCloseModalButtonClick);
+
 
         //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
         modalBuy.style.display = 'block';

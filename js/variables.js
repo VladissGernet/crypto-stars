@@ -1,4 +1,6 @@
 // Page elements
+const body = document.querySelector('body');
+const main = document.querySelector('main');
 const usersNavigation = document.querySelector('.users-nav');
 const usersNavigationContainer = usersNavigation.closest('.container');
 const buySellContainer = usersNavigation.querySelector('.tabs--toggle-buy-sell');
@@ -9,6 +11,19 @@ const mapContainer = document.querySelector('#map').closest('.container');
 const serverErrorContainer = document.querySelector('.message--server-error').closest('.container');
 const noAdvertisementsContainer = document.querySelector('.container--lightbackground');
 const tableBody = document.querySelector('.users-list__table-body');
+
+//Modal
+const modalBuy = document.querySelector('.modal--buy');
+const modalCloseButton = modalBuy.querySelector('.modal__close-btn');
+const modalUsernameWrapper = modalBuy.querySelector('.transaction-info__data');
+const modalVerifiedIconCopy = modalUsernameWrapper.querySelector('svg').cloneNode(true);
+const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
+const modalCashlimit = modalBuy.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
+const modalPaymentInput = modalBuy.querySelector('.modal__input-wrapper--payment input');
+const modalEnrollmentInput = modalBuy.querySelector('.modal__input-wrapper--enrollment input');
+const modalMinAmountError = modalBuy.querySelector('.custom-input__error');
+const modalSelect = modalBuy.querySelector('.modal__select-wrapper select');
+const exchangeAllButton = modalBuy.querySelector('.exchange-all-button');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -29,5 +44,18 @@ export {
   mapBaloonTemplate,
   serverErrorContainer,
   usersNavigationContainer,
-  noAdvertisementsContainer
+  noAdvertisementsContainer,
+  body,
+  main,
+  modalBuy,
+  modalUsernameWrapper,
+  modalCloseButton,
+  modalVerifiedIconCopy,
+  modalRate,
+  modalCashlimit,
+  modalPaymentInput,
+  modalEnrollmentInput,
+  modalMinAmountError,
+  modalSelect,
+  exchangeAllButton
 };
