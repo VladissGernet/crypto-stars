@@ -7,7 +7,7 @@ import {
 } from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
-import {debounce} from './util.js';
+import {debounce, onNumberInputKeydownCheckKey} from './util.js';
 import {COPYRIGHT, filterValues, startCoordinates, TILE_LAYER, ZOOM, changeButtonClassName} from './constants.js';
 import {createMarkers} from './create-markers.js';
 
@@ -141,12 +141,6 @@ getContractors().
         //listener при закрытии модалки нужно удалять и поле очищать.
         //Добавить debounce oninput
 
-        modalPaymentInput.addEventListener('keydown', (keydownEvent) => {
-          if (keydownEvent.key === '-' || keydownEvent.key === '+' || keydownEvent.key === 'e' || keydownEvent.key === 'E') {
-            keydownEvent.preventDefault();
-          }
-        });
-
         const onPaymentInputEnterNewValue = () => {
           const debouncedEnter = debounce(() => {
             modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);
@@ -154,7 +148,17 @@ getContractors().
           debouncedEnter();
         };
 
+        const onEnrollmentInputEnterNewValue = () => {
+          const debouncedEnter = debounce(() => {
+            modalPaymentInput.value = Math.floor(modalEnrollmentInput.value * exchangeRate);
+          });
+          debouncedEnter();
+        };
+
+        modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+        modalEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
         modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
+        modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
 
         //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
         modalBuy.style.display = 'block';

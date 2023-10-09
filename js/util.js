@@ -6,4 +6,10 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {debounce};
+const onNumberInputKeydownCheckKey = (evt) => {
+  if (evt.key === '-' || evt.key === '+' || evt.key === 'e' || evt.key === 'E') {
+    evt.preventDefault();
+  }
+};
+
+export {debounce, onNumberInputKeydownCheckKey};
