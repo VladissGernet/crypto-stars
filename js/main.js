@@ -107,6 +107,16 @@ getContractors().
       wrapper.appendChild(modalNameSpan);
     };
 
+    const fillPaymentMethods = (methodsArray) => {
+      if (methodsArray !== undefined) {
+        methodsArray.forEach((payment) => {
+          const newOption = document.createElement('option');
+          newOption.textContent = payment.provider;
+          modalSelect.appendChild(newOption);
+        });
+      }
+    };
+
 
     main.addEventListener('click', (evt) => {
       const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
@@ -124,13 +134,7 @@ getContractors().
         modalMinAmountError.textContent = `Минимальная сумма — ${minCurrencyAmount} ₽`;
         // добавить платежные системы
         clearModalSelectOptions();
-        if (paymentMethods !== undefined) {
-          paymentMethods.forEach((payment) => {
-            const newOption = document.createElement('option');
-            newOption.textContent = payment.provider;
-            modalSelect.appendChild(newOption);
-          });
-        }
+        fillPaymentMethods(paymentMethods);
         //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
         modalBuy.style.display = 'block';
         // modalBuy.style.display = 'block'; <---- после разработки разблокировать.
