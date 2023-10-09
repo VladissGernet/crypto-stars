@@ -70,9 +70,19 @@ getContractors().
     const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
     const modalCashlimit = modalBuy.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
     const modalMinAmountError = modalBuy.querySelector('.custom-input__error');
+    const modalSelectOptions = modalBuy.querySelectorAll('.modal__select-wrapper option');
+
+    const clearModalSelectOptions = () => {
+      modalSelectOptions.forEach((option) => {
+        const isModalOptionNotDisabled = option.disabled === false;
+        if (isModalOptionNotDisabled) {
+          option.remove();
+        }
+      });
+    };
 
     //После окончания разработки модалки удалить
-    // modalBuy.style.display = 'block';
+    modalBuy.style.display = 'block';
 
     //Constants
     const scrollLockClass = 'scroll-lock';
@@ -86,29 +96,40 @@ getContractors().
       modalBuy.style.display = 'none';
     });
 
+    const fillUsernameWrapper = (wrapper, name, verifiedStatus, icon) => {
+      wrapper.innerHTML = '';
+      const modalNameSpan = document.createElement('span');
+      modalNameSpan.textContent = name;
+      if (verifiedStatus) {
+        wrapper.appendChild(icon);
+      }
+      wrapper.appendChild(modalNameSpan);
+    };
+
 
     main.addEventListener('click', (evt) => {
       const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
       if (selectedElement !== null) {
+        evt.preventDefault();
         const selectedElementId = evt.target.closest('.users-list__table-row').id;
         const selectedData = getSelectedDataId(receivedData, selectedElementId);
-        const {userName, isVerified, exchangeRate, minAmount, status, balance} = selectedData;
+        const {userName, isVerified, exchangeRate, minAmount, status, balance, paymentMethods} = selectedData;
         const minCurrencyAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
         const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
-        evt.preventDefault();
         body.classList.add(scrollLockClass);
-        modalUsernameWrapper.innerHTML = '';
-        const modalNameSpan = document.createElement('span');
-        modalNameSpan.textContent = userName;
-        if (isVerified) {
-          modalUsernameWrapper.appendChild(modalVerifiedIconCopy);
-        }
-        modalUsernameWrapper.appendChild(modalNameSpan);
+        fillUsernameWrapper(modalUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
         modalRate.textContent = `${trimNumber(exchangeRate)} ₽`;
         modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
         modalMinAmountError.textContent = `Минимальная сумма — ${minCurrencyAmount} ₽`;
         // добавить платежные системы
-
+        if (paymentMethods !== undefined) {
+          paymentMethods.forEach((payment) => {
+            console.log(payment.provider);
+            // const newItem = badgeItemCopy.cloneNode();
+            // newItem.textContent = payment.provider;
+            // badgesList.appendChild(newItem);
+          });
+        }
         //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
         modalBuy.style.display = 'block';
         // modalBuy.style.display = 'block'; <---- после разработки разблокировать.
