@@ -1,8 +1,5 @@
 import {getContractors} from './load-data.js';
-import {
-  buySellContainer,
-  toggleListMapContainer,
-} from './variables.js';
+import {buySellContainer, toggleListMapContainer} from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
 import {addModalWindowOpener} from './modal-window-opener.js';
