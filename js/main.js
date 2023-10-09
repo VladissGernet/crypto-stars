@@ -16,7 +16,7 @@ import {
   modalEnrollmentInput,
   modalMinAmountError,
   modalSelect,
-  // exchangeAllButton
+  exchangeAllButton
 } from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
@@ -140,15 +140,22 @@ getContractors().
           });
           debouncedEnter();
         };
+        const onExchangeAllButtonClick = () => {
+          modalEnrollmentInput.value = balance.amount;
+          modalPaymentInput.value = Math.floor(balance.amount * exchangeRate);
+        };
         modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
         modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
-
+        exchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
         const onCloseModalButtonClick = () => {
           body.classList.remove(scrollLockClass);
           modalBuy.style.display = 'none';
           modalCloseButton.removeEventListener('click', onCloseModalButtonClick);
           modalPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
           modalEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
+          exchangeAllButton.removeEventListener('click', onExchangeAllButtonClick);
+          modalEnrollmentInput.value = '';
+          modalPaymentInput.value = '';
         };
         modalCloseButton.addEventListener('click', onCloseModalButtonClick);
         modalBuy.style.display = 'block';
