@@ -140,14 +140,19 @@ getContractors().
 
         //listener при закрытии модалки нужно удалять и поле очищать.
         //Добавить debounce oninput
-        const oneUnitOfKeks = 1;
-        const rubToKeks = oneUnitOfKeks / exchangeRate;
+
         modalPaymentInput.addEventListener('keydown', (keydownEvent) => {
           if (keydownEvent.key === '-' || keydownEvent.key === '+' || keydownEvent.key === 'e' || keydownEvent.key === 'E') {
             keydownEvent.preventDefault();
           }
-          modalEnrollmentInput.value = modalPaymentInput.value * rubToKeks;
         });
+
+        const onPaymentInputEnterNewValue = () => {
+          modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);
+        };
+
+        modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
+
         //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
         modalBuy.style.display = 'block';
         // modalBuy.style.display = 'block'; <---- после разработки разблокировать.
