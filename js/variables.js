@@ -24,6 +24,7 @@ const modalEnrollmentInput = modalBuy.querySelector('.modal__input-wrapper--enro
 const modalMinAmountError = modalBuy.querySelector('.custom-input__error');
 const modalSelect = modalBuy.querySelector('.modal__select-wrapper select');
 const exchangeAllButton = modalBuy.querySelector('.exchange-all-button');
+const modalBuyContentContainer = modalBuy.querySelector('.modal__content');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -57,5 +58,6 @@ export {
   modalEnrollmentInput,
   modalMinAmountError,
   modalSelect,
-  exchangeAllButton
+  exchangeAllButton,
+  modalBuyContentContainer
 };

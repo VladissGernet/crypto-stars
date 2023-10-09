@@ -12,4 +12,6 @@ const onNumberInputKeydownCheckKey = (evt) => {
   }
 };
 
-export {debounce, onNumberInputKeydownCheckKey};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {debounce, onNumberInputKeydownCheckKey, isEscapeKey};

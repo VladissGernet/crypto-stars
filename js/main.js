@@ -1,4 +1,4 @@
-import {getContractors} from './load-data.js';
+import {getContractors, getUserData} from './load-data.js';
 import {
   buySellContainer,
   checkedUsersCheckbox,
@@ -16,16 +16,27 @@ import {
   modalEnrollmentInput,
   modalMinAmountError,
   modalSelect,
-  exchangeAllButton
+  exchangeAllButton,
+  modalBuyContentContainer
 } from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
-import {debounce, onNumberInputKeydownCheckKey} from './util.js';
+import {debounce, onNumberInputKeydownCheckKey, isEscapeKey} from './util.js';
 import {COPYRIGHT, filterValues, startCoordinates, TILE_LAYER, ZOOM, changeButtonClassName, scrollLockClass, modalZIndex} from './constants.js';
 import {createMarkers} from './create-markers.js';
 
+let userData = {};
+getUserData()
+  .then((data) => {
+    userData = data;
+  });
+
+// Реализовать подстановку данных пользователя
+
 //Переместить в другой модуль ======================================================================================
 import {transformCurrencyAmount, trimNumber} from './render-table.js';
+
+modalBuy.style.zIndex = modalZIndex;
 const getSelectedDataId = (data, elementId) => {
   for (let i = 0; i < data.length; i++) {
     if (data[i].id === elementId) {
@@ -110,7 +121,6 @@ getContractors().
     // modalBuy.style.display = 'block';
 
     //main code
-    modalBuy.style.zIndex = modalZIndex;
 
     main.addEventListener('click', (evt) => {
       const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
@@ -147,16 +157,42 @@ getContractors().
         modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
         modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
         exchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
-        const onCloseModalButtonClick = () => {
+
+        let onCloseModalButtonClick = {};
+        let onKeydownCloseModalWindow = {};
+        let onOutsideModalWindowClick = {};
+        const closeModalWindow = () => {
           body.classList.remove(scrollLockClass);
           modalBuy.style.display = 'none';
-          modalCloseButton.removeEventListener('click', onCloseModalButtonClick);
           modalPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
           modalEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
           exchangeAllButton.removeEventListener('click', onExchangeAllButtonClick);
+          document.removeEventListener('keydown', onKeydownCloseModalWindow);
+          modalCloseButton.removeEventListener('click', onCloseModalButtonClick);
+          modalBuy.removeEventListener('click', onOutsideModalWindowClick);
           modalEnrollmentInput.value = '';
           modalPaymentInput.value = '';
         };
+
+        onKeydownCloseModalWindow = (event) => {
+          if (isEscapeKey(event)) {
+            closeModalWindow();
+          }
+        };
+
+        onCloseModalButtonClick = () => {
+          closeModalWindow();
+        };
+
+        onOutsideModalWindowClick = (event) => {
+          const outsideErrorContainerClick = event.composedPath().includes(modalBuyContentContainer) === false;
+          if (outsideErrorContainerClick) {
+            closeModalWindow();
+          }
+        };
+
+        modalBuy.addEventListener('click', onOutsideModalWindowClick);
+        document.addEventListener('keydown', onKeydownCloseModalWindow);
         modalCloseButton.addEventListener('click', onCloseModalButtonClick);
         modalBuy.style.display = 'block';
       }
