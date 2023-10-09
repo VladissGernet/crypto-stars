@@ -70,10 +70,11 @@ getContractors().
     const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
     const modalCashlimit = modalBuy.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
     const modalMinAmountError = modalBuy.querySelector('.custom-input__error');
-    const modalSelectOptions = modalBuy.querySelectorAll('.modal__select-wrapper option');
+    const modalSelect = modalBuy.querySelector('.modal__select-wrapper select');
 
     const clearModalSelectOptions = () => {
-      modalSelectOptions.forEach((option) => {
+      const modalOptions = modalSelect.querySelectorAll('.modal__select-wrapper option');
+      modalOptions.forEach((option) => {
         const isModalOptionNotDisabled = option.disabled === false;
         if (isModalOptionNotDisabled) {
           option.remove();
@@ -122,12 +123,12 @@ getContractors().
         modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
         modalMinAmountError.textContent = `Минимальная сумма — ${minCurrencyAmount} ₽`;
         // добавить платежные системы
+        clearModalSelectOptions();
         if (paymentMethods !== undefined) {
           paymentMethods.forEach((payment) => {
-            console.log(payment.provider);
-            // const newItem = badgeItemCopy.cloneNode();
-            // newItem.textContent = payment.provider;
-            // badgesList.appendChild(newItem);
+            const newOption = document.createElement('option');
+            newOption.textContent = payment.provider;
+            modalSelect.appendChild(newOption);
           });
         }
         //МАГИЧЕСКИЕ ЗНАЧЕНИЯ!!!
