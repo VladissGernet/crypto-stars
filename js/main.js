@@ -148,7 +148,10 @@ getContractors().
         });
 
         const onPaymentInputEnterNewValue = () => {
-          modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);
+          const debouncedEnter = debounce(() => {
+            modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);
+          });
+          debouncedEnter();
         };
 
         modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
