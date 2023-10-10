@@ -26,6 +26,7 @@ const modalSelect = modalBuy.querySelector('.modal__select-wrapper select');
 const exchangeAllButton = modalBuy.querySelector('.exchange-all-button');
 const modalBuyContentContainer = modalBuy.querySelector('.modal__content');
 const userCardNumberField = modalBuy.querySelector('#user-card-number');
+const userCryptoWalletField = modalBuy.querySelector('#user-crypto-wallet');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -61,5 +62,6 @@ export {
   modalSelect,
   exchangeAllButton,
   modalBuyContentContainer,
-  userCardNumberField
+  userCardNumberField,
+  userCryptoWalletField
 };

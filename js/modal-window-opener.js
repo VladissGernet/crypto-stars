@@ -8,7 +8,8 @@ import {
   modalPaymentInput,
   modalRate,
   modalUsernameWrapper,
-  modalVerifiedIconCopy
+  modalVerifiedIconCopy,
+  userCryptoWalletField
 } from './variables.js';
 import {changeButtonClassName, modalZIndex, scrollLockClass} from './constants.js';
 import {transformCurrencyAmount, trimNumber} from './render-table.js';
@@ -25,7 +26,8 @@ modalBuy.style.zIndex = modalZIndex;
 modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 modalEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 
-const addModalWindowOpener = (contractorsData) => {
+const addModalWindowOpener = (contractorsData, serverUserData) => {
+  userCryptoWalletField.placeholder = serverUserData.wallet.address;
   main.addEventListener('click', (evt) => {
     const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
     if (selectedElement !== null) {

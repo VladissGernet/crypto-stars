@@ -1,4 +1,4 @@
-import {getContractors} from './load-data.js';
+import {getContractors, getUserData} from './load-data.js';
 import {buySellContainer, toggleListMapContainer} from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
@@ -13,7 +13,10 @@ getContractors().
     initMap(data, receivedData);
     buySellContainer.addEventListener('click', onNavigationButtonClick);
     toggleListMapContainer.addEventListener('click', onToggleListMapContainerClick);
-    addModalWindowOpener(receivedData);
+    getUserData()
+      .then((userData) => {
+        addModalWindowOpener(receivedData, userData);
+      });
   //Нужно добавить данные пользователя от сервера на модалку.
   // добавить валидацию
   //проверить что отправляется на сервер
