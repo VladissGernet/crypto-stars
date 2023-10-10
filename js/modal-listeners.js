@@ -7,36 +7,23 @@ import {
   modalCloseButton,
   modalEnrollmentInput,
   modalPaymentInput,
-  modalSelect, passwordField,
+  modalSelect,
   userCardNumberField
 } from './variables.js';
-import {scrollLockClass, initialModalSelectValue, pristineDefaultConfig} from './constants.js';
+import {scrollLockClass, initialModalSelectValue} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
-import {transformCurrencyAmount} from './render-table.js';
+import {initPristine} from './init-pristine.js';
 
 const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
 const addModalListeners = (sellerData) => {
   const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;
-  const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
-  const newMaxAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
-  modalPaymentInput.required = true;
-  modalPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
-  modalPaymentInput.min = Math.floor(minAmount * exchangeRate);
-  modalPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
-  modalPaymentInput.max = Math.floor(balance.amount * exchangeRate);
-  modalPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
-  passwordField.required = true;
-  passwordField.dataset.pristineRequiredMessage = 'Введите пароль.';
-  const pristine = new Pristine(modalBuyForm, pristineDefaultConfig, false);
-  const checkSelect = () => modalSelect.selectedIndex;
-  pristine.addValidator(modalSelect, checkSelect, 'Выберите платёжную систему.');
+  const pristine = initPristine(minAmount, balance.amount, exchangeRate, status);
   const onModalSubmit = (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     console.log(isValid);
   };
   modalBuyForm.addEventListener('submit', onModalSubmit);
-
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
       modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);
