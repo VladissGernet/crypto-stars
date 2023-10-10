@@ -30,11 +30,12 @@ const addModalListeners = (sellerData) => {
   const pristine = new Pristine(modalBuyForm, pristineDefaultConfig, false);
   const checkSelect = () => modalSelect.selectedIndex;
   pristine.addValidator(modalSelect, checkSelect, 'Выберите платёжную систему.');
-  modalBuyForm.addEventListener('submit', (evt) => {
+  const onModalSubmit = (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     console.log(isValid);
-  });
+  };
+  modalBuyForm.addEventListener('submit', onModalSubmit);
 
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
@@ -90,6 +91,8 @@ const addModalListeners = (sellerData) => {
     userCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
     modalEnrollmentInput.value = '';
     modalPaymentInput.value = '';
+    pristine.destroy();
+    modalBuyForm.removeEventListener('submit', onModalSubmit);
   };
   onKeydownCloseModalWindow = (event) => {
     if (isEscapeKey(event)) {
