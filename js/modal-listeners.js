@@ -14,10 +14,10 @@ import {scrollLockClass, initialModalSelectValue} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
 
 const pristineDefaultConfig = {
-  classTo: 'modal-buy',
-  errorClass: 'modal-buy__validation-message--error',
-  successClass: 'modal-buy__validation-message--success',
-  errorTextParent: 'modal__container',
+  classTo: 'modal__pristine',
+  errorClass: 'modal__pristine--error',
+  successClass: 'modal__pristine--success',
+  errorTextParent: 'modal__pristine',
   errorTextTag: 'div',
   errorTextClass: 'custom-input__error'
 };
@@ -25,14 +25,14 @@ const pristineDefaultConfig = {
 modalPaymentInput.required = true;
 modalPaymentInput.dataset.pristineRequiredMessage = 'Указать минимум.';
 
-const pristine = new Pristine(modalBuyForm, pristineDefaultConfig);
-// const checkSelect = () => modalSelect.selectedIndex !== initialModalSelectValue;
-// pristine.addValidator(modalSelect, checkSelect, 'Выбери');
+const pristine = new Pristine(modalBuyForm, pristineDefaultConfig, false);
+const checkSelect = () => modalSelect.selectedIndex;
+pristine.addValidator(modalSelect, checkSelect, 'Выбери');
 
 modalBuyForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
-  pristine.addError(modalPaymentInput);
+  // pristine.addError(checkSelect);
   console.log(isValid);
 });
 

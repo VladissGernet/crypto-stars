@@ -325,38 +325,38 @@
                                 999&nbsp;₽&nbsp;-&nbsp;9 999 999 000&nbsp;₽</span></p>
                     </div>
                     <div class="modal__container modal__container--small">
-                        <div class="modal__input-wrapper modal__input-wrapper--min modal__input-wrapper--payment">
+                        <div class="modal__input-wrapper modal__input-wrapper--min modal__pristine">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Оплата</span><span
                                         class="custom-input__unit">₽</span>
                                     <button class="btn btn--textblue custom-input__btn exchange-all-button"
                                             type="button">обменять все
                                     </button>
-                                    <input type="number" value="" placeholder="0">
+                                    <input id="payment" type="number" value="" placeholder="0">
                                 </label>
                             </div>
                         </div>
                         <svg class="modal__container-svg" width="14" height="12" aria-hidden="true">
                             <use xlink:href="#icon-arrow-right"></use>
                         </svg>
-                        <div class="modal__input-wrapper modal__input-wrapper--min modal__input-wrapper--enrollment">
+                        <div class="modal__input-wrapper modal__input-wrapper--min">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Зачисление</span><span
                                         class="custom-input__unit">KEKS</span>
-                                    <input type="number" placeholder="0">
+                                    <input id="enrollment" type="number" placeholder="0">
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div class="modal__container">
-                        <div class="modal__select-wrapper">
+                        <div class="modal__select-wrapper modal__pristine">
                             <div class="select"><span>Плaтёжная система</span>
                                 <!--
                                     При отрисовке в списке платёжных систем нужно отразить только те,
                                     которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                                     остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                                 -->
-                                <select>
+                                <select id="modal--buy__select">
                                     <option selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
                                     <option>Первый криптобанк</option>
