@@ -18,8 +18,13 @@ const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
 const addModalListeners = (sellerData) => {
   const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;
   const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
+  const newMaxAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
   modalPaymentInput.required = true;
-  modalPaymentInput.dataset.pristineRequiredMessage = `Минимальная сумма — ${newMinAmount} ₽`;
+  modalPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
+  modalPaymentInput.min = Math.floor(minAmount * exchangeRate);
+  modalPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
+  modalPaymentInput.max = Math.floor(balance.amount * exchangeRate);
+  modalPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
   passwordField.required = true;
   passwordField.dataset.pristineRequiredMessage = 'Введите пароль.';
   const pristine = new Pristine(modalBuyForm, pristineDefaultConfig, false);
