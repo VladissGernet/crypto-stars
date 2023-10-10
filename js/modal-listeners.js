@@ -2,12 +2,12 @@ import {
   body,
   exchangeAllButton,
   modalBuy,
-  modalBuyContentContainer, modalBuyForm,
+  modalBuyContentContainer,
+  modalBuyForm,
   modalCloseButton,
   modalEnrollmentInput,
   modalPaymentInput,
   modalSelect,
-  modalSubmitButton,
   userCardNumberField
 } from './variables.js';
 import {scrollLockClass, initialModalSelectValue} from './constants.js';
@@ -22,13 +22,25 @@ const pristineDefaultConfig = {
   errorTextClass: 'custom-input__error'
 };
 
+modalPaymentInput.required = true;
+modalPaymentInput.dataset.pristineRequiredMessage = 'Указать минимум.';
+
+const pristine = new Pristine(modalBuyForm, pristineDefaultConfig);
+// const checkSelect = () => modalSelect.selectedIndex !== initialModalSelectValue;
+// pristine.addValidator(modalSelect, checkSelect, 'Выбери');
+
+modalBuyForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  pristine.addError(modalPaymentInput);
+  console.log(isValid);
+});
+
+
 
 const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
 const addModalListeners = (data) => {
-  const {exchangeRate, balance, paymentMethods, minAmount} = data;
-  const minExchangeAmount = Math.floor(minAmount * exchangeRate);
-  const maxExchangeAmount = Math.floor(balance.amount * exchangeRate);
-
+  const {exchangeRate, balance, paymentMethods} = data;
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
       modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);
