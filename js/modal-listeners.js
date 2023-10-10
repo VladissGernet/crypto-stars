@@ -7,7 +7,7 @@ import {
   modalCloseButton,
   modalEnrollmentInput,
   modalPaymentInput,
-  modalSelect,
+  modalSelect, passwordField,
   userCardNumberField
 } from './variables.js';
 import {scrollLockClass, initialModalSelectValue, pristineDefaultConfig} from './constants.js';
@@ -20,6 +20,8 @@ const addModalListeners = (sellerData) => {
   const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
   modalPaymentInput.required = true;
   modalPaymentInput.dataset.pristineRequiredMessage = `Минимальная сумма — ${newMinAmount} ₽`;
+  passwordField.required = true;
+  passwordField.dataset.pristineRequiredMessage = 'Введите пароль.';
   const pristine = new Pristine(modalBuyForm, pristineDefaultConfig, false);
   const checkSelect = () => modalSelect.selectedIndex;
   pristine.addValidator(modalSelect, checkSelect, 'Выберите платёжную систему.');
