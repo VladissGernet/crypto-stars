@@ -14,6 +14,11 @@ getContractors().
     buySellContainer.addEventListener('click', onNavigationButtonClick);
     toggleListMapContainer.addEventListener('click', onToggleListMapContainerClick);
     addModalWindowOpener(receivedData);
+  //Нужно добавить данные пользователя от сервера на модалку.
+  // добавить валидацию
+  //проверить что отправляется на сервер
+  //проверить весь код на наличие возможного рефакторинга и лишнего кода
+  //пройтись по каждому пункту тех задания и протестировать проект
   });
 
 export {receivedData};

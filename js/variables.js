@@ -25,6 +25,7 @@ const modalMinAmountError = modalBuy.querySelector('.custom-input__error');
 const modalSelect = modalBuy.querySelector('.modal__select-wrapper select');
 const exchangeAllButton = modalBuy.querySelector('.exchange-all-button');
 const modalBuyContentContainer = modalBuy.querySelector('.modal__content');
+const userCardNumberField = modalBuy.querySelector('#user-card-number');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -59,5 +60,6 @@ export {
   modalMinAmountError,
   modalSelect,
   exchangeAllButton,
-  modalBuyContentContainer
+  modalBuyContentContainer,
+  userCardNumberField
 };

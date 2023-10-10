@@ -4,12 +4,14 @@ import {
   modalBuy, modalBuyContentContainer,
   modalCloseButton,
   modalEnrollmentInput,
-  modalPaymentInput
+  modalPaymentInput,
+  modalSelect,
+  userCardNumberField
 } from './variables.js';
 import {scrollLockClass} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
 
-const addModalListeners = (rate, balanceAmount) => {
+const addModalListeners = (rate, balanceAmount, contractorPaymentMethods) => {
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
       modalEnrollmentInput.value = (modalPaymentInput.value / rate).toFixed(2);
@@ -29,6 +31,21 @@ const addModalListeners = (rate, balanceAmount) => {
     modalPaymentInput.value = Math.floor(balanceAmount * rate);
   };
   exchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
+  const onModalSelectChange = () => {
+    const selectValue = modalSelect.value;
+    for (const paymentMethod of contractorPaymentMethods) {
+      const providerName = paymentMethod.provider;
+      if (providerName === 'Cash in person') {
+        userCardNumberField.placeholder = '';
+        break;
+      }
+      if (providerName === selectValue) {
+        userCardNumberField.placeholder = paymentMethod.accountNumber;
+        break;
+      }
+    }
+  };
+  modalSelect.addEventListener('change', onModalSelectChange);
   let onCloseModalButtonClick = {};
   let onKeydownCloseModalWindow = {};
   let onOutsideModalWindowClick = {};
@@ -41,6 +58,7 @@ const addModalListeners = (rate, balanceAmount) => {
     document.removeEventListener('keydown', onKeydownCloseModalWindow);
     modalCloseButton.removeEventListener('click', onCloseModalButtonClick);
     modalBuy.removeEventListener('click', onOutsideModalWindowClick);
+    modalSelect.removeEventListener('change', onModalSelectChange);
     modalEnrollmentInput.value = '';
     modalPaymentInput.value = '';
   };

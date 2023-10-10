@@ -25,12 +25,6 @@ modalBuy.style.zIndex = modalZIndex;
 modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 modalEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 
-// let userData = {};
-// getUserData()
-//   .then((data) => {
-//     userData = data;
-//   });
-
 const addModalWindowOpener = (contractorsData) => {
   main.addEventListener('click', (evt) => {
     const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
@@ -48,7 +42,7 @@ const addModalWindowOpener = (contractorsData) => {
       modalMinAmountError.textContent = `Минимальная сумма — ${minCurrencyAmount} ₽`;
       clearModalSelectOptions();
       fillPaymentMethods(paymentMethods);
-      addModalListeners(exchangeRate, balance.amount);
+      addModalListeners(exchangeRate, balance.amount, paymentMethods);
       modalBuy.style.display = 'block';
     }
   });
