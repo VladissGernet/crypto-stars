@@ -53,7 +53,8 @@ const verifiedPinIcon = L.icon({
 const mapPopupTitleFixedWidth = '100%';
 const changeButtonClassName = 'btn--change';
 const scrollLockClass = 'scroll-lock';
-const modalZIndex = '400'; //Для перекрытия карты.
+const modalZIndex = '400'; //Для перекрытия карты модальным окном.
+const initialModalSelectValue = 0;
 
 export {
   BASE_URL,
@@ -71,5 +72,6 @@ export {
   mapPopupTitleFixedWidth,
   changeButtonClassName,
   scrollLockClass,
-  modalZIndex
+  modalZIndex,
+  initialModalSelectValue
 };

@@ -8,9 +8,10 @@ import {
   modalSelect,
   userCardNumberField
 } from './variables.js';
-import {scrollLockClass} from './constants.js';
+import {scrollLockClass, initialModalSelectValue} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
 
+const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
 const addModalListeners = (rate, balanceAmount, contractorPaymentMethods) => {
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
@@ -59,6 +60,8 @@ const addModalListeners = (rate, balanceAmount, contractorPaymentMethods) => {
     modalCloseButton.removeEventListener('click', onCloseModalButtonClick);
     modalBuy.removeEventListener('click', onOutsideModalWindowClick);
     modalSelect.removeEventListener('change', onModalSelectChange);
+    modalSelect.selectedIndex = initialModalSelectValue;
+    userCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
     modalEnrollmentInput.value = '';
     modalPaymentInput.value = '';
   };
