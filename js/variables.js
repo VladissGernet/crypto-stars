@@ -25,9 +25,10 @@ const modalEnrollmentInput = modalBuyForm.querySelector('.modal__input-wrapper--
 const modalMinAmountError = modalBuyForm.querySelector('.custom-input__error');
 const modalSelect = modalBuyForm.querySelector('.modal__select-wrapper select');
 const exchangeAllButton = modalBuyForm.querySelector('.exchange-all-button');
-const modalBuyContentContainer = modalBuy.querySelector('.modal__content');// dasfa
+const modalBuyContentContainer = modalBuy.querySelector('.modal__content');
 const userCardNumberField = modalBuyForm.querySelector('#user-card-number');
 const userCryptoWalletField = modalBuyForm.querySelector('#user-crypto-wallet');
+const modalSubmitButton = modalBuyForm.querySelector('.modal__submit');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -65,5 +66,6 @@ export {
   modalBuyContentContainer,
   userCardNumberField,
   userCryptoWalletField,
-  modalBuyForm
+  modalBuyForm,
+  modalSubmitButton
 };
