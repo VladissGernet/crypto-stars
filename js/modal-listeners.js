@@ -34,16 +34,19 @@ const addModalListeners = (rate, balanceAmount, contractorPaymentMethods) => {
   exchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
   const onModalSelectChange = () => {
     const selectValue = modalSelect.value;
-    for (const paymentMethod of contractorPaymentMethods) {
-      const providerName = paymentMethod.provider;
-      if (providerName === 'Cash in person') {
+    switch (selectValue) {
+      case 'Cash in person':
         userCardNumberField.placeholder = '';
         break;
-      }
-      if (providerName === selectValue) {
-        userCardNumberField.placeholder = paymentMethod.accountNumber;
+      default:
+        for (const paymentMethod of contractorPaymentMethods) {
+          const providerName = paymentMethod.provider;
+          if (providerName === selectValue) {
+            userCardNumberField.placeholder = paymentMethod.accountNumber;
+            break;
+          }
+        }
         break;
-      }
     }
   };
   modalSelect.addEventListener('change', onModalSelectChange);
