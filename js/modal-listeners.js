@@ -10,37 +10,25 @@ import {
   modalSelect,
   userCardNumberField
 } from './variables.js';
-import {scrollLockClass, initialModalSelectValue} from './constants.js';
+import {scrollLockClass, initialModalSelectValue, pristineDefaultConfig} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
-
-const pristineDefaultConfig = {
-  classTo: 'modal__pristine',
-  errorClass: 'modal__pristine--error',
-  successClass: 'modal__pristine--success',
-  errorTextParent: 'modal__pristine',
-  errorTextTag: 'div',
-  errorTextClass: 'custom-input__error'
-};
-
-modalPaymentInput.required = true;
-modalPaymentInput.dataset.pristineRequiredMessage = 'Указать минимум.';
-
-const pristine = new Pristine(modalBuyForm, pristineDefaultConfig, false);
-const checkSelect = () => modalSelect.selectedIndex;
-pristine.addValidator(modalSelect, checkSelect, 'Выбери');
-
-modalBuyForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  // pristine.addError(checkSelect);
-  console.log(isValid);
-});
-
-
+import {transformCurrencyAmount} from './render-table.js';
 
 const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
-const addModalListeners = (data) => {
-  const {exchangeRate, balance, paymentMethods} = data;
+const addModalListeners = (sellerData) => {
+  const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;
+  const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
+  modalPaymentInput.required = true;
+  modalPaymentInput.dataset.pristineRequiredMessage = `Минимальная сумма — ${newMinAmount} ₽`;
+  const pristine = new Pristine(modalBuyForm, pristineDefaultConfig, false);
+  const checkSelect = () => modalSelect.selectedIndex;
+  pristine.addValidator(modalSelect, checkSelect, 'Выберите платёжную систему.');
+  modalBuyForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    console.log(isValid);
+  });
+
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
       modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);

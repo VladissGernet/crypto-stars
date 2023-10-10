@@ -55,6 +55,14 @@ const changeButtonClassName = 'btn--change';
 const scrollLockClass = 'scroll-lock';
 const modalZIndex = '400'; //Для перекрытия карты модальным окном.
 const initialModalSelectValue = 0;
+const pristineDefaultConfig = {
+  classTo: 'modal__pristine',
+  errorClass: 'modal__pristine--error',
+  successClass: 'modal__pristine--success',
+  errorTextParent: 'modal__pristine',
+  errorTextTag: 'div',
+  errorTextClass: 'custom-input__error'
+};
 
 export {
   BASE_URL,
@@ -74,4 +82,5 @@ export {
   scrollLockClass,
   modalZIndex,
   initialModalSelectValue,
+  pristineDefaultConfig
 };
