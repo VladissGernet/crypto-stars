@@ -4,7 +4,6 @@ import {
   modalBuy,
   modalCashlimit,
   modalEnrollmentInput,
-  modalMinAmountError,
   modalPaymentInput,
   modalRate,
   modalUsernameWrapper,
@@ -41,10 +40,9 @@ const addModalWindowOpener = (contractorsData, serverUserData) => {
       fillUsernameWrapper(modalUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
       modalRate.textContent = `${trimNumber(exchangeRate)} ₽`;
       modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
-      modalMinAmountError.textContent = `Минимальная сумма — ${minCurrencyAmount} ₽`;
       clearModalSelectOptions();
       fillPaymentMethods(paymentMethods);
-      addModalListeners(exchangeRate, balance.amount, paymentMethods);
+      addModalListeners(selectedData);
       modalBuy.style.display = 'block';
     }
   });

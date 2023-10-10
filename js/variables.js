@@ -22,7 +22,6 @@ const modalRate = modalBuyForm.querySelector('.transaction-info__item--exchanger
 const modalCashlimit = modalBuyForm.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
 const modalPaymentInput = modalBuyForm.querySelector('.modal__input-wrapper--payment input');
 const modalEnrollmentInput = modalBuyForm.querySelector('.modal__input-wrapper--enrollment input');
-const modalMinAmountError = modalBuyForm.querySelector('.custom-input__error');
 const modalSelect = modalBuyForm.querySelector('.modal__select-wrapper select');
 const exchangeAllButton = modalBuyForm.querySelector('.exchange-all-button');
 const modalBuyContentContainer = modalBuy.querySelector('.modal__content');
@@ -60,7 +59,6 @@ export {
   modalCashlimit,
   modalPaymentInput,
   modalEnrollmentInput,
-  modalMinAmountError,
   modalSelect,
   exchangeAllButton,
   modalBuyContentContainer,

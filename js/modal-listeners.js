@@ -2,35 +2,50 @@ import {
   body,
   exchangeAllButton,
   modalBuy,
-  modalBuyContentContainer,
+  modalBuyContentContainer, modalBuyForm,
   modalCloseButton,
   modalEnrollmentInput,
   modalPaymentInput,
   modalSelect,
+  modalSubmitButton,
   userCardNumberField
 } from './variables.js';
 import {scrollLockClass, initialModalSelectValue} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
 
+const pristineDefaultConfig = {
+  classTo: 'modal-buy',
+  errorClass: 'modal-buy__validation-message--error',
+  successClass: 'modal-buy__validation-message--success',
+  errorTextParent: 'modal__container',
+  errorTextTag: 'div',
+  errorTextClass: 'custom-input__error'
+};
+
+
 const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
-const addModalListeners = (rate, balanceAmount, contractorPaymentMethods) => {
+const addModalListeners = (data) => {
+  const {exchangeRate, balance, paymentMethods, minAmount} = data;
+  const minExchangeAmount = Math.floor(minAmount * exchangeRate);
+  const maxExchangeAmount = Math.floor(balance.amount * exchangeRate);
+
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
-      modalEnrollmentInput.value = (modalPaymentInput.value / rate).toFixed(2);
+      modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);
     });
     debouncedEnter();
   };
   modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
   const onEnrollmentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
-      modalPaymentInput.value = Math.floor(modalEnrollmentInput.value * rate);
+      modalPaymentInput.value = Math.floor(modalEnrollmentInput.value * exchangeRate);
     });
     debouncedEnter();
   };
   modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
   const onExchangeAllButtonClick = () => {
-    modalEnrollmentInput.value = balanceAmount;
-    modalPaymentInput.value = Math.floor(balanceAmount * rate);
+    modalEnrollmentInput.value = balance.amount;
+    modalPaymentInput.value = Math.floor(balance.amount * exchangeRate);
   };
   exchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
   const onModalSelectChange = () => {
@@ -40,7 +55,7 @@ const addModalListeners = (rate, balanceAmount, contractorPaymentMethods) => {
         userCardNumberField.placeholder = '';
         break;
       default:
-        for (const paymentMethod of contractorPaymentMethods) {
+        for (const paymentMethod of paymentMethods) {
           const providerName = paymentMethod.provider;
           if (providerName === selectValue) {
             userCardNumberField.placeholder = paymentMethod.accountNumber;
