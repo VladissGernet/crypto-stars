@@ -1,7 +1,8 @@
 import {
   body,
   exchangeAllButton,
-  modalBuy, modalBuyContentContainer,
+  modalBuy,
+  modalBuyContentContainer,
   modalCloseButton,
   modalEnrollmentInput,
   modalPaymentInput,

@@ -14,19 +14,20 @@ const tableBody = document.querySelector('.users-list__table-body');
 
 //Modal
 const modalBuy = document.querySelector('.modal--buy');
+const modalBuyForm = modalBuy.querySelector('.modal-buy');
 const modalCloseButton = modalBuy.querySelector('.modal__close-btn');
-const modalUsernameWrapper = modalBuy.querySelector('.transaction-info__data');
+const modalUsernameWrapper = modalBuyForm.querySelector('.transaction-info__data');
 const modalVerifiedIconCopy = modalUsernameWrapper.querySelector('svg').cloneNode(true);
-const modalRate = modalBuy.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
-const modalCashlimit = modalBuy.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
-const modalPaymentInput = modalBuy.querySelector('.modal__input-wrapper--payment input');
-const modalEnrollmentInput = modalBuy.querySelector('.modal__input-wrapper--enrollment input');
-const modalMinAmountError = modalBuy.querySelector('.custom-input__error');
-const modalSelect = modalBuy.querySelector('.modal__select-wrapper select');
-const exchangeAllButton = modalBuy.querySelector('.exchange-all-button');
-const modalBuyContentContainer = modalBuy.querySelector('.modal__content');
-const userCardNumberField = modalBuy.querySelector('#user-card-number');
-const userCryptoWalletField = modalBuy.querySelector('#user-crypto-wallet');
+const modalRate = modalBuyForm.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
+const modalCashlimit = modalBuyForm.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
+const modalPaymentInput = modalBuyForm.querySelector('.modal__input-wrapper--payment input');
+const modalEnrollmentInput = modalBuyForm.querySelector('.modal__input-wrapper--enrollment input');
+const modalMinAmountError = modalBuyForm.querySelector('.custom-input__error');
+const modalSelect = modalBuyForm.querySelector('.modal__select-wrapper select');
+const exchangeAllButton = modalBuyForm.querySelector('.exchange-all-button');
+const modalBuyContentContainer = modalBuy.querySelector('.modal__content');// dasfa
+const userCardNumberField = modalBuyForm.querySelector('#user-card-number');
+const userCryptoWalletField = modalBuyForm.querySelector('#user-crypto-wallet');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -63,5 +64,6 @@ export {
   exchangeAllButton,
   modalBuyContentContainer,
   userCardNumberField,
-  userCryptoWalletField
+  userCryptoWalletField,
+  modalBuyForm
 };

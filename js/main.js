@@ -16,8 +16,9 @@ getContractors().
     getUserData()
       .then((userData) => {
         addModalWindowOpener(receivedData, userData);
+        // const pristine = new Pristine(uploadForm, pristineDefaultConfig);
       });
-  //Нужно добавить данные пользователя от сервера на модалку.
+
   // добавить валидацию
   //проверить что отправляется на сервер
   //проверить весь код на наличие возможного рефакторинга и лишнего кода
