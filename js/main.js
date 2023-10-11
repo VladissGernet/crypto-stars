@@ -17,8 +17,7 @@ getContractors().
     getUserData()
       .then((userData) => {
         const userBalancesObject = getUserBalances(userData);
-        console.log(userBalancesObject);
-        addModalWindowOpener(receivedData, userData);
+        addModalWindowOpener(receivedData, userData, userBalancesObject);
       });
   // добавить валидацию
   //проверить что отправляется на сервер

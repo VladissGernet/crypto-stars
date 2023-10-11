@@ -2,7 +2,7 @@ import {transformCurrencyAmount} from './render-table.js';
 import {modalBuyForm, modalPaymentInput, modalSelect, passwordField} from './variables.js';
 import {pristineDefaultConfig} from './constants.js';
 
-const initPristine = (minimum, maximum, rate, userStatus) => {
+const initPristine = (minimum, maximum, rate, userStatus, userBalances) => {
   const newMinAmount = transformCurrencyAmount(minimum, rate, userStatus);
   const newMaxAmount = transformCurrencyAmount(maximum, rate, userStatus);
   modalPaymentInput.required = true;
@@ -16,6 +16,8 @@ const initPristine = (minimum, maximum, rate, userStatus) => {
   const pristineConstructor = new Pristine(modalBuyForm, pristineDefaultConfig, false);
   const checkSelect = () => modalSelect.selectedIndex;
   pristineConstructor.addValidator(modalSelect, checkSelect, 'Выберите платёжную систему.');
+  const checkUserRubWallet = () => (userBalances.RUB >= minimum * rate) && (modalPaymentInput.value <= userBalances.RUB);
+  pristineConstructor.addValidator(modalPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
   return pristineConstructor;
 };
 

@@ -25,7 +25,7 @@ modalBuy.style.zIndex = modalZIndex;
 modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 modalEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 
-const addModalWindowOpener = (contractorsData, serverUserData) => {
+const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => {
   userCryptoWalletField.placeholder = serverUserData.wallet.address;
   main.addEventListener('click', (evt) => {
     const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
@@ -42,7 +42,7 @@ const addModalWindowOpener = (contractorsData, serverUserData) => {
       modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
       clearModalSelectOptions();
       fillPaymentMethods(paymentMethods);
-      addModalListeners(selectedData);
+      addModalListeners(selectedData, userBalances);
       modalBuy.style.display = 'block';
     }
   });
