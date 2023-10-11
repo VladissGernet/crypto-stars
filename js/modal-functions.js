@@ -7,8 +7,8 @@ const getSelectedDataId = (data, elementId) => {
     }
   }
 };
-const clearModalSelectOptions = () => {
-  const modalOptions = modalSelect.querySelectorAll('.modal__select-wrapper option');
+const clearModalSelectOptions = (select) => {
+  const modalOptions = select.querySelectorAll('option');
   modalOptions.forEach((option) => {
     const isModalOptionNotDisabled = option.disabled === false;
     if (isModalOptionNotDisabled) {

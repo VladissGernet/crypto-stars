@@ -46,7 +46,7 @@ const sellSeceivingCurrency = modalSellForm.querySelector('[name="receivingCurre
 const sellModalUsernameWrapper = modalSellForm.querySelector('.transaction-info__data');
 const sellModalRate = modalSellForm.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
 const sellModalCashlimit = modalSellForm.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
-const modalSellSelect = modalSellForm.querySelector('#modal--sell__select');
+const sellModalSelect = modalSellForm.querySelector('#modal--sell__select');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -101,5 +101,6 @@ export {
   sellSeceivingCurrency,
   sellModalUsernameWrapper,
   sellModalRate,
-  sellModalCashlimit
+  sellModalCashlimit,
+  sellModalSelect
 };

@@ -22,7 +22,9 @@ import {
   sellSeceivingCurrency,
   sellModalUsernameWrapper,
   sellModalRate,
-  sellModalCashlimit
+  sellModalCashlimit,
+  modalSelect,
+  sellModalSelect
 } from './variables.js';
 import {changeButtonClassName, filterValues, modalZIndex, scrollLockClass, sellerIdClassName, valueToOpenSellModal} from './constants.js';
 import {addSpacesToNumber, onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
@@ -60,7 +62,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         fillUsernameWrapper(modalUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
         modalRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
         modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
-        clearModalSelectOptions();
+        clearModalSelectOptions(modalSelect);
         fillPaymentMethods(paymentMethods);
         addModalListeners(selectedData, userBalances);
         modalBuy.style.display = 'block';
@@ -75,6 +77,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         fillUsernameWrapper(sellModalUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
         sellModalRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
         sellModalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
+        clearModalSelectOptions(sellModalSelect);
       }
     }
   });
