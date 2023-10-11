@@ -68,6 +68,7 @@ const SubmitButtonText = {
   SENDING: 'Обмен...'
 };
 const defaultErrorMessageText = 'Ошибка заполнения формы';
+const sellerIdClassName = 'seller-id';
 
 export {
   BASE_URL,
@@ -89,5 +90,6 @@ export {
   initialModalSelectValue,
   pristineDefaultConfig,
   SubmitButtonText,
-  defaultErrorMessageText
+  defaultErrorMessageText,
+  sellerIdClassName
 };

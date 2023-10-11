@@ -1,5 +1,5 @@
 import {mapBaloonTemplate} from './variables.js';
-import {mapPopupTitleFixedWidth, changeButtonClassName} from './constants.js';
+import {mapPopupTitleFixedWidth, changeButtonClassName, sellerIdClassName} from './constants.js';
 import {addSpacesToNumber} from './util.js';
 
 const createPopup = (markerData) => {
@@ -12,6 +12,8 @@ const createPopup = (markerData) => {
   const limit = popupElement.querySelector('.user-card__cash-item--limit .user-card__cash-data');
   const badgesList = popupElement.querySelector('.user-card__badges-list');
   const popupButton = popupElement.querySelector('button');
+  popupElement.classList.add(sellerIdClassName);
+  popupElement.id = markerData.id;
   popupButton.classList.add(changeButtonClassName);
   const badge = badgesList.querySelector('.badge');
   const {amount, currency} = markerData.balance;

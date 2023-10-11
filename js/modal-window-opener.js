@@ -15,7 +15,7 @@ import {
   sendingCurrency,
   receivingCurrency
 } from './variables.js';
-import {changeButtonClassName, modalZIndex, scrollLockClass} from './constants.js';
+import {changeButtonClassName, modalZIndex, scrollLockClass, sellerIdClassName} from './constants.js';
 import {onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
 import {
   getSelectedDataId,
@@ -35,7 +35,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
     const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
     if (selectedElement !== null) {
       evt.preventDefault();
-      const selectedElementId = evt.target.closest('.users-list__table-row').id;
+      const selectedElementId = evt.target.closest(`.${sellerIdClassName}`).id;
       const selectedData = getSelectedDataId(contractorsData, selectedElementId);
       const {id, userName, isVerified, exchangeRate, minAmount, status, balance, paymentMethods} = selectedData;
       sendingContractorId.value = id;

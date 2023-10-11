@@ -14,7 +14,6 @@ const initMap = (contractorsData, convertedData) => {
   const verifiedMarkerGroup = L.layerGroup().addTo(map);
   createMarkers(convertedData, defaultMarkerGroup, verifiedMarkerGroup);
   addCheckedUsersInputListener(contractorsData, convertedData, map, defaultMarkerGroup);
-  return {convertedData};
 };
 
 export {initMap};

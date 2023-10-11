@@ -5,7 +5,7 @@ import {
   usersList,
   userTableRowTemplate
 } from './variables.js';
-import {initialFilterValue, changeButtonClassName} from './constants.js';
+import {initialFilterValue, changeButtonClassName, sellerIdClassName} from './constants.js';
 import {transformCurrencyAmount} from './util.js';
 
 const renderTable = (data, filterValue = initialFilterValue) => {
@@ -39,6 +39,7 @@ const renderTable = (data, filterValue = initialFilterValue) => {
       const minCurrencyAmount = transformCurrencyAmount(minAmount, exchangeRate, filterValue);
       const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, filterValue);
       userTableRow.id = element.id;
+      userTableRow.classList.add(sellerIdClassName);
       rowUsername.textContent = userName;
       const isNotVerified = Boolean(isVerified) === false;
       if (isNotVerified) {
