@@ -16,6 +16,7 @@ import {initPristine} from './init-pristine.js';
 
 const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
 const addModalListeners = (sellerData) => {
+  // добавить валидауцию нна проверку максимального количества валюты пользователя
   const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;
   const pristine = initPristine(minAmount, balance.amount, exchangeRate, status);
   const onModalSubmit = (evt) => {

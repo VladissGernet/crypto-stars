@@ -4,6 +4,7 @@ import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
 import {addModalWindowOpener} from './modal-window-opener.js';
 import {initMap} from './map-init.js';
+import {getUserBalances} from './get-user-balances.js';
 
 let receivedData = [];
 getContractors().
@@ -15,6 +16,8 @@ getContractors().
     toggleListMapContainer.addEventListener('click', onToggleListMapContainerClick);
     getUserData()
       .then((userData) => {
+        const userBalancesObject = getUserBalances(userData);
+        console.log(userBalancesObject);
         addModalWindowOpener(receivedData, userData);
       });
   // добавить валидацию
