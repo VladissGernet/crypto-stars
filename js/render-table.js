@@ -6,7 +6,7 @@ import {
   userTableRowTemplate
 } from './variables.js';
 import {initialFilterValue, changeButtonClassName, sellerIdClassName} from './constants.js';
-import {transformCurrencyAmount} from './util.js';
+import {addSpacesToNumber, transformCurrencyAmount} from './util.js';
 
 const renderTable = (data, filterValue = initialFilterValue) => {
   const isDataEmpty = data.length === 0;
@@ -46,7 +46,7 @@ const renderTable = (data, filterValue = initialFilterValue) => {
         verifiedIcon.remove();
       }
       currency.textContent = balance.currency;
-      rowExchangeRate.textContent = `${exchangeRate} ₽`;
+      rowExchangeRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
       cashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
       badgesList.innerHTML = '';
       if (paymentMethods !== undefined) {

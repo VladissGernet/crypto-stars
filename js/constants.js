@@ -68,7 +68,7 @@ const SubmitButtonText = {
   SENDING: 'Обмен...'
 };
 const defaultErrorMessageText = 'Ошибка заполнения формы';
-const sellerIdClassName = 'seller-id';
+const sellerIdClassName = 'contractor-id';
 const valueToOpenSellModal = 'Cписок';
 
 export {
