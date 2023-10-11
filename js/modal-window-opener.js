@@ -63,11 +63,11 @@ import {
   clearModalSelectOptions,
   fillUsernameWrapper,
   fillPaymentMethods,
-  showModalWindow, blockSubmitButton, unblockSubmitButton
+  showModalWindow,
 } from './modal-functions.js';
 import {addModalListeners} from './modal-listeners.js';
-import {hideValidationMessage, showValidationMessage} from './validation-message.js';
-import {sendData} from './load-data.js';
+import {hideValidationMessage} from './validation-message.js';
+import {initSubmit} from './init-submit.js';
 
 modalBuy.style.zIndex = modalZIndex;
 buyPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
@@ -216,31 +216,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
           }
         };
         onModalSubmit = (event) => {
-          event.preventDefault();
-          const isValid = pristine.validate();
-          if (isValid) {
-            blockSubmitButton(sellSubmitButton);
-            hideValidationMessage(sellErrorMessage);
-            sendData(new FormData(event.target))
-              .then(
-                () => {
-                  showValidationMessage(sellSuccessMessage);
-                  unblockSubmitButton(sellSubmitButton);
-                  closeModalWindow();
-                }
-              )
-              .catch(
-                (err) => {
-                  showValidationMessage(sellErrorMessage);
-                  sellErrorMessageText.textContent = err.message;
-                  unblockSubmitButton(sellSubmitButton);
-                }
-              )
-              .finally(() => {
-              });
-          } else {
-            showValidationMessage(sellErrorMessage);
-          }
+          initSubmit(event, pristine, sellSubmitButton, sellErrorMessage, sellSuccessMessage, sellErrorMessageText, closeModalWindow);
         };
         sellForm.addEventListener('submit', onModalSubmit);
         modalSell.addEventListener('mousedown', onOutsideModalWindowClick);
