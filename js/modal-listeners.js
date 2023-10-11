@@ -72,24 +72,50 @@ const addModalListeners = (sellerData, userBalances) => {
   let onKeydownCloseModalWindow = {};
   let onOutsideModalWindowClick = {};
   let onModalSubmit = {};
-  const closeModalWindow = () => {
+
+  const resetPaymentListeners = (paymentInput, onPaymentInput, enrollmentInput, onEnrollmentInput, exchangeAll, onExchangeAllClick) => {
+    paymentInput.removeEventListener('input', onPaymentInput);
+    enrollmentInput.removeEventListener('input', onEnrollmentInput);
+    paymentInput.value = '';
+    enrollmentInput.value = '';
+    exchangeAll.removeEventListener('click', onExchangeAllClick);
+  };
+
+  const resetForm = (modal, closeButton, select, form, errorText, onSelectChange, onFormSubmit) => {
     body.classList.remove(scrollLockClass);
-    modalBuy.style.display = 'none';
-    buyPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
-    buyEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
-    buyExchangeAllButton.removeEventListener('click', onExchangeAllButtonClick);
-    document.removeEventListener('keydown', onKeydownCloseModalWindow);
-    buyCloseButton.removeEventListener('click', onCloseModalButtonClick);
-    modalBuy.removeEventListener('mousedown', onOutsideModalWindowClick);
-    buySelect.removeEventListener('change', onModalSelectChange);
-    buySelect.selectedIndex = initialModalSelectValue;
-    buyEnrollmentInput.value = '';
-    buyPaymentInput.value = '';
-    pristine.destroy();
+    modal.style.display = 'none';
+    modal.removeEventListener('mousedown', onOutsideModalWindowClick);
     hideValidationMessage(buyErrorMessage);
     hideValidationMessage(buySuccessMessage);
-    buyForm.removeEventListener('submit', onModalSubmit);
-    buyErrorMessageText.textContent = defaultErrorMessageText;
+    errorText.textContent = defaultErrorMessageText;
+    pristine.destroy();
+    document.removeEventListener('keydown', onKeydownCloseModalWindow);
+    closeButton.removeEventListener('click', onCloseModalButtonClick);
+    select.removeEventListener('change', onSelectChange);
+    select.selectedIndex = initialModalSelectValue;
+    form.removeEventListener('submit', onFormSubmit);
+  };
+
+  const closeModalWindow = () => {
+    resetPaymentListeners(buyPaymentInput, onPaymentInputEnterNewValue, buyEnrollmentInput, onEnrollmentInputEnterNewValue, buyExchangeAllButton, onExchangeAllButtonClick);
+    resetForm(modalBuy, buyCloseButton, buySelect, buyForm, buyErrorMessageText, onModalSelectChange, onModalSubmit);
+    // body.classList.remove(scrollLockClass);
+    // modalBuy.style.display = 'none';
+    // buyPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
+    // buyEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
+    // buyExchangeAllButton.removeEventListener('click', onExchangeAllButtonClick);
+    // document.removeEventListener('keydown', onKeydownCloseModalWindow);
+    // buyCloseButton.removeEventListener('click', onCloseModalButtonClick);
+    // modalBuy.removeEventListener('mousedown', onOutsideModalWindowClick);
+    // buySelect.removeEventListener('change', onModalSelectChange);
+    // buySelect.selectedIndex = initialModalSelectValue;
+    // buyEnrollmentInput.value = '';
+    // buyPaymentInput.value = '';
+    // pristine.destroy();
+    // hideValidationMessage(buyErrorMessage);
+    // hideValidationMessage(buySuccessMessage);
+    // buyForm.removeEventListener('submit', onModalSubmit);
+    // buyErrorMessageText.textContent = defaultErrorMessageText;
 
     contractorCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
   };
