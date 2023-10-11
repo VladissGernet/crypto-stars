@@ -81,7 +81,7 @@ const addModalListeners = (sellerData, userBalances) => {
     exchangeAllButton.removeEventListener('click', onExchangeAllButtonClick);
     document.removeEventListener('keydown', onKeydownCloseModalWindow);
     modalCloseButton.removeEventListener('click', onCloseModalButtonClick);
-    modalBuy.removeEventListener('click', onOutsideModalWindowClick);
+    modalBuy.removeEventListener('mousedown', onOutsideModalWindowClick);
     modalSelect.removeEventListener('change', onModalSelectChange);
     modalSelect.selectedIndex = initialModalSelectValue;
     userCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
@@ -133,7 +133,7 @@ const addModalListeners = (sellerData, userBalances) => {
     }
   };
   modalBuyForm.addEventListener('submit', onModalSubmit);
-  modalBuy.addEventListener('click', onOutsideModalWindowClick);
+  modalBuy.addEventListener('mousedown', onOutsideModalWindowClick);
   document.addEventListener('keydown', onKeydownCloseModalWindow);
   modalCloseButton.addEventListener('click', onCloseModalButtonClick);
 };
