@@ -16,7 +16,7 @@ const initPristine = (minimum, maximum, rate, userStatus, userBalances) => {
   const pristineConstructor = new Pristine(modalBuyForm, pristineDefaultConfig, false);
   const checkSelect = () => modalSelect.selectedIndex;
   pristineConstructor.addValidator(modalSelect, checkSelect, 'Выберите платёжную систему.');
-  const checkUserRubWallet = () => (userBalances.RUB >= minimum * rate) && (modalPaymentInput.value <= userBalances.RUB);
+  const checkUserRubWallet = () => modalPaymentInput.value <= userBalances.RUB;
   pristineConstructor.addValidator(modalPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
   return pristineConstructor;
 };

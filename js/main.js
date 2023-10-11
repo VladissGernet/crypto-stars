@@ -16,11 +16,38 @@ getContractors()
     toggleListMapContainer.addEventListener('click', onToggleListMapContainerClick);
     getUserData()
       .then((userData) => {
-        console.log(userData)
-        const userBalancesObject = getUserBalances(userData);
-        addModalWindowOpener(receivedData, userData, userBalancesObject);
+        const userMochData = {
+          "userName": "Андрей",
+          "balances": [
+            {
+              "currency": "RUB",
+              "amount": 20000
+            },
+            {
+              "currency": "KEKS",
+              "amount": 94.28
+            }
+          ],
+          "wallet": {
+            "currency": "KEKS",
+            "address": "o6j428495spjy20pwwer0elobwz8lvwksk2ffwxd"
+          },
+          "paymentMethods": [
+            {
+              "currency": "RUB",
+              "provider": "Sberbank",
+              "accountNumber": "0000 0000 0000 5691"
+            },
+            {
+              "currency": "RUB",
+              "provider": "QIWI",
+              "accountNumber": "0000 0000 0000 4880"
+            }
+          ]
+        };
+        const userBalancesObject = getUserBalances(userMochData);
+        addModalWindowOpener(receivedData, userMochData, userBalancesObject);
       });
-  //проверить что отправляется на сервер
   //проверить весь код на наличие возможного рефакторинга и лишнего кода
   //пройтись по каждому пункту тех задания и протестировать проект
     //Вернуть значение пароля на изначальное
