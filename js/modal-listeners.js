@@ -24,21 +24,21 @@ const userCardNumberFieldInitialPlaceholder = contractorCardNumberField.placehol
 const addModalListeners = (sellerData, userBalances) => {
   const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;
   const pristine = initPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
-  const onPaymentInputEnterNewValue = () => {
+  const onPaymentEnterValue = () => {
     const debouncedEnter = debounce(() => {
       buyEnrollmentInput.value = buyPaymentInput.value / exchangeRate;
     });
     debouncedEnter();
   };
-  buyPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
-  const onEnrollmentInputEnterNewValue = () => {
+  buyPaymentInput.addEventListener('input', onPaymentEnterValue);
+  const onEnrollmentEnterValue = () => {
     const debouncedEnter = debounce(() => {
       buyPaymentInput.value = buyEnrollmentInput.value * exchangeRate;
       buyPaymentInput.value = Number(buyPaymentInput.value).toFixed(2);
     });
     debouncedEnter();
   };
-  buyEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
+  buyEnrollmentInput.addEventListener('input', onEnrollmentEnterValue);
   const onExchangeAllButtonClick = () => {
     if (userBalances.RUB <= (balance.amount * exchangeRate)) {
       buyEnrollmentInput.value = userBalances.RUB / exchangeRate;
@@ -97,26 +97,8 @@ const addModalListeners = (sellerData, userBalances) => {
   };
 
   const closeModalWindow = () => {
-    resetPaymentListeners(buyPaymentInput, onPaymentInputEnterNewValue, buyEnrollmentInput, onEnrollmentInputEnterNewValue, buyExchangeAllButton, onExchangeAllButtonClick);
+    resetPaymentListeners(buyPaymentInput, onPaymentEnterValue, buyEnrollmentInput, onEnrollmentEnterValue, buyExchangeAllButton, onExchangeAllButtonClick);
     resetForm(modalBuy, buyCloseButton, buySelect, buyForm, buyErrorMessageText, onModalSelectChange, onModalSubmit);
-    // body.classList.remove(scrollLockClass);
-    // modalBuy.style.display = 'none';
-    // buyPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
-    // buyEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
-    // buyExchangeAllButton.removeEventListener('click', onExchangeAllButtonClick);
-    // document.removeEventListener('keydown', onKeydownCloseModalWindow);
-    // buyCloseButton.removeEventListener('click', onCloseModalButtonClick);
-    // modalBuy.removeEventListener('mousedown', onOutsideModalWindowClick);
-    // buySelect.removeEventListener('change', onModalSelectChange);
-    // buySelect.selectedIndex = initialModalSelectValue;
-    // buyEnrollmentInput.value = '';
-    // buyPaymentInput.value = '';
-    // pristine.destroy();
-    // hideValidationMessage(buyErrorMessage);
-    // hideValidationMessage(buySuccessMessage);
-    // buyForm.removeEventListener('submit', onModalSubmit);
-    // buyErrorMessageText.textContent = defaultErrorMessageText;
-
     contractorCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
   };
   onKeydownCloseModalWindow = (event) => {
