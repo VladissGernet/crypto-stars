@@ -4,7 +4,7 @@ import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
 import {addModalWindowOpener} from './modal-window-opener.js';
 import {initMap} from './map-init.js';
-import {getUserBalances} from './get-user-balances.js';
+import {getUserBalancesObject} from './get-user-balances-object.js';
 
 let receivedData = [];
 getContractors()
@@ -16,7 +16,7 @@ getContractors()
     toggleListMapContainer.addEventListener('click', onToggleListMapContainerClick);
     getUserData()
       .then((userData) => {
-        const userBalancesObject = getUserBalances(userData);
+        const userBalancesObject = getUserBalancesObject(userData);
         addModalWindowOpener(receivedData, userData, userBalancesObject);
       });
   //проверить весь код на наличие возможного рефакторинга и лишнего кода

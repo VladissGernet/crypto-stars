@@ -1,4 +1,4 @@
-const getUserBalances = (serverUserData) => {
+const getUserBalancesObject = (serverUserData) => {
   const userBalances = {};
   for (const balanceValue of serverUserData.balances) {
     userBalances[balanceValue.currency] = balanceValue.amount;
@@ -6,4 +6,4 @@ const getUserBalances = (serverUserData) => {
   return userBalances;
 };
 
-export {getUserBalances};
+export {getUserBalancesObject};
