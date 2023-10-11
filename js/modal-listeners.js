@@ -83,7 +83,6 @@ const addModalListeners = (sellerData, userBalances) => {
     modalBuy.removeEventListener('mousedown', onOutsideModalWindowClick);
     buySelect.removeEventListener('change', onModalSelectChange);
     buySelect.selectedIndex = initialModalSelectValue;
-    contractorCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
     buyEnrollmentInput.value = '';
     buyPaymentInput.value = '';
     pristine.destroy();
@@ -91,6 +90,8 @@ const addModalListeners = (sellerData, userBalances) => {
     hideValidationMessage(buySuccessMessage);
     buyForm.removeEventListener('submit', onModalSubmit);
     buyErrorMessageText.textContent = defaultErrorMessageText;
+
+    contractorCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
   };
   onKeydownCloseModalWindow = (event) => {
     if (isEscapeKey(event)) {

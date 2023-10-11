@@ -187,7 +187,6 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
           sellPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
           sellEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
           sellExchangeAllCrypto.removeEventListener('click', onModalSellExchangeAllButtonClick);
-          sellExchangeAllRub.removeEventListener('click', onModalSellExchangeAllButtonClick);
           document.removeEventListener('keydown', onKeydownCloseModalWindow);
           sellCloseButton.removeEventListener('click', onCloseModalButtonClick);
           modalSell.removeEventListener('mousedown', onOutsideModalWindowClick);
@@ -200,6 +199,8 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
           hideValidationMessage(sellSuccessMessage);
           sellForm.removeEventListener('submit', onModalSubmit);
           sellErrorMessage.textContent = defaultErrorMessageText;
+
+          sellExchangeAllRub.removeEventListener('click', onModalSellExchangeAllButtonClick);
         };
         onKeydownCloseModalWindow = (event) => {
           if (isEscapeKey(event)) {
