@@ -24,7 +24,8 @@ import {
   sellModalRate,
   sellModalCashlimit,
   modalSelect,
-  sellModalSelect
+  sellModalSelect,
+  contractorCryptoWallet
 } from './variables.js';
 import {changeButtonClassName, filterValues, modalZIndex, scrollLockClass, sellerIdClassName, valueToOpenSellModal} from './constants.js';
 import {addSpacesToNumber, onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
@@ -42,7 +43,6 @@ modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 modalEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 
 const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => {
-  userCryptoWalletField.placeholder = serverUserData.wallet.address;
   main.addEventListener('click', (evt) => {
     const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
     if (selectedElement !== null) {
@@ -66,6 +66,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         fillPaymentMethods(paymentMethods, modalSelect);
         addModalListeners(selectedData, userBalances);
         showModalWindow(modalBuy);
+        userCryptoWalletField.placeholder = serverUserData.wallet.address;
       }
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === valueToOpenSellModal) {
@@ -79,6 +80,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         clearModalSelectOptions(sellModalSelect);
         fillPaymentMethods(serverUserData.paymentMethods, sellModalSelect);
         showModalWindow(modalSell);
+        contractorCryptoWallet.placeholder = selectedData.wallet.address;
       }
     }
   });

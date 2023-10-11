@@ -47,6 +47,7 @@ const sellModalUsernameWrapper = modalSellForm.querySelector('.transaction-info_
 const sellModalRate = modalSellForm.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
 const sellModalCashlimit = modalSellForm.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
 const sellModalSelect = modalSellForm.querySelector('#modal--sell__select');
+const contractorCryptoWallet = modalSellForm.querySelector('#contractor-crypto-wallet');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -102,5 +103,6 @@ export {
   sellModalUsernameWrapper,
   sellModalRate,
   sellModalCashlimit,
-  sellModalSelect
+  sellModalSelect,
+  contractorCryptoWallet
 };
