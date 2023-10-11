@@ -43,13 +43,13 @@ import {
   sellPassword
 } from './variables.js';
 import {
-  changeButtonClassName, defaultErrorMessageText,
+  classNameOfChangeButton, defaultErrorMessageText,
   filterValues,
   initialModalSelectValue,
   modalZIndex, pristineDefaultConfig,
   scrollLockClass,
   sellerIdClassName,
-  valueToOpenSellModal
+  filterValueToOpenSellModal
 } from './constants.js';
 import {
   addSpacesToNumber,
@@ -77,7 +77,7 @@ sellEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 
 const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => {
   main.addEventListener('click', (evt) => {
-    const selectedElement = evt.target.closest(`.${changeButtonClassName}`);
+    const selectedElement = evt.target.closest(`.${classNameOfChangeButton}`);
     if (selectedElement !== null) {
       evt.preventDefault();
       const selectedElementId = evt.target.closest(`.${sellerIdClassName}`).id;
@@ -104,7 +104,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         addModalListeners(selectedData, userBalances);
       }
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
-      if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === valueToOpenSellModal) {
+      if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === filterValueToOpenSellModal) {
         hideValidationMessage(sellSuccessMessage);
         hideValidationMessage(sellErrorMessage);
         const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);

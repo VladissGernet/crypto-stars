@@ -1,5 +1,5 @@
 import {mapBaloonTemplate} from './variables.js';
-import {mapPopupTitleFixedWidth, changeButtonClassName, sellerIdClassName} from './constants.js';
+import {mapPopupTitleWidth, classNameOfChangeButton, sellerIdClassName} from './constants.js';
 import {addSpacesToNumber} from './util.js';
 
 const createPopup = (markerData) => {
@@ -14,10 +14,10 @@ const createPopup = (markerData) => {
   const popupButton = popupElement.querySelector('button');
   popupElement.classList.add(sellerIdClassName);
   popupElement.id = markerData.id;
-  popupButton.classList.add(changeButtonClassName);
+  popupButton.classList.add(classNameOfChangeButton);
   const badge = badgesList.querySelector('.badge');
   const {amount, currency} = markerData.balance;
-  titleWrapper.style.width = mapPopupTitleFixedWidth;
+  titleWrapper.style.width = mapPopupTitleWidth;
   title.textContent = markerData.userName;
   currencyValue.textContent = currency;
   rate.textContent = `${addSpacesToNumber(markerData.exchangeRate)} ₽`;

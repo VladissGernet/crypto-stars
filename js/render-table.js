@@ -5,7 +5,7 @@ import {
   usersList,
   userTableRowTemplate
 } from './variables.js';
-import {initialFilterValue, changeButtonClassName, sellerIdClassName} from './constants.js';
+import {initialFilterValue, classNameOfChangeButton, sellerIdClassName} from './constants.js';
 import {addSpacesToNumber, transformCurrencyAmount} from './util.js';
 
 const renderTable = (data, filterValue = initialFilterValue) => {
@@ -56,7 +56,7 @@ const renderTable = (data, filterValue = initialFilterValue) => {
           badgesList.appendChild(newItem);
         });
       }
-      tableButton.classList.add(changeButtonClassName);
+      tableButton.classList.add(classNameOfChangeButton);
       userTableRowFragment.appendChild(userTableRow);
     });
     tableBody.appendChild(userTableRowFragment);

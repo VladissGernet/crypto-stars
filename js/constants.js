@@ -50,8 +50,8 @@ const verifiedPinIcon = L.icon({
   iconSize: [iconConfig.verified.width, iconConfig.verified.height],
   iconAnchor: [iconConfig.verified.anchorX, iconConfig.verified.anchorY],
 });
-const mapPopupTitleFixedWidth = '100%';
-const changeButtonClassName = 'btn--change';
+const mapPopupTitleWidth = '100%';
+const classNameOfChangeButton = 'btn--change';
 const scrollLockClass = 'scroll-lock';
 const modalZIndex = '1000'; //Для перекрытия карты модальным окном.
 const initialModalSelectValue = 0;
@@ -69,7 +69,7 @@ const SubmitButtonText = {
 };
 const defaultErrorMessageText = 'Ошибка заполнения формы';
 const sellerIdClassName = 'contractor-id';
-const valueToOpenSellModal = 'Cписок';
+const filterValueToOpenSellModal = 'Cписок';
 
 export {
   BASE_URL,
@@ -84,8 +84,8 @@ export {
   startCoordinates,
   pinIcon,
   verifiedPinIcon,
-  mapPopupTitleFixedWidth,
-  changeButtonClassName,
+  mapPopupTitleWidth,
+  classNameOfChangeButton,
   scrollLockClass,
   modalZIndex,
   initialModalSelectValue,
@@ -93,5 +93,5 @@ export {
   SubmitButtonText,
   defaultErrorMessageText,
   sellerIdClassName,
-  valueToOpenSellModal
+  filterValueToOpenSellModal
 };
