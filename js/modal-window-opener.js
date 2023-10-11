@@ -30,7 +30,7 @@ import {
   modalSellEnrollmentInput
 } from './variables.js';
 import {changeButtonClassName, filterValues, modalZIndex, scrollLockClass, sellerIdClassName, valueToOpenSellModal} from './constants.js';
-import {addSpacesToNumber, onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
+import {addSpacesToNumber, debounce, onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
 import {
   getSelectedDataId,
   clearModalSelectOptions,
@@ -83,7 +83,23 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         fillPaymentMethods(serverUserData.paymentMethods, sellModalSelect);
         showModalWindow(modalSell);
         contractorCryptoWallet.placeholder = selectedData.wallet.address;
-        console.log(modalSellPaymentInput)
+        // modalSellPaymentInput
+        // modalSellEnrollmentInput
+        const onPaymentInputEnterNewValue = () => {
+          const debouncedEnter = debounce(() => {
+            modalSellEnrollmentInput.value = modalSellPaymentInput.value / exchangeRate;
+          });
+          debouncedEnter();
+        };
+        modalSellPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
+        const onEnrollmentInputEnterNewValue = () => {
+          const debouncedEnter = debounce(() => {
+            modalSellPaymentInput.value = modalSellEnrollmentInput.value * exchangeRate;
+            modalSellPaymentInput.value = Number(modalSellPaymentInput.value).toFixed(2);
+          });
+          debouncedEnter();
+        };
+        modalSellEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
       }
     }
   });
