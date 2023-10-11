@@ -32,29 +32,6 @@ const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
 const addModalListeners = (sellerData, userBalances) => {
   const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;
   const pristine = initPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
-  const onModalSubmit = (evt) => {
-    evt.preventDefault();
-    const isValid = pristine.validate();
-    if (isValid) {
-      blockSubmitButton();
-      hideValidationMessage(validationErrorMessage);
-      sendData(new FormData(evt.target))
-        .then(
-          () => {
-            showValidationMessage(validationSuccessMessage);
-          }
-        )
-        .catch(
-          (err) => {
-            console.log(err.message);
-          }
-        )
-        .finally(unblockSubmitButton);
-    } else {
-      showValidationMessage(validationErrorMessage);
-    }
-  };
-  modalBuyForm.addEventListener('submit', onModalSubmit);
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
       modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);
@@ -95,6 +72,7 @@ const addModalListeners = (sellerData, userBalances) => {
   let onCloseModalButtonClick = {};
   let onKeydownCloseModalWindow = {};
   let onOutsideModalWindowClick = {};
+  let onModalSubmit = {};
   const closeModalWindow = () => {
     body.classList.remove(scrollLockClass);
     modalBuy.style.display = 'none';
@@ -128,6 +106,33 @@ const addModalListeners = (sellerData, userBalances) => {
       closeModalWindow();
     }
   };
+  onModalSubmit = (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      hideValidationMessage(validationErrorMessage);
+      sendData(new FormData(evt.target))
+        .then(
+          () => {
+            showValidationMessage(validationSuccessMessage);
+          }
+        )
+        .catch(
+          (err) => {
+            console.log(err.message);
+          }
+        )
+        .finally(() => {
+          console.log('final');
+          unblockSubmitButton();
+          // closeModalWindow();
+        });
+    } else {
+      showValidationMessage(validationErrorMessage);
+    }
+  };
+  modalBuyForm.addEventListener('submit', onModalSubmit);
   modalBuy.addEventListener('click', onOutsideModalWindowClick);
   document.addEventListener('keydown', onKeydownCloseModalWindow);
   modalCloseButton.addEventListener('click', onCloseModalButtonClick);
