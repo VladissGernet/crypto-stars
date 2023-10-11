@@ -37,29 +37,29 @@ const buySendingExchangeRate = buyForm.querySelector('[name="exchangeRate"]');
 const buySendingCurrency = buyForm.querySelector('[name="sendingCurrency"]');
 const buyReceivingCurrency = buyForm.querySelector('[name="receivingCurrency"]');
 
-const modalSell = document.querySelector('.modal--sell');
-const modalSellContentContainer = modalSell.querySelector('.modal__content');
-const modalSellForm = modalSell.querySelector('.modal-sell');
-const sellSendingContractorId = modalSellForm.querySelector('[name="contractorId"]');
-const sellSendingExchangeRate = modalSellForm.querySelector('[name="exchangeRate"]');
-const sellSendingCurrency = modalSellForm.querySelector('[name="sendingCurrency"]');
-const sellSeceivingCurrency = modalSellForm.querySelector('[name="receivingCurrency"]');
-const sellModalUsernameWrapper = modalSellForm.querySelector('.transaction-info__data');
-const sellModalRate = modalSellForm.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
-const sellModalCashlimit = modalSellForm.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
-const sellModalSelect = modalSellForm.querySelector('#modal--sell__select');
-const contractorCryptoWallet = modalSellForm.querySelector('#contractor-crypto-wallet');
-const modalSellPaymentInput = modalSellForm.querySelector('#sell-payment');
-const modalSellEnrollmentInput = modalSellForm.querySelector('#sell-enrollment');
-const exchangeAllCrypto = modalSellForm.querySelector('#exchange-all-crypto');
-const exchangeAllRub = modalSellForm.querySelector('#exchange-all-rub');
-const userCardNumber = modalSellForm.querySelector('#user-card-number');
-const modalSellCloseButton = modalSell.querySelector('.modal__close-btn');
-const modalSellErrorMessage = modalSellForm.querySelector('.modal__validation-message--error');
-const modalSellSuccessMessage = modalSellForm.querySelector('.modal__validation-message--success');
-const modalSellSubmitButton = modalSellForm.querySelector('.modal__submit');
-const modalSellErrorMessageText = buyErrorMessage.querySelector('.modal__validation-message--error-text');
-const modalSellPassword = modalSellForm.querySelector('#sell-password');
+const modalSell = body.querySelector('.modal--sell');
+const sellContentContainer = modalSell.querySelector('.modal__content');
+const sellForm = modalSell.querySelector('.modal-sell');
+const sellSendingContractorId = sellForm.querySelector('[name="contractorId"]');
+const sellSendingExchangeRate = sellForm.querySelector('[name="exchangeRate"]');
+const sellSendingCurrency = sellForm.querySelector('[name="sendingCurrency"]');
+const sellReceivingCurrency = sellForm.querySelector('[name="receivingCurrency"]');
+const sellUsernameWrapper = sellForm.querySelector('.transaction-info__data');
+const selllRate = sellForm.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
+const sellCashlimit = sellForm.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
+const sellSelect = sellForm.querySelector('#modal--sell__select');
+const contractorCryptoWallet = sellForm.querySelector('#contractor-crypto-wallet');
+const sellPaymentInput = sellForm.querySelector('#sell-payment');
+const sellEnrollmentInput = sellForm.querySelector('#sell-enrollment');
+const sellExchangeAllCrypto = sellForm.querySelector('#exchange-all-crypto');
+const sellExchangeAllRub = sellForm.querySelector('#exchange-all-rub');
+const userCardNumber = sellForm.querySelector('#user-card-number');
+const sellCloseButton = modalSell.querySelector('.modal__close-btn');
+const sellErrorMessage = sellForm.querySelector('.modal__validation-message--error');
+const sellSuccessMessage = sellForm.querySelector('.modal__validation-message--success');
+const sellSubmitButton = sellForm.querySelector('.modal__submit');
+const sellErrorMessageText = buyErrorMessage.querySelector('.modal__validation-message--error-text');
+const sellPassword = sellForm.querySelector('#sell-password');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -107,26 +107,26 @@ export {
   buyReceivingCurrency,
   buyErrorMessageText,
   modalSell,
-  modalSellForm,
+  sellForm,
   sellSendingContractorId,
   sellSendingExchangeRate,
   sellSendingCurrency,
-  sellSeceivingCurrency,
-  sellModalUsernameWrapper,
-  sellModalRate,
-  sellModalCashlimit,
-  sellModalSelect,
+  sellReceivingCurrency,
+  sellUsernameWrapper,
+  selllRate,
+  sellCashlimit,
+  sellSelect,
   contractorCryptoWallet,
-  modalSellPaymentInput,
-  modalSellEnrollmentInput,
-  exchangeAllCrypto,
-  exchangeAllRub,
+  sellPaymentInput,
+  sellEnrollmentInput,
+  sellExchangeAllCrypto,
+  sellExchangeAllRub,
   userCardNumber,
-  modalSellCloseButton,
-  modalSellErrorMessage,
-  modalSellSuccessMessage,
-  modalSellContentContainer,
-  modalSellSubmitButton,
-  modalSellErrorMessageText,
-  modalSellPassword
+  sellCloseButton,
+  sellErrorMessage,
+  sellSuccessMessage,
+  sellContentContainer,
+  sellSubmitButton,
+  sellErrorMessageText,
+  sellPassword
 };

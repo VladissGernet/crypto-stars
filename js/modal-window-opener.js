@@ -19,28 +19,28 @@ import {
   sellSendingContractorId,
   sellSendingExchangeRate,
   sellSendingCurrency,
-  sellSeceivingCurrency,
-  sellModalUsernameWrapper,
-  sellModalRate,
-  sellModalCashlimit,
+  sellReceivingCurrency,
+  sellUsernameWrapper,
+  selllRate,
+  sellCashlimit,
   buySelect,
-  sellModalSelect,
+  sellSelect,
   contractorCryptoWallet,
-  modalSellPaymentInput,
-  modalSellEnrollmentInput,
-  exchangeAllCrypto,
-  exchangeAllRub,
+  sellPaymentInput,
+  sellEnrollmentInput,
+  sellExchangeAllCrypto,
+  sellExchangeAllRub,
   userCardNumber,
-  modalSellCloseButton,
-  modalSellErrorMessage,
-  modalSellSuccessMessage,
-  modalSellContentContainer,
-  modalSellForm,
-  modalSellSubmitButton,
-  modalSellErrorMessageText,
+  sellCloseButton,
+  sellErrorMessage,
+  sellSuccessMessage,
+  sellContentContainer,
+  sellForm,
+  sellSubmitButton,
+  sellErrorMessageText,
   buySuccessMessage,
   buyErrorMessage,
-  modalSellPassword
+  sellPassword
 } from './variables.js';
 import {
   changeButtonClassName, defaultErrorMessageText,
@@ -72,8 +72,8 @@ import {sendData} from './load-data.js';
 modalBuy.style.zIndex = modalZIndex;
 buyPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 buyEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
-modalSellPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
-modalSellEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+sellPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+sellEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 
 const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => {
   main.addEventListener('click', (evt) => {
@@ -105,62 +105,62 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       }
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === valueToOpenSellModal) {
-        hideValidationMessage(modalSellSuccessMessage);
-        hideValidationMessage(modalSellErrorMessage);
+        hideValidationMessage(sellSuccessMessage);
+        hideValidationMessage(sellErrorMessage);
         const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
         const newMaxAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
-        modalSellPaymentInput.required = true;
-        modalSellPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
-        modalSellPaymentInput.min = minAmount / exchangeRate;
-        modalSellPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
-        modalSellPaymentInput.max = balance.amount / exchangeRate;
-        modalSellPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
-        modalSellPassword.required = true;
-        modalSellPassword.dataset.pristineRequiredMessage = 'Введите пароль.';
-        const pristine = new Pristine(modalSellForm, pristineDefaultConfig, false);
-        const checkSelect = () => sellModalSelect.selectedIndex;
-        pristine.addValidator(sellModalSelect, checkSelect, 'Выберите платёжную систему.');
-        const checkUserRubWallet = () => ((userBalances.KEKS * exchangeRate) >= modalSellEnrollmentInput.value);
-        pristine.addValidator(modalSellPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
+        sellPaymentInput.required = true;
+        sellPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
+        sellPaymentInput.min = minAmount / exchangeRate;
+        sellPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
+        sellPaymentInput.max = balance.amount / exchangeRate;
+        sellPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
+        sellPassword.required = true;
+        sellPassword.dataset.pristineRequiredMessage = 'Введите пароль.';
+        const pristine = new Pristine(sellForm, pristineDefaultConfig, false);
+        const checkSelect = () => sellSelect.selectedIndex;
+        pristine.addValidator(sellSelect, checkSelect, 'Выберите платёжную систему.');
+        const checkUserRubWallet = () => ((userBalances.KEKS * exchangeRate) >= sellEnrollmentInput.value);
+        pristine.addValidator(sellPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
         sellSendingContractorId.value = id;
         sellSendingExchangeRate.value = exchangeRate;
         sellSendingCurrency.value = 'KEKS';
-        sellSeceivingCurrency.value = 'RUB';
-        fillUsernameWrapper(sellModalUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
-        sellModalRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
-        sellModalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
-        clearModalSelectOptions(sellModalSelect);
-        fillPaymentMethods(serverUserData.paymentMethods, sellModalSelect);
+        sellReceivingCurrency.value = 'RUB';
+        fillUsernameWrapper(sellUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
+        selllRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
+        sellCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
+        clearModalSelectOptions(sellSelect);
+        fillPaymentMethods(serverUserData.paymentMethods, sellSelect);
         showModalWindow(modalSell);
         contractorCryptoWallet.placeholder = selectedData.wallet.address;
         const onPaymentInputEnterNewValue = () => {
           const debouncedEnter = debounce(() => {
-            modalSellEnrollmentInput.value = modalSellPaymentInput.value * exchangeRate;
+            sellEnrollmentInput.value = sellPaymentInput.value * exchangeRate;
           });
           debouncedEnter();
         };
-        modalSellPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
+        sellPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
         const onEnrollmentInputEnterNewValue = () => {
           const debouncedEnter = debounce(() => {
-            modalSellPaymentInput.value = modalSellEnrollmentInput.value / exchangeRate;
+            sellPaymentInput.value = sellEnrollmentInput.value / exchangeRate;
           });
           debouncedEnter();
         };
-        modalSellEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
+        sellEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
         const onModalSellExchangeAllButtonClick = () => {
           if ((userBalances.KEKS * exchangeRate) <= balance.amount) {
-            modalSellPaymentInput.value = userBalances.KEKS;
-            modalSellEnrollmentInput.value = userBalances.KEKS * exchangeRate;
+            sellPaymentInput.value = userBalances.KEKS;
+            sellEnrollmentInput.value = userBalances.KEKS * exchangeRate;
           }
           if ((userBalances.KEKS * exchangeRate) > balance.amount) {
-            modalSellEnrollmentInput.value = balance.amount;
-            modalSellPaymentInput.value = balance.amount / exchangeRate;
+            sellEnrollmentInput.value = balance.amount;
+            sellPaymentInput.value = balance.amount / exchangeRate;
           }
         };
-        exchangeAllCrypto.addEventListener('click', onModalSellExchangeAllButtonClick);
-        exchangeAllRub.addEventListener('click', onModalSellExchangeAllButtonClick);
+        sellExchangeAllCrypto.addEventListener('click', onModalSellExchangeAllButtonClick);
+        sellExchangeAllRub.addEventListener('click', onModalSellExchangeAllButtonClick);
         const onModalSelectChange = () => {
-          const selectValue = sellModalSelect.value;
+          const selectValue = sellSelect.value;
           switch (selectValue) {
             case 'Cash in person':
               userCardNumber.placeholder = '';
@@ -176,7 +176,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
               break;
           }
         };
-        sellModalSelect.addEventListener('change', onModalSelectChange);
+        sellSelect.addEventListener('change', onModalSelectChange);
         let onCloseModalButtonClick = {};
         let onKeydownCloseModalWindow = {};
         let onOutsideModalWindowClick = {};
@@ -184,22 +184,22 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         const closeModalWindow = () => {
           body.classList.remove(scrollLockClass);
           modalSell.style.display = 'none';
-          modalSellPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
-          modalSellEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
-          exchangeAllCrypto.removeEventListener('click', onModalSellExchangeAllButtonClick);
-          exchangeAllRub.removeEventListener('click', onModalSellExchangeAllButtonClick);
+          sellPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
+          sellEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
+          sellExchangeAllCrypto.removeEventListener('click', onModalSellExchangeAllButtonClick);
+          sellExchangeAllRub.removeEventListener('click', onModalSellExchangeAllButtonClick);
           document.removeEventListener('keydown', onKeydownCloseModalWindow);
-          modalSellCloseButton.removeEventListener('click', onCloseModalButtonClick);
+          sellCloseButton.removeEventListener('click', onCloseModalButtonClick);
           modalSell.removeEventListener('mousedown', onOutsideModalWindowClick);
-          sellModalSelect.removeEventListener('change', onModalSelectChange);
-          sellModalSelect.selectedIndex = initialModalSelectValue;
-          modalSellPaymentInput.value = '';
-          modalSellEnrollmentInput.value = '';
+          sellSelect.removeEventListener('change', onModalSelectChange);
+          sellSelect.selectedIndex = initialModalSelectValue;
+          sellPaymentInput.value = '';
+          sellEnrollmentInput.value = '';
           pristine.destroy();
-          hideValidationMessage(modalSellErrorMessage);
-          hideValidationMessage(modalSellSuccessMessage);
-          modalSellForm.removeEventListener('submit', onModalSubmit);
-          modalSellErrorMessage.textContent = defaultErrorMessageText;
+          hideValidationMessage(sellErrorMessage);
+          hideValidationMessage(sellSuccessMessage);
+          sellForm.removeEventListener('submit', onModalSubmit);
+          sellErrorMessage.textContent = defaultErrorMessageText;
         };
         onKeydownCloseModalWindow = (event) => {
           if (isEscapeKey(event)) {
@@ -210,7 +210,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
           closeModalWindow();
         };
         onOutsideModalWindowClick = (event) => {
-          const outsideErrorContainerClick = event.composedPath().includes(modalSellContentContainer) === false;
+          const outsideErrorContainerClick = event.composedPath().includes(sellContentContainer) === false;
           if (outsideErrorContainerClick) {
             closeModalWindow();
           }
@@ -219,33 +219,33 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
           event.preventDefault();
           const isValid = pristine.validate();
           if (isValid) {
-            blockSubmitButton(modalSellSubmitButton);
-            hideValidationMessage(modalSellErrorMessage);
+            blockSubmitButton(sellSubmitButton);
+            hideValidationMessage(sellErrorMessage);
             sendData(new FormData(event.target))
               .then(
                 () => {
-                  showValidationMessage(modalSellSuccessMessage);
-                  unblockSubmitButton(modalSellSubmitButton);
+                  showValidationMessage(sellSuccessMessage);
+                  unblockSubmitButton(sellSubmitButton);
                   closeModalWindow();
                 }
               )
               .catch(
                 (err) => {
-                  showValidationMessage(modalSellErrorMessage);
-                  modalSellErrorMessageText.textContent = err.message;
-                  unblockSubmitButton(modalSellSubmitButton);
+                  showValidationMessage(sellErrorMessage);
+                  sellErrorMessageText.textContent = err.message;
+                  unblockSubmitButton(sellSubmitButton);
                 }
               )
               .finally(() => {
               });
           } else {
-            showValidationMessage(modalSellErrorMessage);
+            showValidationMessage(sellErrorMessage);
           }
         };
-        modalSellForm.addEventListener('submit', onModalSubmit);
+        sellForm.addEventListener('submit', onModalSubmit);
         modalSell.addEventListener('mousedown', onOutsideModalWindowClick);
         document.addEventListener('keydown', onKeydownCloseModalWindow);
-        modalSellCloseButton.addEventListener('click', onCloseModalButtonClick);
+        sellCloseButton.addEventListener('click', onCloseModalButtonClick);
       }
     }
   });
