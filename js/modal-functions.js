@@ -1,4 +1,4 @@
-import {modalBuy, modalSelect} from './variables.js';
+import {SubmitButtonText} from './constants.js';
 
 const getSelectedDataId = (data, elementId) => {
   for (let i = 0; i < data.length; i++) {
@@ -37,11 +37,21 @@ const fillPaymentMethods = (methodsArray, select) => {
 const showModalWindow = (modal) => {
   modal.style.display = 'block';
 };
+const blockSubmitButton = (submitButton) => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+const unblockSubmitButton = (submitButton) => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
 export {
   getSelectedDataId,
   clearModalSelectOptions,
   fillUsernameWrapper,
   fillPaymentMethods,
-  showModalWindow
+  showModalWindow,
+  blockSubmitButton,
+  unblockSubmitButton
 };

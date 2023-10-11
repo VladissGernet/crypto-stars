@@ -14,20 +14,21 @@ import {
   modalSubmitButton,
   validationErrorMessageText
 } from './variables.js';
-import {scrollLockClass, initialModalSelectValue, SubmitButtonText, defaultErrorMessageText} from './constants.js';
+import {scrollLockClass, initialModalSelectValue, defaultErrorMessageText} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
 import {initPristine} from './init-pristine.js';
 import {hideValidationMessage, showValidationMessage} from './validation-message.js';
 import {sendData} from './load-data.js';
+import {blockSubmitButton, unblockSubmitButton} from './modal-functions.js';
 
-const blockSubmitButton = () => {
-  modalSubmitButton.disabled = true;
-  modalSubmitButton.textContent = SubmitButtonText.SENDING;
-};
-const unblockSubmitButton = () => {
-  modalSubmitButton.disabled = false;
-  modalSubmitButton.textContent = SubmitButtonText.IDLE;
-};
+// const blockSubmitButton = () => {
+//   modalSubmitButton.disabled = true;
+//   modalSubmitButton.textContent = SubmitButtonText.SENDING;
+// };
+// const unblockSubmitButton = () => {
+//   modalSubmitButton.disabled = false;
+//   modalSubmitButton.textContent = SubmitButtonText.IDLE;
+// };
 
 const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
 const addModalListeners = (sellerData, userBalances) => {
@@ -113,13 +114,13 @@ const addModalListeners = (sellerData, userBalances) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      blockSubmitButton();
+      blockSubmitButton(modalSubmitButton);
       hideValidationMessage(validationErrorMessage);
       sendData(new FormData(evt.target))
         .then(
           () => {
             showValidationMessage(validationSuccessMessage);
-            unblockSubmitButton();
+            unblockSubmitButton(modalSubmitButton);
             closeModalWindow();
           }
         )
@@ -127,7 +128,7 @@ const addModalListeners = (sellerData, userBalances) => {
           (err) => {
             showValidationMessage(validationErrorMessage);
             validationErrorMessageText.textContent = err.message;
-            unblockSubmitButton();
+            unblockSubmitButton(modalSubmitButton);
           }
         )
         .finally(() => {
