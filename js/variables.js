@@ -31,6 +31,13 @@ const passwordField = modalBuyForm.querySelector('#password');
 const validationErrorMessage = modalBuyForm.querySelector('.modal__validation-message--error');
 const validationSuccessMessage = modalBuyForm.querySelector('.modal__validation-message--success');
 const modalSubmitButton = modalBuyForm.querySelector('.modal__submit');
+const sendingType = modalBuyForm.querySelector('[name="type"]');
+const sendingContractorId = modalBuyForm.querySelector('[name="contractorId"]');
+const sendingExchangeRate = modalBuyForm.querySelector('[name="exchangeRate"]');
+const sendingCurrency = modalBuyForm.querySelector('[name="sendingCurrency"]');
+const receivingCurrency = modalBuyForm.querySelector('[name="receivingCurrency"]');
+const sendingAmount = modalBuyForm.querySelector('[name="sendingAmount"]');
+const receivingAmount = modalBuyForm.querySelector('[name="receivingAmount"]');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -71,5 +78,12 @@ export {
   passwordField,
   validationErrorMessage,
   validationSuccessMessage,
-  modalSubmitButton
+  modalSubmitButton,
+  sendingType,
+  sendingContractorId,
+  sendingExchangeRate,
+  sendingCurrency,
+  receivingCurrency,
+  sendingAmount,
+  receivingAmount
 };

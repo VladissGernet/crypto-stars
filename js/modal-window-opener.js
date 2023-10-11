@@ -8,7 +8,12 @@ import {
   modalRate,
   modalUsernameWrapper,
   modalVerifiedIconCopy,
-  userCryptoWalletField
+  userCryptoWalletField,
+  // sendingType,
+  sendingContractorId,
+  sendingExchangeRate,
+  sendingCurrency,
+  receivingCurrency
 } from './variables.js';
 import {changeButtonClassName, modalZIndex, scrollLockClass} from './constants.js';
 import {transformCurrencyAmount, trimNumber} from './render-table.js';
@@ -33,7 +38,11 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       evt.preventDefault();
       const selectedElementId = evt.target.closest('.users-list__table-row').id;
       const selectedData = getSelectedDataId(contractorsData, selectedElementId);
-      const {userName, isVerified, exchangeRate, minAmount, status, balance, paymentMethods} = selectedData;
+      const {id, userName, isVerified, exchangeRate, minAmount, status, balance, paymentMethods} = selectedData;
+      sendingContractorId.value = id;
+      sendingExchangeRate.value = exchangeRate;
+      sendingCurrency.value = 'RUB';
+      receivingCurrency.value = 'KEKS';
       const minCurrencyAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
       const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
       body.classList.add(scrollLockClass);

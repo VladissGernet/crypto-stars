@@ -332,7 +332,7 @@
                                     <button class="btn btn--textblue custom-input__btn exchange-all-button"
                                             type="button">обменять все
                                     </button>
-                                    <input id="payment" type="number" value="" placeholder="0">
+                                    <input id="payment" type="number" name="sendingAmount" value="" placeholder="0">
                                 </label>
                             </div>
                         </div>
@@ -343,7 +343,7 @@
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Зачисление</span><span
                                         class="custom-input__unit">KEKS</span>
-                                    <input id="enrollment" type="number" placeholder="0">
+                                    <input id="enrollment" type="number" name="receivingAmount" placeholder="0">
                                 </label>
                             </div>
                         </div>
@@ -356,7 +356,7 @@
                                     которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                                     остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                                 -->
-                                <select id="modal--buy__select">
+                                <select id="modal--buy__select" name="paymentMethod">
                                     <option selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
                                     <option>Первый криптобанк</option>
@@ -385,7 +385,8 @@
                         <div class="modal__input-wrapper modal__input-wrapper--decorated modal__pristine">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Платёжный пароль</span>
-                                    <input id="password" type="password" value="123456" placeholder="Введите пароль">
+<!--                                    <input id="password" type="password" name="paymentPassword" value="123456" placeholder="Введите пароль">-->
+                                    <input id="password" type="password" name="paymentPassword" value="180712" placeholder="Введите пароль">
                                 </label>
                             </div>
                         </div>

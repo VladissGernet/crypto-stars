@@ -41,7 +41,7 @@ const addModalListeners = (sellerData, userBalances) => {
   modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
   const onEnrollmentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
-      modalPaymentInput.value = Math.floor(modalEnrollmentInput.value * exchangeRate);
+      modalPaymentInput.value = (modalEnrollmentInput.value * exchangeRate).toFixed(2);
     });
     debouncedEnter();
   };
