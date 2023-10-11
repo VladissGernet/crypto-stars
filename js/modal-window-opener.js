@@ -9,13 +9,14 @@ import {
   modalUsernameWrapper,
   modalVerifiedIconCopy,
   userCryptoWalletField,
-  // sendingType,
   sendingContractorId,
   sendingExchangeRate,
   sendingCurrency,
-  receivingCurrency
+  receivingCurrency,
+  buySellContainer,
+  modalSell
 } from './variables.js';
-import {changeButtonClassName, modalZIndex, scrollLockClass, sellerIdClassName} from './constants.js';
+import {changeButtonClassName, filterValues, modalZIndex, scrollLockClass, sellerIdClassName} from './constants.js';
 import {onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
 import {
   getSelectedDataId,
@@ -38,20 +39,26 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       const selectedElementId = evt.target.closest(`.${sellerIdClassName}`).id;
       const selectedData = getSelectedDataId(contractorsData, selectedElementId);
       const {id, userName, isVerified, exchangeRate, minAmount, status, balance, paymentMethods} = selectedData;
-      sendingContractorId.value = id;
-      sendingExchangeRate.value = exchangeRate;
-      sendingCurrency.value = 'RUB';
-      receivingCurrency.value = 'KEKS';
-      const minCurrencyAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
-      const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
-      body.classList.add(scrollLockClass);
-      fillUsernameWrapper(modalUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
-      modalRate.textContent = `${exchangeRate} ₽`;
-      modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
-      clearModalSelectOptions();
-      fillPaymentMethods(paymentMethods);
-      addModalListeners(selectedData, userBalances);
-      modalBuy.style.display = 'block';
+      const activeButton = buySellContainer.querySelector('.is-active');
+      if (filterValues[activeButton.textContent] === 'seller') {
+        sendingContractorId.value = id;
+        sendingExchangeRate.value = exchangeRate;
+        sendingCurrency.value = 'RUB';
+        receivingCurrency.value = 'KEKS';
+        const minCurrencyAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
+        const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
+        body.classList.add(scrollLockClass);
+        fillUsernameWrapper(modalUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
+        modalRate.textContent = `${exchangeRate} ₽`;
+        modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
+        clearModalSelectOptions();
+        fillPaymentMethods(paymentMethods);
+        addModalListeners(selectedData, userBalances);
+        modalBuy.style.display = 'block';
+      }
+      if (filterValues[activeButton.textContent] === 'buyer') {
+        modalSell.style.display = 'block';
+      }
     }
   });
 };

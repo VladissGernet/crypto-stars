@@ -40,6 +40,9 @@ const receivingCurrency = modalBuyForm.querySelector('[name="receivingCurrency"]
 const sendingAmount = modalBuyForm.querySelector('[name="sendingAmount"]');
 const receivingAmount = modalBuyForm.querySelector('[name="receivingAmount"]');
 
+const modalSell = document.querySelector('.modal--sell');
+const modalSellForm = modalSell.querySelector('.modal-sell');
+
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
   .content
@@ -87,5 +90,7 @@ export {
   receivingCurrency,
   sendingAmount,
   receivingAmount,
-  validationErrorMessageText
+  validationErrorMessageText,
+  modalSell,
+  modalSellForm
 };
