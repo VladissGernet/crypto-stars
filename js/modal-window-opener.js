@@ -109,7 +109,6 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         hideValidationMessage(modalSellErrorMessage);
         const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
         const newMaxAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
-        console.log(balance.amount)
         modalSellPaymentInput.required = true;
         modalSellPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
         modalSellEnrollmentInput.min = minAmount;
@@ -121,7 +120,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         const pristine = new Pristine(modalSellForm, pristineDefaultConfig, false);
         const checkSelect = () => sellModalSelect.selectedIndex;
         pristine.addValidator(sellModalSelect, checkSelect, 'Выберите платёжную систему.');
-        const checkUserRubWallet = () => (userBalances.RUB >= minAmount) && (modalSellEnrollmentInput.value <= userBalances.RUB);
+        const checkUserRubWallet = () => (userBalances.KEKS >= minAmount) && (modalSellEnrollmentInput.value <= userBalances.KEKS);
         pristine.addValidator(modalSellEnrollmentInput, checkUserRubWallet, 'У вас недостаточно средств.');
         sellSendingContractorId.value = id;
         sellSendingExchangeRate.value = exchangeRate;
@@ -149,11 +148,11 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         };
         modalSellEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
         const onModalSellExchangeAllButtonClick = () => {
-          if (userBalances.RUB <= (balance.amount)) {
-            modalSellEnrollmentInput.value = userBalances.RUB;
-            modalSellPaymentInput.value = userBalances.RUB / exchangeRate;
+          if ((userBalances.KEKS * exchangeRate) <= balance.amount) {
+            modalSellPaymentInput.value = userBalances.KEKS;
+            modalSellEnrollmentInput.value = userBalances.KEKS * exchangeRate;
           }
-          if (userBalances.RUB > (balance.amount)) {
+          if ((userBalances.KEKS * exchangeRate) > balance.amount) {
             modalSellEnrollmentInput.value = balance.amount;
             modalSellPaymentInput.value = balance.amount / exchangeRate;
           }

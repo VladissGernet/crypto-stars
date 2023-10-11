@@ -25,7 +25,7 @@ getContractors()
             },
             {
               "currency": "KEKS",
-              "amount": 94.28
+              "amount": 351
             }
           ],
           "wallet": {
