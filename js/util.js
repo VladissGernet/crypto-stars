@@ -27,4 +27,4 @@ const transformCurrencyAmount = (currencyValue, rate, filter) => {
   return addSpacesToNumber(currencyValue);
 };
 
-export {debounce, onNumberInputKeydownCheckKey, isEscapeKey, transformCurrencyAmount};
+export {debounce, onNumberInputKeydownCheckKey, isEscapeKey, transformCurrencyAmount, addSpacesToNumber};
