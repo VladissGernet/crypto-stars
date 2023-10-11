@@ -11,6 +11,5 @@ const onNumberInputKeydownCheckKey = (evt) => {
   }
 };
 const isEscapeKey = (evt) => evt.key === 'Escape';
-const addPointToNumber = (number) => Math.floor(number * 100) / 100;
 
-export {debounce, onNumberInputKeydownCheckKey, isEscapeKey, addPointToNumber};
+export {debounce, onNumberInputKeydownCheckKey, isEscapeKey};

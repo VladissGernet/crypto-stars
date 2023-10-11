@@ -1,6 +1,5 @@
 import {mapBaloonTemplate} from './variables.js';
 import {mapPopupTitleFixedWidth, changeButtonClassName} from './constants.js';
-import {trimNumber} from './render-table.js';
 
 const createPopup = (markerData) => {
   const popupElement = mapBaloonTemplate.cloneNode(true);
@@ -18,9 +17,9 @@ const createPopup = (markerData) => {
   titleWrapper.style.width = mapPopupTitleFixedWidth;
   title.textContent = markerData.userName;
   currencyValue.textContent = currency;
-  rate.textContent = `${trimNumber(markerData.exchangeRate)} ₽`;
-  const getMinAmount = () => trimNumber(markerData.minAmount * markerData.exchangeRate);
-  const getMaxAmount = () => trimNumber(amount * markerData.exchangeRate);
+  rate.textContent = `${markerData.exchangeRate} ₽`;
+  const getMinAmount = () => markerData.minAmount * markerData.exchangeRate;
+  const getMaxAmount = () => amount * markerData.exchangeRate;
   limit.textContent = `${getMinAmount()} ₽ – ${getMaxAmount()} ₽`;
   const isSellerNotVerified = markerData.isVerified === false;
   if (isSellerNotVerified) {

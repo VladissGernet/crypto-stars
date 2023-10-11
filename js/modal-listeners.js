@@ -15,7 +15,7 @@ import {
   validationErrorMessageText
 } from './variables.js';
 import {scrollLockClass, initialModalSelectValue, SubmitButtonText, defaultErrorMessageText} from './constants.js';
-import {debounce, isEscapeKey, addPointToNumber} from './util.js';
+import {debounce, isEscapeKey} from './util.js';
 import {initPristine} from './init-pristine.js';
 import {hideValidationMessage, showValidationMessage} from './validation-message.js';
 import {sendData} from './load-data.js';
@@ -42,7 +42,7 @@ const addModalListeners = (sellerData, userBalances) => {
   modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
   const onEnrollmentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
-      modalPaymentInput.value = addPointToNumber(modalEnrollmentInput.value * exchangeRate);
+      modalPaymentInput.value = modalEnrollmentInput.value * exchangeRate;
       modalPaymentInput.value = Number(modalPaymentInput.value).toFixed(2);
     });
     debouncedEnter();
@@ -50,7 +50,7 @@ const addModalListeners = (sellerData, userBalances) => {
   modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
   const onExchangeAllButtonClick = () => {
     modalEnrollmentInput.value = balance.amount;
-    modalPaymentInput.value = addPointToNumber(balance.amount * exchangeRate);
+    modalPaymentInput.value = balance.amount * exchangeRate;
   };
   exchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
   const onModalSelectChange = () => {

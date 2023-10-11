@@ -1,16 +1,15 @@
 import {transformCurrencyAmount} from './render-table.js';
 import {modalBuyForm, modalPaymentInput, modalSelect, passwordField} from './variables.js';
 import {pristineDefaultConfig} from './constants.js';
-import {addPointToNumber} from './util.js';
 
 const initPristine = (minimum, maximum, rate, userStatus, userBalances) => {
   const newMinAmount = transformCurrencyAmount(minimum, rate, userStatus);
   const newMaxAmount = transformCurrencyAmount(maximum, rate, userStatus);
   modalPaymentInput.required = true;
   modalPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
-  modalPaymentInput.min = Math.floor(minimum * rate);
+  modalPaymentInput.min = minimum * rate;
   modalPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
-  modalPaymentInput.max = addPointToNumber(maximum * rate);
+  modalPaymentInput.max = maximum * rate;
   modalPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
   passwordField.required = true;
   passwordField.dataset.pristineRequiredMessage = 'Введите пароль.';

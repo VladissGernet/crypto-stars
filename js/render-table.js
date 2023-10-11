@@ -2,12 +2,11 @@ import {noAdvertisementsContainer, tableBody, usersList, userTableRowTemplate} f
 import {initialFilterValue, changeButtonClassName} from './constants.js';
 
 const addSpacesToNumber = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-const trimNumber = (value) => addSpacesToNumber((Math.floor(value * 100)) / 100);
 const transformCurrencyAmount = (currencyValue, rate, filter) => {
   if (filter === 'seller') {
-    return trimNumber(currencyValue * rate);
+    return addSpacesToNumber(currencyValue * rate);
   }
-  return trimNumber(currencyValue);
+  return addSpacesToNumber(currencyValue);
 };
 
 const renderTable = (data, filterValue = initialFilterValue) => {
@@ -42,7 +41,7 @@ const renderTable = (data, filterValue = initialFilterValue) => {
         verifiedIcon.remove();
       }
       currency.textContent = balance.currency;
-      rowExchangeRate.textContent = `${trimNumber(exchangeRate)} ₽`;
+      rowExchangeRate.textContent = `${exchangeRate} ₽`;
       cashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
       badgesList.innerHTML = '';
       if (paymentMethods !== undefined) {
@@ -59,4 +58,4 @@ const renderTable = (data, filterValue = initialFilterValue) => {
   }
 };
 
-export {renderTable, trimNumber, transformCurrencyAmount};
+export {renderTable, transformCurrencyAmount};

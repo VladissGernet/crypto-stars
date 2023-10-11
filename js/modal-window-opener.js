@@ -16,7 +16,7 @@ import {
   receivingCurrency
 } from './variables.js';
 import {changeButtonClassName, modalZIndex, scrollLockClass} from './constants.js';
-import {transformCurrencyAmount, trimNumber} from './render-table.js';
+import {transformCurrencyAmount} from './render-table.js';
 import {onNumberInputKeydownCheckKey} from './util.js';
 import {
   getSelectedDataId,
@@ -47,7 +47,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
       body.classList.add(scrollLockClass);
       fillUsernameWrapper(modalUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
-      modalRate.textContent = `${trimNumber(exchangeRate)} ₽`;
+      modalRate.textContent = `${exchangeRate} ₽`;
       modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
       clearModalSelectOptions();
       fillPaymentMethods(paymentMethods);
