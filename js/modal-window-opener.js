@@ -43,6 +43,8 @@ import {addModalListeners} from './modal-listeners.js';
 modalBuy.style.zIndex = modalZIndex;
 modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 modalEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+modalSellPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+modalSellEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 
 const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => {
   main.addEventListener('click', (evt) => {
