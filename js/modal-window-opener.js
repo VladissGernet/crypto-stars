@@ -120,7 +120,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         const pristine = new Pristine(modalSellForm, pristineDefaultConfig, false);
         const checkSelect = () => sellModalSelect.selectedIndex;
         pristine.addValidator(sellModalSelect, checkSelect, 'Выберите платёжную систему.');
-        const checkUserRubWallet = () => (userBalances.KEKS >= minAmount) && (modalSellEnrollmentInput.value <= userBalances.KEKS);
+        const checkUserRubWallet = () => ((userBalances.KEKS * exchangeRate) >= modalSellEnrollmentInput.value);
         pristine.addValidator(modalSellEnrollmentInput, checkUserRubWallet, 'У вас недостаточно средств.');
         sellSendingContractorId.value = id;
         sellSendingExchangeRate.value = exchangeRate;
