@@ -120,8 +120,8 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         const pristine = new Pristine(modalSellForm, pristineDefaultConfig, false);
         const checkSelect = () => sellModalSelect.selectedIndex;
         pristine.addValidator(sellModalSelect, checkSelect, 'Выберите платёжную систему.');
-        const checkUserRubWallet = () => (userBalances.RUB >= minAmount * exchangeRate) && (modalPaymentInput.value <= userBalances.RUB);
-        pristine.addValidator(modalPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
+        const checkUserRubWallet = () => (userBalances.RUB >= minAmount * exchangeRate) && (modalSellPaymentInput.value <= userBalances.RUB);
+        pristine.addValidator(modalSellPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
         sellSendingContractorId.value = id;
         sellSendingExchangeRate.value = exchangeRate;
         sellSendingCurrency.value = 'KEKS';
