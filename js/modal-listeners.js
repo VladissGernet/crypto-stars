@@ -38,14 +38,15 @@ const addModalListeners = (sellerData, userBalances) => {
     });
     debouncedEnter();
   };
-  modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
+  modalPaymentInput.addEventListener('change', onPaymentInputEnterNewValue);
   const onEnrollmentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
       modalPaymentInput.value = addPointToNumber(modalEnrollmentInput.value * exchangeRate);
+      modalPaymentInput.value = Number(modalPaymentInput.value).toFixed(2);
     });
     debouncedEnter();
   };
-  modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
+  modalEnrollmentInput.addEventListener('change', onEnrollmentInputEnterNewValue);
   const onExchangeAllButtonClick = () => {
     modalEnrollmentInput.value = balance.amount;
     modalPaymentInput.value = Math.floor(balance.amount * exchangeRate);
