@@ -11,15 +11,14 @@ import {
   contractorCardNumberField,
   buyErrorMessage,
   buySuccessMessage,
-  buySubmitButton,
-  buyErrorMessageText
+  buyErrorMessageText,
+  buySubmitButton
 } from './variables.js';
 import {scrollLockClass, initialModalSelectValue, defaultErrorMessageText} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
 import {initPristine} from './init-pristine.js';
-import {hideValidationMessage, showValidationMessage} from './validation-message.js';
-import {sendData} from './load-data.js';
-import {blockSubmitButton, unblockSubmitButton} from './modal-functions.js';
+import {hideValidationMessage} from './validation-message.js';
+import {initSubmit} from './init-submit.js';
 
 const userCardNumberFieldInitialPlaceholder = contractorCardNumberField.placeholder;
 const addModalListeners = (sellerData, userBalances) => {
@@ -108,31 +107,7 @@ const addModalListeners = (sellerData, userBalances) => {
     }
   };
   onModalSubmit = (evt) => {
-    evt.preventDefault();
-    const isValid = pristine.validate();
-    if (isValid) {
-      blockSubmitButton(buySubmitButton);
-      hideValidationMessage(buyErrorMessage);
-      sendData(new FormData(evt.target))
-        .then(
-          () => {
-            showValidationMessage(buySuccessMessage);
-            unblockSubmitButton(buySubmitButton);
-            closeModalWindow();
-          }
-        )
-        .catch(
-          (err) => {
-            showValidationMessage(buyErrorMessage);
-            buyErrorMessageText.textContent = err.message;
-            unblockSubmitButton(buySubmitButton);
-          }
-        )
-        .finally(() => {
-        });
-    } else {
-      showValidationMessage(buyErrorMessage);
-    }
+    initSubmit(evt, pristine, buySubmitButton, buyErrorMessage, buySuccessMessage, buyErrorMessageText, closeModalWindow);
   };
   buyForm.addEventListener('submit', onModalSubmit);
   modalBuy.addEventListener('mousedown', onOutsideModalWindowClick);

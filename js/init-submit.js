@@ -2,13 +2,13 @@ import {blockSubmitButton, unblockSubmitButton} from './modal-functions.js';
 import {hideValidationMessage, showValidationMessage} from './validation-message.js';
 import {sendData} from './load-data.js';
 
-const initSubmit = (e, prist, submit, errorMessage, successMessage, errorText, closeModal) => {
-  e.preventDefault();
-  const isValid = prist.validate();
+const initSubmit = (evt, pristine, submit, errorMessage, successMessage, errorText, closeModal) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
   if (isValid) {
     blockSubmitButton(submit);
     hideValidationMessage(errorMessage);
-    sendData(new FormData(e.target))
+    sendData(new FormData(evt.target))
       .then(
         () => {
           showValidationMessage(successMessage);
