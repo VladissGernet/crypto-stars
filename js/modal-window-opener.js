@@ -109,19 +109,20 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         hideValidationMessage(modalSellErrorMessage);
         const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
         const newMaxAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
+        console.log(balance.amount)
         modalSellPaymentInput.required = true;
         modalSellPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
-        modalSellPaymentInput.min = minAmount / exchangeRate;
-        modalSellPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
-        modalSellPaymentInput.max = minAmount / exchangeRate;
-        modalSellPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
+        modalSellEnrollmentInput.min = minAmount;
+        modalSellEnrollmentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
+        modalSellEnrollmentInput.max = balance.amount;
+        modalSellEnrollmentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
         modalSellPassword.required = true;
         modalSellPassword.dataset.pristineRequiredMessage = 'Введите пароль.';
         const pristine = new Pristine(modalSellForm, pristineDefaultConfig, false);
         const checkSelect = () => sellModalSelect.selectedIndex;
         pristine.addValidator(sellModalSelect, checkSelect, 'Выберите платёжную систему.');
-        const checkUserRubWallet = () => (userBalances.RUB >= minAmount * exchangeRate) && (modalSellPaymentInput.value <= userBalances.RUB);
-        pristine.addValidator(modalSellPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
+        const checkUserRubWallet = () => (userBalances.RUB >= minAmount) && (modalSellEnrollmentInput.value <= userBalances.RUB);
+        pristine.addValidator(modalSellEnrollmentInput, checkUserRubWallet, 'У вас недостаточно средств.');
         sellSendingContractorId.value = id;
         sellSendingExchangeRate.value = exchangeRate;
         sellSendingCurrency.value = 'KEKS';

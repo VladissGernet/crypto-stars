@@ -21,7 +21,7 @@ getContractors()
           "balances": [
             {
               "currency": "RUB",
-              "amount":  2000000
+              "amount":  10000
             },
             {
               "currency": "KEKS",
