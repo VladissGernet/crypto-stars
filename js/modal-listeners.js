@@ -8,7 +8,7 @@ import {
   modalEnrollmentInput,
   modalPaymentInput,
   modalSelect,
-  userCardNumberField,
+  contractorCardNumberField,
   validationErrorMessage,
   validationSuccessMessage,
   modalSubmitButton,
@@ -21,7 +21,7 @@ import {hideValidationMessage, showValidationMessage} from './validation-message
 import {sendData} from './load-data.js';
 import {blockSubmitButton, unblockSubmitButton} from './modal-functions.js';
 
-const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
+const userCardNumberFieldInitialPlaceholder = contractorCardNumberField.placeholder;
 const addModalListeners = (sellerData, userBalances) => {
   const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;
   const pristine = initPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
@@ -55,13 +55,13 @@ const addModalListeners = (sellerData, userBalances) => {
     const selectValue = modalSelect.value;
     switch (selectValue) {
       case 'Cash in person':
-        userCardNumberField.placeholder = '';
+        contractorCardNumberField.placeholder = '';
         break;
       default:
         for (const paymentMethod of paymentMethods) {
           const providerName = paymentMethod.provider;
           if (providerName === selectValue) {
-            userCardNumberField.placeholder = paymentMethod.accountNumber;
+            contractorCardNumberField.placeholder = paymentMethod.accountNumber;
             break;
           }
         }
@@ -84,7 +84,7 @@ const addModalListeners = (sellerData, userBalances) => {
     modalBuy.removeEventListener('mousedown', onOutsideModalWindowClick);
     modalSelect.removeEventListener('change', onModalSelectChange);
     modalSelect.selectedIndex = initialModalSelectValue;
-    userCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
+    contractorCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
     modalEnrollmentInput.value = '';
     modalPaymentInput.value = '';
     pristine.destroy();

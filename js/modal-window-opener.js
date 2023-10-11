@@ -29,7 +29,9 @@ import {
   modalSellPaymentInput,
   modalSellEnrollmentInput,
   exchangeAllCrypto,
-  exchangeAllRub
+  exchangeAllRub,
+  contractorCardNumberField,
+  userCardNumber
 } from './variables.js';
 import {changeButtonClassName, filterValues, modalZIndex, scrollLockClass, sellerIdClassName, valueToOpenSellModal} from './constants.js';
 import {addSpacesToNumber, debounce, onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
@@ -113,6 +115,24 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         };
         exchangeAllCrypto.addEventListener('click', onModalSellExchangeAllButtonClick);
         exchangeAllRub.addEventListener('click', onModalSellExchangeAllButtonClick);
+        const onModalSelectChange = () => {
+          const selectValue = sellModalSelect.value;
+          switch (selectValue) {
+            case 'Cash in person':
+              userCardNumber.placeholder = '';
+              break;
+            default:
+              for (const paymentMethod of serverUserData.paymentMethods) {
+                const providerName = paymentMethod.provider;
+                if (providerName === selectValue) {
+                  userCardNumber.placeholder = paymentMethod.accountNumber;
+                  break;
+                }
+              }
+              break;
+          }
+        };
+        sellModalSelect.addEventListener('change', onModalSelectChange);
       }
     }
   });

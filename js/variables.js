@@ -25,7 +25,7 @@ const modalEnrollmentInput = modalBuyForm.querySelector('#enrollment');
 const modalSelect = modalBuyForm.querySelector('#modal--buy__select');
 const modalBuyExchangeAll = modalBuyForm.querySelector('.exchange-all-button');
 const modalBuyContentContainer = modalBuy.querySelector('.modal__content');
-const userCardNumberField = modalBuyForm.querySelector('#user-card-number');
+const contractorCardNumberField = modalBuyForm.querySelector('#contractor-card-number');
 const userCryptoWalletField = modalBuyForm.querySelector('#user-crypto-wallet');
 const passwordField = modalBuyForm.querySelector('#password');
 const validationErrorMessage = modalBuyForm.querySelector('.modal__validation-message--error');
@@ -52,6 +52,7 @@ const modalSellPaymentInput = modalSellForm.querySelector('#sell-payment');
 const modalSellEnrollmentInput = modalSellForm.querySelector('#sell-enrollment');
 const exchangeAllCrypto = modalSellForm.querySelector('#exchange-all-crypto');
 const exchangeAllRub = modalSellForm.querySelector('#exchange-all-rub');
+const userCardNumber = modalSellForm.querySelector('#user-card-number');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -86,7 +87,7 @@ export {
   modalSelect,
   modalBuyExchangeAll,
   modalBuyContentContainer,
-  userCardNumberField,
+  contractorCardNumberField,
   userCryptoWalletField,
   modalBuyForm,
   passwordField,
@@ -112,5 +113,6 @@ export {
   modalSellPaymentInput,
   modalSellEnrollmentInput,
   exchangeAllCrypto,
-  exchangeAllRub
+  exchangeAllRub,
+  userCardNumber
 };
