@@ -99,6 +99,10 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
           debouncedEnter();
         };
         modalSellEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
+        const onExchangeAllCryptoClick = () => {
+          // modalSellPaymentInput.value =
+        };
+        // exchangeAllCrypto.addEventListener('click', onExchangeAllCryptoClick);
       }
     }
   });
