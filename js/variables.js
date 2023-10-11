@@ -29,6 +29,7 @@ const userCardNumberField = modalBuyForm.querySelector('#user-card-number');
 const userCryptoWalletField = modalBuyForm.querySelector('#user-crypto-wallet');
 const passwordField = modalBuyForm.querySelector('#password');
 const validationErrorMessage = modalBuyForm.querySelector('.modal__validation-message--error');
+const validationErrorMessageText = validationErrorMessage.querySelector('.modal__validation-message--error-text');
 const validationSuccessMessage = modalBuyForm.querySelector('.modal__validation-message--success');
 const modalSubmitButton = modalBuyForm.querySelector('.modal__submit');
 const sendingType = modalBuyForm.querySelector('[name="type"]');
@@ -85,5 +86,6 @@ export {
   sendingCurrency,
   receivingCurrency,
   sendingAmount,
-  receivingAmount
+  receivingAmount,
+  validationErrorMessageText
 };

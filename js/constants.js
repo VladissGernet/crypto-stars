@@ -2,15 +2,15 @@ const BASE_URL = 'https://cryptostar.grading.pages.academy';
 const Route = {
   GET_CONTRACTORS: '/contractors',
   GET_USERS: '/user',
-  SEND_DATA: '/',
+  SEND_DATA: '/'
 };
 const Method = {
   GET: 'GET',
-  POST: 'POST',
+  POST: 'POST'
 };
 const ErrorText = {
-  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
-  SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
+  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу.',
+  SEND_DATA: 'Не удалось отправить форму. Попробуйте поменять значение оплаты.'
 };
 const initialFilterValue = 'seller';
 const filterValues = {
@@ -67,6 +67,7 @@ const SubmitButtonText = {
   IDLE: 'Обменять',
   SENDING: 'Обмен...'
 };
+const defaultErrorMessageText = 'Ошибка заполнения формы';
 
 export {
   BASE_URL,
@@ -87,5 +88,6 @@ export {
   modalZIndex,
   initialModalSelectValue,
   pristineDefaultConfig,
-  SubmitButtonText
+  SubmitButtonText,
+  defaultErrorMessageText
 };

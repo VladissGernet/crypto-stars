@@ -11,9 +11,10 @@ import {
   userCardNumberField,
   validationErrorMessage,
   validationSuccessMessage,
-  modalSubmitButton
+  modalSubmitButton,
+  validationErrorMessageText
 } from './variables.js';
-import {scrollLockClass, initialModalSelectValue, SubmitButtonText} from './constants.js';
+import {scrollLockClass, initialModalSelectValue, SubmitButtonText, defaultErrorMessageText} from './constants.js';
 import {debounce, isEscapeKey, addPointToNumber} from './util.js';
 import {initPristine} from './init-pristine.js';
 import {hideValidationMessage, showValidationMessage} from './validation-message.js';
@@ -49,7 +50,7 @@ const addModalListeners = (sellerData, userBalances) => {
   modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
   const onExchangeAllButtonClick = () => {
     modalEnrollmentInput.value = balance.amount;
-    modalPaymentInput.value = Math.floor(balance.amount * exchangeRate);
+    modalPaymentInput.value = addPointToNumber(balance.amount * exchangeRate);
   };
   exchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
   const onModalSelectChange = () => {
@@ -92,6 +93,7 @@ const addModalListeners = (sellerData, userBalances) => {
     hideValidationMessage(validationErrorMessage);
     hideValidationMessage(validationSuccessMessage);
     modalBuyForm.removeEventListener('submit', onModalSubmit);
+    validationErrorMessageText.textContent = defaultErrorMessageText;
   };
   onKeydownCloseModalWindow = (event) => {
     if (isEscapeKey(event)) {
@@ -117,17 +119,18 @@ const addModalListeners = (sellerData, userBalances) => {
         .then(
           () => {
             showValidationMessage(validationSuccessMessage);
+            unblockSubmitButton();
+            closeModalWindow();
           }
         )
         .catch(
           (err) => {
-            console.log(err.message);
+            showValidationMessage(validationErrorMessage);
+            validationErrorMessageText.textContent = err.message;
+            unblockSubmitButton();
           }
         )
         .finally(() => {
-          console.log('final');
-          unblockSubmitButton();
-          // closeModalWindow();
         });
     } else {
       showValidationMessage(validationErrorMessage);
