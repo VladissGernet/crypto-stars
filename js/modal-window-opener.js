@@ -34,7 +34,11 @@ import {
   modalSellCloseButton,
   modalSellErrorMessage,
   modalSellSuccessMessage,
-  modalSellContentContainer
+  modalSellContentContainer,
+  modalSellForm,
+  modalSellSubmitButton,
+  validationErrorMessage,
+  validationErrorMessageText
 } from './variables.js';
 import {
   changeButtonClassName, defaultErrorMessageText,
@@ -57,10 +61,12 @@ import {
   clearModalSelectOptions,
   fillUsernameWrapper,
   fillPaymentMethods,
-  showModalWindow
+  showModalWindow, blockSubmitButton, unblockSubmitButton
 } from './modal-functions.js';
 import {addModalListeners} from './modal-listeners.js';
-import {hideValidationMessage} from './validation-message.js';
+import {hideValidationMessage, showValidationMessage} from './validation-message.js';
+import {sendData} from './load-data.js';
+import {initPristine} from './init-pristine.js';
 
 modalBuy.style.zIndex = modalZIndex;
 modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
@@ -96,6 +102,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       }
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === valueToOpenSellModal) {
+        const pristine = initPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
         sellSendingContractorId.value = id;
         sellSendingExchangeRate.value = exchangeRate;
         sellSendingCurrency.value = 'KEKS';
@@ -154,7 +161,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         let onCloseModalButtonClick = {};
         let onKeydownCloseModalWindow = {};
         let onOutsideModalWindowClick = {};
-        // let onModalSubmit = {};
+        let onModalSubmit = {};
         const closeModalWindow = () => {
           body.classList.remove(scrollLockClass);
           modalSell.style.display = 'none';
@@ -172,7 +179,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
           // pristine.destroy();
           hideValidationMessage(modalSellErrorMessage);
           hideValidationMessage(modalSellSuccessMessage);
-          // modalSellForm.removeEventListener('submit', onModalSubmit);
+          modalSellForm.removeEventListener('submit', onModalSubmit);
           modalSellErrorMessage.textContent = defaultErrorMessageText;
         };
         onKeydownCloseModalWindow = (event) => {
@@ -189,7 +196,34 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
             closeModalWindow();
           }
         };
-        // modalBuyForm.addEventListener('submit', onModalSubmit);
+        onModalSubmit = (event) => {
+          event.preventDefault();
+          const isValid = pristine.validate();
+          if (isValid) {
+            blockSubmitButton(modalSellSubmitButton);
+            hideValidationMessage(modalSellErrorMessage);
+            sendData(new FormData(event.target))
+              .then(
+                () => {
+                  showValidationMessage(modalSellSuccessMessage);
+                  unblockSubmitButton(modalSellSubmitButton);
+                  closeModalWindow();
+                }
+              )
+              .catch(
+                (err) => {
+                  showValidationMessage(modalSellErrorMessage);
+                  validationErrorMessageText.textContent = err.message;
+                  unblockSubmitButton(modalSellSubmitButton);
+                }
+              )
+              .finally(() => {
+              });
+          } else {
+            showValidationMessage(modalSellErrorMessage);
+          }
+        };
+        modalSellForm.addEventListener('submit', onModalSubmit);
         modalSell.addEventListener('mousedown', onOutsideModalWindowClick);
         document.addEventListener('keydown', onKeydownCloseModalWindow);
         modalSellCloseButton.addEventListener('click', onCloseModalButtonClick);

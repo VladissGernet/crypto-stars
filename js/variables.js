@@ -57,6 +57,9 @@ const userCardNumber = modalSellForm.querySelector('#user-card-number');
 const modalSellCloseButton = modalSell.querySelector('.modal__close-btn');
 const modalSellErrorMessage = modalSellForm.querySelector('.modal__validation-message--error');
 const modalSellSuccessMessage = modalSellForm.querySelector('.modal__validation-message--success');
+const modalSellSubmitButton = modalSellForm.querySelector('.modal__submit');
+const modalSellErrorMessageText = validationErrorMessage.querySelector('.modal__validation-message--error-text');
+
 
 
 //Templates
@@ -123,5 +126,7 @@ export {
   modalSellCloseButton,
   modalSellErrorMessage,
   modalSellSuccessMessage,
-  modalSellContentContainer
+  modalSellContentContainer,
+  modalSellSubmitButton,
+  modalSellErrorMessageText
 };
