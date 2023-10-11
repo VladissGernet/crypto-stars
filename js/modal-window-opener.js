@@ -25,7 +25,9 @@ import {
   sellModalCashlimit,
   modalSelect,
   sellModalSelect,
-  contractorCryptoWallet
+  contractorCryptoWallet,
+  modalSellPaymentInput,
+  modalSellEnrollmentInput
 } from './variables.js';
 import {changeButtonClassName, filterValues, modalZIndex, scrollLockClass, sellerIdClassName, valueToOpenSellModal} from './constants.js';
 import {addSpacesToNumber, onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
@@ -81,7 +83,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         fillPaymentMethods(serverUserData.paymentMethods, sellModalSelect);
         showModalWindow(modalSell);
         contractorCryptoWallet.placeholder = selectedData.wallet.address;
-
+        console.log(modalSellPaymentInput)
       }
     }
   });
