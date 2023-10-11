@@ -1,6 +1,6 @@
 import {
   body,
-  exchangeAllButton,
+  modalBuyExchangeAll,
   modalBuy,
   modalBuyContentContainer,
   modalBuyForm,
@@ -44,7 +44,7 @@ const addModalListeners = (sellerData, userBalances) => {
     modalEnrollmentInput.value = balance.amount;
     modalPaymentInput.value = balance.amount * exchangeRate;
   };
-  exchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
+  modalBuyExchangeAll.addEventListener('click', onExchangeAllButtonClick);
   const onModalSelectChange = () => {
     const selectValue = modalSelect.value;
     switch (selectValue) {
@@ -72,7 +72,7 @@ const addModalListeners = (sellerData, userBalances) => {
     modalBuy.style.display = 'none';
     modalPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
     modalEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
-    exchangeAllButton.removeEventListener('click', onExchangeAllButtonClick);
+    modalBuyExchangeAll.removeEventListener('click', onExchangeAllButtonClick);
     document.removeEventListener('keydown', onKeydownCloseModalWindow);
     modalCloseButton.removeEventListener('click', onCloseModalButtonClick);
     modalBuy.removeEventListener('mousedown', onOutsideModalWindowClick);
