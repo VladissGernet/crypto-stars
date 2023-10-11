@@ -38,6 +38,7 @@ const buySendingCurrency = modalBuyForm.querySelector('[name="sendingCurrency"]'
 const buyReceivingCurrency = modalBuyForm.querySelector('[name="receivingCurrency"]');
 
 const modalSell = document.querySelector('.modal--sell');
+const modalSellContentContainer = modalSell.querySelector('.modal__content');
 const modalSellForm = modalSell.querySelector('.modal-sell');
 const sellSendingContractorId = modalSellForm.querySelector('[name="contractorId"]');
 const sellSendingExchangeRate = modalSellForm.querySelector('[name="exchangeRate"]');
@@ -53,6 +54,10 @@ const modalSellEnrollmentInput = modalSellForm.querySelector('#sell-enrollment')
 const exchangeAllCrypto = modalSellForm.querySelector('#exchange-all-crypto');
 const exchangeAllRub = modalSellForm.querySelector('#exchange-all-rub');
 const userCardNumber = modalSellForm.querySelector('#user-card-number');
+const modalSellCloseButton = modalSell.querySelector('.modal__close-btn');
+const modalSellErrorMessage = modalSellForm.querySelector('.modal__validation-message--error');
+const modalSellSuccessMessage = modalSellForm.querySelector('.modal__validation-message--success');
+
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -114,5 +119,9 @@ export {
   modalSellEnrollmentInput,
   exchangeAllCrypto,
   exchangeAllRub,
-  userCardNumber
+  userCardNumber,
+  modalSellCloseButton,
+  modalSellErrorMessage,
+  modalSellSuccessMessage,
+  modalSellContentContainer
 };

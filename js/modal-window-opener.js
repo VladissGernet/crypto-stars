@@ -30,11 +30,28 @@ import {
   modalSellEnrollmentInput,
   exchangeAllCrypto,
   exchangeAllRub,
-  contractorCardNumberField,
-  userCardNumber
+  userCardNumber,
+  modalSellCloseButton,
+  modalSellErrorMessage,
+  modalSellSuccessMessage,
+  modalSellContentContainer
 } from './variables.js';
-import {changeButtonClassName, filterValues, modalZIndex, scrollLockClass, sellerIdClassName, valueToOpenSellModal} from './constants.js';
-import {addSpacesToNumber, debounce, onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
+import {
+  changeButtonClassName, defaultErrorMessageText,
+  filterValues,
+  initialModalSelectValue,
+  modalZIndex,
+  scrollLockClass,
+  sellerIdClassName,
+  valueToOpenSellModal
+} from './constants.js';
+import {
+  addSpacesToNumber,
+  debounce,
+  isEscapeKey,
+  onNumberInputKeydownCheckKey,
+  transformCurrencyAmount
+} from './util.js';
 import {
   getSelectedDataId,
   clearModalSelectOptions,
@@ -43,6 +60,7 @@ import {
   showModalWindow
 } from './modal-functions.js';
 import {addModalListeners} from './modal-listeners.js';
+import {hideValidationMessage} from './validation-message.js';
 
 modalBuy.style.zIndex = modalZIndex;
 modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
@@ -133,6 +151,48 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
           }
         };
         sellModalSelect.addEventListener('change', onModalSelectChange);
+        let onCloseModalButtonClick = {};
+        let onKeydownCloseModalWindow = {};
+        let onOutsideModalWindowClick = {};
+        // let onModalSubmit = {};
+        const closeModalWindow = () => {
+          body.classList.remove(scrollLockClass);
+          modalSell.style.display = 'none';
+          modalSellPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
+          modalSellEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
+          exchangeAllCrypto.removeEventListener('click', onModalSellExchangeAllButtonClick);
+          exchangeAllRub.removeEventListener('click', onModalSellExchangeAllButtonClick);
+          document.removeEventListener('keydown', onKeydownCloseModalWindow);
+          modalSellCloseButton.removeEventListener('click', onCloseModalButtonClick);
+          modalSell.removeEventListener('mousedown', onOutsideModalWindowClick);
+          sellModalSelect.removeEventListener('change', onModalSelectChange);
+          sellModalSelect.selectedIndex = initialModalSelectValue;
+          modalSellPaymentInput.value = '';
+          modalSellEnrollmentInput.value = '';
+          // pristine.destroy();
+          hideValidationMessage(modalSellErrorMessage);
+          hideValidationMessage(modalSellSuccessMessage);
+          // modalSellForm.removeEventListener('submit', onModalSubmit);
+          modalSellErrorMessage.textContent = defaultErrorMessageText;
+        };
+        onKeydownCloseModalWindow = (event) => {
+          if (isEscapeKey(event)) {
+            closeModalWindow();
+          }
+        };
+        onCloseModalButtonClick = () => {
+          closeModalWindow();
+        };
+        onOutsideModalWindowClick = (event) => {
+          const outsideErrorContainerClick = event.composedPath().includes(modalSellContentContainer) === false;
+          if (outsideErrorContainerClick) {
+            closeModalWindow();
+          }
+        };
+        // modalBuyForm.addEventListener('submit', onModalSubmit);
+        modalSell.addEventListener('mousedown', onOutsideModalWindowClick);
+        document.addEventListener('keydown', onKeydownCloseModalWindow);
+        modalSellCloseButton.addEventListener('click', onCloseModalButtonClick);
       }
     }
   });
