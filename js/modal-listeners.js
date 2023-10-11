@@ -41,7 +41,7 @@ const addModalListeners = (sellerData, userBalances) => {
   };
   modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
   const onExchangeAllButtonClick = () => {
-    if (userBalances.RUB < (balance.amount * exchangeRate)) {
+    if (userBalances.RUB <= (balance.amount * exchangeRate)) {
       modalEnrollmentInput.value = userBalances.RUB / exchangeRate;
       modalPaymentInput.value = userBalances.RUB;
     }

@@ -27,7 +27,8 @@ import {
   sellModalSelect,
   contractorCryptoWallet,
   modalSellPaymentInput,
-  modalSellEnrollmentInput
+  modalSellEnrollmentInput,
+  exchangeAllCrypto
 } from './variables.js';
 import {changeButtonClassName, filterValues, modalZIndex, scrollLockClass, sellerIdClassName, valueToOpenSellModal} from './constants.js';
 import {addSpacesToNumber, debounce, onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
@@ -100,9 +101,16 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         };
         modalSellEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
         const onExchangeAllCryptoClick = () => {
-          // modalSellPaymentInput.value =
+          if (userBalances.RUB < (balance.amount)) {
+            modalSellEnrollmentInput.value = userBalances.RUB;
+            modalSellPaymentInput.value = userBalances.RUB;
+          }
+          if (userBalances.RUB > (balance.amount)) {
+            modalSellEnrollmentInput.value = balance.amount;
+            modalSellPaymentInput.value = balance.amount;
+          }
         };
-        // exchangeAllCrypto.addEventListener('click', onExchangeAllCryptoClick);
+        exchangeAllCrypto.addEventListener('click', onExchangeAllCryptoClick);
       }
     }
   });

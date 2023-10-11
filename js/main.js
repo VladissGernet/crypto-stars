@@ -19,8 +19,37 @@ getContractors()
     hideValidationMessage(validationErrorMessage);
     getUserData()
       .then((userData) => {
-        const userBalancesObject = getUserBalances(userData);
-        addModalWindowOpener(receivedData, userData, userBalancesObject);
+        const mochUserData = {
+          "userName": "Андрей",
+          "balances": [
+            {
+              "currency": "RUB",
+              "amount":  2000000
+            },
+            {
+              "currency": "KEKS",
+              "amount": 94.28
+            }
+          ],
+          "wallet": {
+            "currency": "KEKS",
+            "address": "o6j428495spjy20pwwer0elobwz8lvwksk2ffwxd"
+          },
+          "paymentMethods": [
+            {
+              "currency": "RUB",
+              "provider": "Sberbank",
+              "accountNumber": "0000 0000 0000 5691"
+            },
+            {
+              "currency": "RUB",
+              "provider": "QIWI",
+              "accountNumber": "0000 0000 0000 4880"
+            }
+          ]
+        };
+        const userBalancesObject = getUserBalances(mochUserData);
+        addModalWindowOpener(receivedData, mochUserData, userBalancesObject);
       });
   //проверить что отправляется на сервер
   //проверить весь код на наличие возможного рефакторинга и лишнего кода
