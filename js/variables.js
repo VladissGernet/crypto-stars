@@ -27,7 +27,7 @@ const modalBuyExchangeAll = modalBuyForm.querySelector('.exchange-all-button');
 const modalBuyContentContainer = modalBuy.querySelector('.modal__content');
 const contractorCardNumberField = modalBuyForm.querySelector('#contractor-card-number');
 const userCryptoWalletField = modalBuyForm.querySelector('#user-crypto-wallet');
-const passwordField = modalBuyForm.querySelector('#password');
+const passwordField = modalBuyForm.querySelector('#buy-password');
 const validationErrorMessage = modalBuyForm.querySelector('.modal__validation-message--error');
 const validationErrorMessageText = validationErrorMessage.querySelector('.modal__validation-message--error-text');
 const validationSuccessMessage = modalBuyForm.querySelector('.modal__validation-message--success');
@@ -59,8 +59,7 @@ const modalSellErrorMessage = modalSellForm.querySelector('.modal__validation-me
 const modalSellSuccessMessage = modalSellForm.querySelector('.modal__validation-message--success');
 const modalSellSubmitButton = modalSellForm.querySelector('.modal__submit');
 const modalSellErrorMessageText = validationErrorMessage.querySelector('.modal__validation-message--error-text');
-
-
+const modalSellPassword = modalSellForm.querySelector('#sell-password');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -128,5 +127,6 @@ export {
   modalSellSuccessMessage,
   modalSellContentContainer,
   modalSellSubmitButton,
-  modalSellErrorMessageText
+  modalSellErrorMessageText,
+  modalSellPassword
 };

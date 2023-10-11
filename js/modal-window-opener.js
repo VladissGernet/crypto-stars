@@ -37,13 +37,16 @@ import {
   modalSellContentContainer,
   modalSellForm,
   modalSellSubmitButton,
-  modalSellErrorMessageText, validationSuccessMessage, validationErrorMessage
+  modalSellErrorMessageText,
+  validationSuccessMessage,
+  validationErrorMessage,
+  modalSellPassword
 } from './variables.js';
 import {
   changeButtonClassName, defaultErrorMessageText,
   filterValues,
   initialModalSelectValue,
-  modalZIndex,
+  modalZIndex, pristineDefaultConfig,
   scrollLockClass,
   sellerIdClassName,
   valueToOpenSellModal
@@ -65,7 +68,6 @@ import {
 import {addModalListeners} from './modal-listeners.js';
 import {hideValidationMessage, showValidationMessage} from './validation-message.js';
 import {sendData} from './load-data.js';
-import {initPristine} from './init-pristine.js';
 
 modalBuy.style.zIndex = modalZIndex;
 modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
@@ -105,7 +107,21 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === valueToOpenSellModal) {
         hideValidationMessage(modalSellSuccessMessage);
         hideValidationMessage(modalSellErrorMessage);
-        const pristine = initPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
+        const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
+        const newMaxAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
+        modalSellPaymentInput.required = true;
+        modalSellPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
+        modalSellPaymentInput.min = minAmount / exchangeRate;
+        modalSellPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
+        modalSellPaymentInput.max = minAmount / exchangeRate;
+        modalSellPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
+        modalSellPassword.required = true;
+        modalSellPassword.dataset.pristineRequiredMessage = 'Введите пароль.';
+        const pristine = new Pristine(modalSellForm, pristineDefaultConfig, false);
+        const checkSelect = () => sellModalSelect.selectedIndex;
+        pristine.addValidator(sellModalSelect, checkSelect, 'Выберите платёжную систему.');
+        const checkUserRubWallet = () => (userBalances.RUB >= minAmount * exchangeRate) && (modalPaymentInput.value <= userBalances.RUB);
+        pristine.addValidator(modalPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
         sellSendingContractorId.value = id;
         sellSendingExchangeRate.value = exchangeRate;
         sellSendingCurrency.value = 'KEKS';
@@ -179,7 +195,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
           sellModalSelect.selectedIndex = initialModalSelectValue;
           modalSellPaymentInput.value = '';
           modalSellEnrollmentInput.value = '';
-          // pristine.destroy();
+          pristine.destroy();
           hideValidationMessage(modalSellErrorMessage);
           hideValidationMessage(modalSellSuccessMessage);
           modalSellForm.removeEventListener('submit', onModalSubmit);
