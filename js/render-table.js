@@ -1,4 +1,10 @@
-import {noAdvertisementsContainer, tableBody, usersList, userTableRowTemplate} from './variables.js';
+import {
+  checkedUsersCheckbox,
+  noAdvertisementsContainer,
+  tableBody,
+  usersList,
+  userTableRowTemplate
+} from './variables.js';
 import {initialFilterValue, changeButtonClassName} from './constants.js';
 import {transformCurrencyAmount} from './util.js';
 
@@ -11,7 +17,12 @@ const renderTable = (data, filterValue = initialFilterValue) => {
     usersList.style.display = 'block';
     noAdvertisementsContainer.style.display = 'none';
     tableBody.innerHTML = '';
-    const filteredData = data.filter((element) => element.status === filterValue);
+    const filteredData = data.filter((element) => {
+      if (checkedUsersCheckbox.checked === true) {
+        return element.status === filterValue && element.isVerified === true;
+      }
+      return element.status === filterValue;
+    });
     const userTableRowFragment = document.createDocumentFragment();
     filteredData.forEach((element) => {
       const {userName, isVerified, balance, exchangeRate, minAmount, paymentMethods} = element;
