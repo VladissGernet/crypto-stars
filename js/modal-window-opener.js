@@ -64,9 +64,9 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
         clearModalSelectOptions(modalSelect);
         fillPaymentMethods(paymentMethods, modalSelect);
-        addModalListeners(selectedData, userBalances);
         showModalWindow(modalBuy);
         userCryptoWalletField.placeholder = serverUserData.wallet.address;
+        addModalListeners(selectedData, userBalances);
       }
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === valueToOpenSellModal) {
