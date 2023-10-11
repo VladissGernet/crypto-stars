@@ -2,13 +2,13 @@ import {
   body,
   main,
   modalBuy,
-  modalCashlimit,
-  modalEnrollmentInput,
-  modalPaymentInput,
-  modalRate,
-  modalUsernameWrapper,
+  buyCashlimit,
+  buyEnrollmentInput,
+  buyPaymentInput,
+  buyRate,
+  buyUsernameWrapper,
   modalVerifiedIconCopy,
-  userCryptoWalletField,
+  buyUserCryptoWalletField,
   buySendingContractorId,
   buySendingExchangeRate,
   buySendingCurrency,
@@ -23,7 +23,7 @@ import {
   sellModalUsernameWrapper,
   sellModalRate,
   sellModalCashlimit,
-  modalSelect,
+  buySelect,
   sellModalSelect,
   contractorCryptoWallet,
   modalSellPaymentInput,
@@ -38,8 +38,8 @@ import {
   modalSellForm,
   modalSellSubmitButton,
   modalSellErrorMessageText,
-  validationSuccessMessage,
-  validationErrorMessage,
+  buySuccessMessage,
+  buyErrorMessage,
   modalSellPassword
 } from './variables.js';
 import {
@@ -70,8 +70,8 @@ import {hideValidationMessage, showValidationMessage} from './validation-message
 import {sendData} from './load-data.js';
 
 modalBuy.style.zIndex = modalZIndex;
-modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
-modalEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+buyPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+buyEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 modalSellPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 modalSellEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 
@@ -88,19 +88,19 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       const activeButton = buySellContainer.querySelector('.is-active');
       body.classList.add(scrollLockClass);
       if (filterValues[activeButton.textContent] === 'seller') {
-        hideValidationMessage(validationSuccessMessage);
-        hideValidationMessage(validationErrorMessage);
+        hideValidationMessage(buySuccessMessage);
+        hideValidationMessage(buyErrorMessage);
         buySendingContractorId.value = id;
         buySendingExchangeRate.value = exchangeRate;
         buySendingCurrency.value = 'RUB';
         buyReceivingCurrency.value = 'KEKS';
-        fillUsernameWrapper(modalUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
-        modalRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
-        modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
-        clearModalSelectOptions(modalSelect);
-        fillPaymentMethods(paymentMethods, modalSelect);
+        fillUsernameWrapper(buyUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
+        buyRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
+        buyCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
+        clearModalSelectOptions(buySelect);
+        fillPaymentMethods(paymentMethods, buySelect);
         showModalWindow(modalBuy);
-        userCryptoWalletField.placeholder = serverUserData.wallet.address;
+        buyUserCryptoWalletField.placeholder = serverUserData.wallet.address;
         addModalListeners(selectedData, userBalances);
       }
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');

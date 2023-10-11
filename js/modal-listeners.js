@@ -1,18 +1,18 @@
 import {
   body,
-  modalBuyExchangeAll,
+  buyExchangeAllButton,
   modalBuy,
-  modalBuyContentContainer,
-  modalBuyForm,
-  modalCloseButton,
-  modalEnrollmentInput,
-  modalPaymentInput,
-  modalSelect,
+  buyContentContainer,
+  buyForm,
+  buyCloseButton,
+  buyEnrollmentInput,
+  buyPaymentInput,
+  buySelect,
   contractorCardNumberField,
-  validationErrorMessage,
-  validationSuccessMessage,
-  modalSubmitButton,
-  validationErrorMessageText
+  buyErrorMessage,
+  buySuccessMessage,
+  buySubmitButton,
+  buyErrorMessageText
 } from './variables.js';
 import {scrollLockClass, initialModalSelectValue, defaultErrorMessageText} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
@@ -27,32 +27,32 @@ const addModalListeners = (sellerData, userBalances) => {
   const pristine = initPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
-      modalEnrollmentInput.value = modalPaymentInput.value / exchangeRate;
+      buyEnrollmentInput.value = buyPaymentInput.value / exchangeRate;
     });
     debouncedEnter();
   };
-  modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
+  buyPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
   const onEnrollmentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
-      modalPaymentInput.value = modalEnrollmentInput.value * exchangeRate;
-      modalPaymentInput.value = Number(modalPaymentInput.value).toFixed(2);
+      buyPaymentInput.value = buyEnrollmentInput.value * exchangeRate;
+      buyPaymentInput.value = Number(buyPaymentInput.value).toFixed(2);
     });
     debouncedEnter();
   };
-  modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
+  buyEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
   const onExchangeAllButtonClick = () => {
     if (userBalances.RUB <= (balance.amount * exchangeRate)) {
-      modalEnrollmentInput.value = userBalances.RUB / exchangeRate;
-      modalPaymentInput.value = userBalances.RUB;
+      buyEnrollmentInput.value = userBalances.RUB / exchangeRate;
+      buyPaymentInput.value = userBalances.RUB;
     }
     if (userBalances.RUB > (balance.amount * exchangeRate)) {
-      modalEnrollmentInput.value = balance.amount;
-      modalPaymentInput.value = balance.amount * exchangeRate;
+      buyEnrollmentInput.value = balance.amount;
+      buyPaymentInput.value = balance.amount * exchangeRate;
     }
   };
-  modalBuyExchangeAll.addEventListener('click', onExchangeAllButtonClick);
+  buyExchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
   const onModalSelectChange = () => {
-    const selectValue = modalSelect.value;
+    const selectValue = buySelect.value;
     switch (selectValue) {
       case 'Cash in person':
         contractorCardNumberField.placeholder = '';
@@ -68,7 +68,7 @@ const addModalListeners = (sellerData, userBalances) => {
         break;
     }
   };
-  modalSelect.addEventListener('change', onModalSelectChange);
+  buySelect.addEventListener('change', onModalSelectChange);
   let onCloseModalButtonClick = {};
   let onKeydownCloseModalWindow = {};
   let onOutsideModalWindowClick = {};
@@ -76,22 +76,22 @@ const addModalListeners = (sellerData, userBalances) => {
   const closeModalWindow = () => {
     body.classList.remove(scrollLockClass);
     modalBuy.style.display = 'none';
-    modalPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
-    modalEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
-    modalBuyExchangeAll.removeEventListener('click', onExchangeAllButtonClick);
+    buyPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
+    buyEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
+    buyExchangeAllButton.removeEventListener('click', onExchangeAllButtonClick);
     document.removeEventListener('keydown', onKeydownCloseModalWindow);
-    modalCloseButton.removeEventListener('click', onCloseModalButtonClick);
+    buyCloseButton.removeEventListener('click', onCloseModalButtonClick);
     modalBuy.removeEventListener('mousedown', onOutsideModalWindowClick);
-    modalSelect.removeEventListener('change', onModalSelectChange);
-    modalSelect.selectedIndex = initialModalSelectValue;
+    buySelect.removeEventListener('change', onModalSelectChange);
+    buySelect.selectedIndex = initialModalSelectValue;
     contractorCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
-    modalEnrollmentInput.value = '';
-    modalPaymentInput.value = '';
+    buyEnrollmentInput.value = '';
+    buyPaymentInput.value = '';
     pristine.destroy();
-    hideValidationMessage(validationErrorMessage);
-    hideValidationMessage(validationSuccessMessage);
-    modalBuyForm.removeEventListener('submit', onModalSubmit);
-    validationErrorMessageText.textContent = defaultErrorMessageText;
+    hideValidationMessage(buyErrorMessage);
+    hideValidationMessage(buySuccessMessage);
+    buyForm.removeEventListener('submit', onModalSubmit);
+    buyErrorMessageText.textContent = defaultErrorMessageText;
   };
   onKeydownCloseModalWindow = (event) => {
     if (isEscapeKey(event)) {
@@ -102,7 +102,7 @@ const addModalListeners = (sellerData, userBalances) => {
     closeModalWindow();
   };
   onOutsideModalWindowClick = (event) => {
-    const outsideErrorContainerClick = event.composedPath().includes(modalBuyContentContainer) === false;
+    const outsideErrorContainerClick = event.composedPath().includes(buyContentContainer) === false;
     if (outsideErrorContainerClick) {
       closeModalWindow();
     }
@@ -111,33 +111,33 @@ const addModalListeners = (sellerData, userBalances) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      blockSubmitButton(modalSubmitButton);
-      hideValidationMessage(validationErrorMessage);
+      blockSubmitButton(buySubmitButton);
+      hideValidationMessage(buyErrorMessage);
       sendData(new FormData(evt.target))
         .then(
           () => {
-            showValidationMessage(validationSuccessMessage);
-            unblockSubmitButton(modalSubmitButton);
+            showValidationMessage(buySuccessMessage);
+            unblockSubmitButton(buySubmitButton);
             closeModalWindow();
           }
         )
         .catch(
           (err) => {
-            showValidationMessage(validationErrorMessage);
-            validationErrorMessageText.textContent = err.message;
-            unblockSubmitButton(modalSubmitButton);
+            showValidationMessage(buyErrorMessage);
+            buyErrorMessageText.textContent = err.message;
+            unblockSubmitButton(buySubmitButton);
           }
         )
         .finally(() => {
         });
     } else {
-      showValidationMessage(validationErrorMessage);
+      showValidationMessage(buyErrorMessage);
     }
   };
-  modalBuyForm.addEventListener('submit', onModalSubmit);
+  buyForm.addEventListener('submit', onModalSubmit);
   modalBuy.addEventListener('mousedown', onOutsideModalWindowClick);
   document.addEventListener('keydown', onKeydownCloseModalWindow);
-  modalCloseButton.addEventListener('click', onCloseModalButtonClick);
+  buyCloseButton.addEventListener('click', onCloseModalButtonClick);
 };
 
 export {addModalListeners};

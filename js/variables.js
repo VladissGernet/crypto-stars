@@ -14,28 +14,28 @@ const noAdvertisementsContainer = main.querySelector('.container--lightbackgroun
 
 //Modal
 const modalBuy = body.querySelector('.modal--buy');
-const modalBuyForm = modalBuy.querySelector('.modal-buy');
-const modalCloseButton = modalBuy.querySelector('.modal__close-btn');
-const modalUsernameWrapper = modalBuyForm.querySelector('.transaction-info__data');
-const modalVerifiedIconCopy = modalUsernameWrapper.querySelector('svg').cloneNode(true);
-const modalRate = modalBuyForm.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
-const modalCashlimit = modalBuyForm.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
-const modalPaymentInput = modalBuyForm.querySelector('#payment');
-const modalEnrollmentInput = modalBuyForm.querySelector('#enrollment');
-const modalSelect = modalBuyForm.querySelector('#modal--buy__select');
-const modalBuyExchangeAll = modalBuyForm.querySelector('.exchange-all-button');
-const modalBuyContentContainer = modalBuy.querySelector('.modal__content');
-const contractorCardNumberField = modalBuyForm.querySelector('#contractor-card-number');
-const userCryptoWalletField = modalBuyForm.querySelector('#user-crypto-wallet');
-const passwordField = modalBuyForm.querySelector('#buy-password');
-const validationErrorMessage = modalBuyForm.querySelector('.modal__validation-message--error');
-const validationErrorMessageText = validationErrorMessage.querySelector('.modal__validation-message--error-text');
-const validationSuccessMessage = modalBuyForm.querySelector('.modal__validation-message--success');
-const modalSubmitButton = modalBuyForm.querySelector('.modal__submit');
-const buySendingContractorId = modalBuyForm.querySelector('[name="contractorId"]');
-const buySendingExchangeRate = modalBuyForm.querySelector('[name="exchangeRate"]');
-const buySendingCurrency = modalBuyForm.querySelector('[name="sendingCurrency"]');
-const buyReceivingCurrency = modalBuyForm.querySelector('[name="receivingCurrency"]');
+const buyForm = modalBuy.querySelector('.modal-buy');
+const buyCloseButton = modalBuy.querySelector('.modal__close-btn');
+const buyUsernameWrapper = buyForm.querySelector('.transaction-info__data');
+const modalVerifiedIconCopy = buyUsernameWrapper.querySelector('svg').cloneNode(true);
+const buyRate = buyForm.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
+const buyCashlimit = buyForm.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
+const buyPaymentInput = buyForm.querySelector('#payment');
+const buyEnrollmentInput = buyForm.querySelector('#enrollment');
+const buySelect = buyForm.querySelector('#modal--buy__select');
+const buyExchangeAllButton = buyForm.querySelector('.exchange-all-button');
+const buyContentContainer = modalBuy.querySelector('.modal__content');
+const contractorCardNumberField = buyForm.querySelector('#contractor-card-number');
+const buyUserCryptoWalletField = buyForm.querySelector('#user-crypto-wallet');
+const buyPasswordField = buyForm.querySelector('#buy-password');
+const buyErrorMessage = buyForm.querySelector('.modal__validation-message--error');
+const buyErrorMessageText = buyErrorMessage.querySelector('.modal__validation-message--error-text');
+const buySuccessMessage = buyForm.querySelector('.modal__validation-message--success');
+const buySubmitButton = buyForm.querySelector('.modal__submit');
+const buySendingContractorId = buyForm.querySelector('[name="contractorId"]');
+const buySendingExchangeRate = buyForm.querySelector('[name="exchangeRate"]');
+const buySendingCurrency = buyForm.querySelector('[name="sendingCurrency"]');
+const buyReceivingCurrency = buyForm.querySelector('[name="receivingCurrency"]');
 
 const modalSell = document.querySelector('.modal--sell');
 const modalSellContentContainer = modalSell.querySelector('.modal__content');
@@ -58,7 +58,7 @@ const modalSellCloseButton = modalSell.querySelector('.modal__close-btn');
 const modalSellErrorMessage = modalSellForm.querySelector('.modal__validation-message--error');
 const modalSellSuccessMessage = modalSellForm.querySelector('.modal__validation-message--success');
 const modalSellSubmitButton = modalSellForm.querySelector('.modal__submit');
-const modalSellErrorMessageText = validationErrorMessage.querySelector('.modal__validation-message--error-text');
+const modalSellErrorMessageText = buyErrorMessage.querySelector('.modal__validation-message--error-text');
 const modalSellPassword = modalSellForm.querySelector('#sell-password');
 
 //Templates
@@ -84,28 +84,28 @@ export {
   body,
   main,
   modalBuy,
-  modalUsernameWrapper,
-  modalCloseButton,
+  buyUsernameWrapper,
+  buyCloseButton,
   modalVerifiedIconCopy,
-  modalRate,
-  modalCashlimit,
-  modalPaymentInput,
-  modalEnrollmentInput,
-  modalSelect,
-  modalBuyExchangeAll,
-  modalBuyContentContainer,
+  buyRate,
+  buyCashlimit,
+  buyPaymentInput,
+  buyEnrollmentInput,
+  buySelect,
+  buyExchangeAllButton,
+  buyContentContainer,
   contractorCardNumberField,
-  userCryptoWalletField,
-  modalBuyForm,
-  passwordField,
-  validationErrorMessage,
-  validationSuccessMessage,
-  modalSubmitButton,
+  buyUserCryptoWalletField,
+  buyForm,
+  buyPasswordField,
+  buyErrorMessage,
+  buySuccessMessage,
+  buySubmitButton,
   buySendingContractorId,
   buySendingExchangeRate,
   buySendingCurrency,
   buyReceivingCurrency,
-  validationErrorMessageText,
+  buyErrorMessageText,
   modalSell,
   modalSellForm,
   sellSendingContractorId,
