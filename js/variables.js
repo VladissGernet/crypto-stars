@@ -32,16 +32,18 @@ const validationErrorMessage = modalBuyForm.querySelector('.modal__validation-me
 const validationErrorMessageText = validationErrorMessage.querySelector('.modal__validation-message--error-text');
 const validationSuccessMessage = modalBuyForm.querySelector('.modal__validation-message--success');
 const modalSubmitButton = modalBuyForm.querySelector('.modal__submit');
-const sendingType = modalBuyForm.querySelector('[name="type"]');
-const sendingContractorId = modalBuyForm.querySelector('[name="contractorId"]');
-const sendingExchangeRate = modalBuyForm.querySelector('[name="exchangeRate"]');
-const sendingCurrency = modalBuyForm.querySelector('[name="sendingCurrency"]');
-const receivingCurrency = modalBuyForm.querySelector('[name="receivingCurrency"]');
-const sendingAmount = modalBuyForm.querySelector('[name="sendingAmount"]');
-const receivingAmount = modalBuyForm.querySelector('[name="receivingAmount"]');
+const buySendingContractorId = modalBuyForm.querySelector('[name="contractorId"]');
+const buySendingExchangeRate = modalBuyForm.querySelector('[name="exchangeRate"]');
+const buySendingCurrency = modalBuyForm.querySelector('[name="sendingCurrency"]');
+const buyReceivingCurrency = modalBuyForm.querySelector('[name="receivingCurrency"]');
 
 const modalSell = document.querySelector('.modal--sell');
 const modalSellForm = modalSell.querySelector('.modal-sell');
+const sellSendingContractorId = modalSellForm.querySelector('[name="contractorId"]');
+const sellSendingExchangeRate = modalSellForm.querySelector('[name="exchangeRate"]');
+const sellSendingCurrency = modalSellForm.querySelector('[name="sendingCurrency"]');
+const sellSeceivingCurrency = modalSellForm.querySelector('[name="receivingCurrency"]');
+const modalSellSelect = modalSellForm.querySelector('#modal--sell__select');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -83,14 +85,15 @@ export {
   validationErrorMessage,
   validationSuccessMessage,
   modalSubmitButton,
-  sendingType,
-  sendingContractorId,
-  sendingExchangeRate,
-  sendingCurrency,
-  receivingCurrency,
-  sendingAmount,
-  receivingAmount,
+  buySendingContractorId,
+  buySendingExchangeRate,
+  buySendingCurrency,
+  buyReceivingCurrency,
   validationErrorMessageText,
   modalSell,
-  modalSellForm
+  modalSellForm,
+  sellSendingContractorId,
+  sellSendingExchangeRate,
+  sellSendingCurrency,
+  sellSeceivingCurrency,
 };

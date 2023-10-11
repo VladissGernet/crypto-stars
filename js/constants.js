@@ -69,6 +69,7 @@ const SubmitButtonText = {
 };
 const defaultErrorMessageText = 'Ошибка заполнения формы';
 const sellerIdClassName = 'seller-id';
+const valueToOpenSellModal = 'Cписок';
 
 export {
   BASE_URL,
@@ -91,5 +92,6 @@ export {
   pristineDefaultConfig,
   SubmitButtonText,
   defaultErrorMessageText,
-  sellerIdClassName
+  sellerIdClassName,
+  valueToOpenSellModal
 };
