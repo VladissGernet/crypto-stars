@@ -37,8 +37,7 @@ import {
   modalSellContentContainer,
   modalSellForm,
   modalSellSubmitButton,
-  validationErrorMessage,
-  validationErrorMessageText
+  modalSellErrorMessageText, validationSuccessMessage, validationErrorMessage
 } from './variables.js';
 import {
   changeButtonClassName, defaultErrorMessageText,
@@ -87,6 +86,8 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       const activeButton = buySellContainer.querySelector('.is-active');
       body.classList.add(scrollLockClass);
       if (filterValues[activeButton.textContent] === 'seller') {
+        hideValidationMessage(validationSuccessMessage);
+        hideValidationMessage(validationErrorMessage);
         buySendingContractorId.value = id;
         buySendingExchangeRate.value = exchangeRate;
         buySendingCurrency.value = 'RUB';
@@ -102,6 +103,8 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       }
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === valueToOpenSellModal) {
+        hideValidationMessage(modalSellSuccessMessage);
+        hideValidationMessage(modalSellErrorMessage);
         const pristine = initPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
         sellSendingContractorId.value = id;
         sellSendingExchangeRate.value = exchangeRate;
@@ -213,7 +216,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
               .catch(
                 (err) => {
                   showValidationMessage(modalSellErrorMessage);
-                  validationErrorMessageText.textContent = err.message;
+                  modalSellErrorMessageText.textContent = err.message;
                   unblockSubmitButton(modalSellSubmitButton);
                 }
               )
