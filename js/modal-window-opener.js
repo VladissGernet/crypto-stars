@@ -63,7 +63,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         modalRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
         modalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
         clearModalSelectOptions(modalSelect);
-        fillPaymentMethods(paymentMethods);
+        fillPaymentMethods(paymentMethods, modalSelect);
         addModalListeners(selectedData, userBalances);
         modalBuy.style.display = 'block';
       }
@@ -78,6 +78,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         sellModalRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
         sellModalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
         clearModalSelectOptions(sellModalSelect);
+        fillPaymentMethods(serverUserData.paymentMethods, sellModalSelect);
       }
     }
   });

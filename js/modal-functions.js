@@ -25,12 +25,12 @@ const fillUsernameWrapper = (wrapper, name, verifiedStatus, icon) => {
   }
   wrapper.appendChild(modalNameSpan);
 };
-const fillPaymentMethods = (methodsArray) => {
+const fillPaymentMethods = (methodsArray, select) => {
   if (methodsArray !== undefined) {
     methodsArray.forEach((payment) => {
       const newOption = document.createElement('option');
       newOption.textContent = payment.provider;
-      modalSelect.appendChild(newOption);
+      select.appendChild(newOption);
     });
   }
 };
