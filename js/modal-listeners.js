@@ -14,7 +14,7 @@ import {
   modalSubmitButton
 } from './variables.js';
 import {scrollLockClass, initialModalSelectValue, SubmitButtonText} from './constants.js';
-import {debounce, isEscapeKey} from './util.js';
+import {debounce, isEscapeKey, addPointToNumber} from './util.js';
 import {initPristine} from './init-pristine.js';
 import {hideValidationMessage, showValidationMessage} from './validation-message.js';
 import {sendData} from './load-data.js';
@@ -34,14 +34,14 @@ const addModalListeners = (sellerData, userBalances) => {
   const pristine = initPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
-      modalEnrollmentInput.value = (modalPaymentInput.value / exchangeRate).toFixed(2);
+      modalEnrollmentInput.value = addPointToNumber(modalPaymentInput.value / exchangeRate);
     });
     debouncedEnter();
   };
   modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
   const onEnrollmentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
-      modalPaymentInput.value = (modalEnrollmentInput.value * exchangeRate).toFixed(2);
+      modalPaymentInput.value = addPointToNumber(modalEnrollmentInput.value * exchangeRate);
     });
     debouncedEnter();
   };

@@ -2,7 +2,7 @@ import {noAdvertisementsContainer, tableBody, usersList, userTableRowTemplate} f
 import {initialFilterValue, changeButtonClassName} from './constants.js';
 
 const addSpacesToNumber = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-const trimNumber = (value) => addSpacesToNumber(value.toFixed(2));
+const trimNumber = (value) => addSpacesToNumber((Math.floor(value * 100)) / 100);
 const transformCurrencyAmount = (currencyValue, rate, filter) => {
   if (filter === 'seller') {
     return trimNumber(currencyValue * rate);
