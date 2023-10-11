@@ -53,7 +53,7 @@ const verifiedPinIcon = L.icon({
 const mapPopupTitleFixedWidth = '100%';
 const changeButtonClassName = 'btn--change';
 const scrollLockClass = 'scroll-lock';
-const modalZIndex = '400'; //Для перекрытия карты модальным окном.
+const modalZIndex = '1000'; //Для перекрытия карты модальным окном.
 const initialModalSelectValue = 0;
 const pristineDefaultConfig = {
   classTo: 'modal__pristine',

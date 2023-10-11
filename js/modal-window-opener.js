@@ -32,14 +32,14 @@ import {
   getSelectedDataId,
   clearModalSelectOptions,
   fillUsernameWrapper,
-  fillPaymentMethods
+  fillPaymentMethods,
+  showModalWindow
 } from './modal-functions.js';
 import {addModalListeners} from './modal-listeners.js';
 
 modalBuy.style.zIndex = modalZIndex;
 modalPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 modalEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
-// modalSell.style.display = 'block';
 
 const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => {
   userCryptoWalletField.placeholder = serverUserData.wallet.address;
@@ -65,7 +65,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         clearModalSelectOptions(modalSelect);
         fillPaymentMethods(paymentMethods, modalSelect);
         addModalListeners(selectedData, userBalances);
-        modalBuy.style.display = 'block';
+        showModalWindow(modalBuy);
       }
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === valueToOpenSellModal) {
@@ -78,7 +78,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         sellModalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
         clearModalSelectOptions(sellModalSelect);
         fillPaymentMethods(serverUserData.paymentMethods, sellModalSelect);
-        modalSell.style.display = 'block';
+        showModalWindow(modalSell);
       }
     }
   });

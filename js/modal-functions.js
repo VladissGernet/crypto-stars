@@ -1,4 +1,4 @@
-import {modalSelect} from './variables.js';
+import {modalBuy, modalSelect} from './variables.js';
 
 const getSelectedDataId = (data, elementId) => {
   for (let i = 0; i < data.length; i++) {
@@ -34,10 +34,14 @@ const fillPaymentMethods = (methodsArray, select) => {
     });
   }
 };
+const showModalWindow = (modal) => {
+  modal.style.display = 'block';
+};
 
 export {
   getSelectedDataId,
   clearModalSelectOptions,
   fillUsernameWrapper,
-  fillPaymentMethods
+  fillPaymentMethods,
+  showModalWindow
 };
