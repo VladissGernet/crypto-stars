@@ -43,6 +43,8 @@ const sellSendingContractorId = modalSellForm.querySelector('[name="contractorId
 const sellSendingExchangeRate = modalSellForm.querySelector('[name="exchangeRate"]');
 const sellSendingCurrency = modalSellForm.querySelector('[name="sendingCurrency"]');
 const sellSeceivingCurrency = modalSellForm.querySelector('[name="receivingCurrency"]');
+const sellModalUsernameWrapper = modalSellForm.querySelector('.transaction-info__data');
+const sellModalRate = modalSellForm.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
 const modalSellSelect = modalSellForm.querySelector('#modal--sell__select');
 
 //Templates
@@ -96,4 +98,6 @@ export {
   sellSendingExchangeRate,
   sellSendingCurrency,
   sellSeceivingCurrency,
+  sellModalUsernameWrapper,
+  sellModalRate
 };
