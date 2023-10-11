@@ -22,6 +22,7 @@ import {
   sellSeceivingCurrency,
   sellModalUsernameWrapper,
   sellModalRate,
+  sellModalCashlimit
 } from './variables.js';
 import {changeButtonClassName, filterValues, modalZIndex, scrollLockClass, sellerIdClassName, valueToOpenSellModal} from './constants.js';
 import {addSpacesToNumber, onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
@@ -73,6 +74,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         sellSeceivingCurrency.value = 'RUB';
         fillUsernameWrapper(sellModalUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
         sellModalRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
+        sellModalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
       }
     }
   });
