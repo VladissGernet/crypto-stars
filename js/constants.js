@@ -63,6 +63,10 @@ const pristineDefaultConfig = {
   errorTextTag: 'div',
   errorTextClass: 'custom-input__error'
 };
+const SubmitButtonText = {
+  IDLE: 'Обменять',
+  SENDING: 'Обмен...'
+};
 
 export {
   BASE_URL,
@@ -82,5 +86,6 @@ export {
   scrollLockClass,
   modalZIndex,
   initialModalSelectValue,
-  pristineDefaultConfig
+  pristineDefaultConfig,
+  SubmitButtonText
 };

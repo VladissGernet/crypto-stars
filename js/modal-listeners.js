@@ -8,11 +8,25 @@ import {
   modalEnrollmentInput,
   modalPaymentInput,
   modalSelect,
-  userCardNumberField
+  userCardNumberField,
+  validationErrorMessage,
+  validationSuccessMessage,
+  modalSubmitButton
 } from './variables.js';
-import {scrollLockClass, initialModalSelectValue} from './constants.js';
+import {scrollLockClass, initialModalSelectValue, SubmitButtonText} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
 import {initPristine} from './init-pristine.js';
+import {hideValidationMessage, showValidationMessage} from './validation-message.js';
+import {sendData} from './load-data.js';
+
+const blockSubmitButton = () => {
+  modalSubmitButton.disabled = true;
+  modalSubmitButton.textContent = SubmitButtonText.SENDING;
+};
+const unblockSubmitButton = () => {
+  modalSubmitButton.disabled = false;
+  modalSubmitButton.textContent = SubmitButtonText.IDLE;
+};
 
 const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
 const addModalListeners = (sellerData, userBalances) => {
@@ -21,7 +35,24 @@ const addModalListeners = (sellerData, userBalances) => {
   const onModalSubmit = (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
-    console.log(isValid);
+    if (isValid) {
+      blockSubmitButton();
+      hideValidationMessage(validationErrorMessage);
+      sendData(new FormData(evt.target))
+        .then(
+          () => {
+            showValidationMessage(validationSuccessMessage);
+          }
+        )
+        .catch(
+          (err) => {
+            console.log(err.message);
+          }
+        )
+        .finally(unblockSubmitButton);
+    } else {
+      showValidationMessage(validationErrorMessage);
+    }
   };
   modalBuyForm.addEventListener('submit', onModalSubmit);
   const onPaymentInputEnterNewValue = () => {
@@ -79,6 +110,8 @@ const addModalListeners = (sellerData, userBalances) => {
     modalEnrollmentInput.value = '';
     modalPaymentInput.value = '';
     pristine.destroy();
+    hideValidationMessage(validationErrorMessage);
+    hideValidationMessage(validationSuccessMessage);
     modalBuyForm.removeEventListener('submit', onModalSubmit);
   };
   onKeydownCloseModalWindow = (event) => {

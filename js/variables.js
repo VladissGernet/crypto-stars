@@ -28,6 +28,9 @@ const modalBuyContentContainer = modalBuy.querySelector('.modal__content');
 const userCardNumberField = modalBuyForm.querySelector('#user-card-number');
 const userCryptoWalletField = modalBuyForm.querySelector('#user-crypto-wallet');
 const passwordField = modalBuyForm.querySelector('#password');
+const validationErrorMessage = modalBuyForm.querySelector('.modal__validation-message--error');
+const validationSuccessMessage = modalBuyForm.querySelector('.modal__validation-message--success');
+const modalSubmitButton = modalBuyForm.querySelector('.modal__submit');
 
 //Templates
 const userTableRowTemplate = document.querySelector('#user-table-row__template')
@@ -65,5 +68,8 @@ export {
   userCardNumberField,
   userCryptoWalletField,
   modalBuyForm,
-  passwordField
+  passwordField,
+  validationErrorMessage,
+  validationSuccessMessage,
+  modalSubmitButton
 };
