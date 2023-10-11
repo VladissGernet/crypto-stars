@@ -21,15 +21,6 @@ import {hideValidationMessage, showValidationMessage} from './validation-message
 import {sendData} from './load-data.js';
 import {blockSubmitButton, unblockSubmitButton} from './modal-functions.js';
 
-// const blockSubmitButton = () => {
-//   modalSubmitButton.disabled = true;
-//   modalSubmitButton.textContent = SubmitButtonText.SENDING;
-// };
-// const unblockSubmitButton = () => {
-//   modalSubmitButton.disabled = false;
-//   modalSubmitButton.textContent = SubmitButtonText.IDLE;
-// };
-
 const userCardNumberFieldInitialPlaceholder = userCardNumberField.placeholder;
 const addModalListeners = (sellerData, userBalances) => {
   const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;
