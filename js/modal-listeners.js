@@ -19,6 +19,7 @@ import {debounce, isEscapeKey} from './util.js';
 import {initPristine} from './init-pristine.js';
 import {hideValidationMessage} from './validation-message.js';
 import {initSubmit} from './init-submit.js';
+import {resetPaymentListeners} from './close-modal-window.js';
 
 const userCardNumberFieldInitialPlaceholder = contractorCardNumberField.placeholder;
 const addModalListeners = (sellerData, userBalances) => {
@@ -72,15 +73,6 @@ const addModalListeners = (sellerData, userBalances) => {
   let onKeydownCloseModalWindow = {};
   let onOutsideModalWindowClick = {};
   let onModalSubmit = {};
-
-  const resetPaymentListeners = (paymentInput, onPaymentInput, enrollmentInput, onEnrollmentInput, exchangeAll, onExchangeAllClick) => {
-    paymentInput.removeEventListener('input', onPaymentInput);
-    enrollmentInput.removeEventListener('input', onEnrollmentInput);
-    paymentInput.value = '';
-    enrollmentInput.value = '';
-    exchangeAll.removeEventListener('click', onExchangeAllClick);
-  };
-
   const resetForm = (modal, closeButton, select, form, errorText, onSelectChange, onFormSubmit) => {
     body.classList.remove(scrollLockClass);
     modal.style.display = 'none';
@@ -95,7 +87,6 @@ const addModalListeners = (sellerData, userBalances) => {
     select.selectedIndex = initialModalSelectValue;
     form.removeEventListener('submit', onFormSubmit);
   };
-
   const closeModalWindow = () => {
     resetPaymentListeners(buyPaymentInput, onPaymentEnterValue, buyEnrollmentInput, onEnrollmentEnterValue, buyExchangeAllButton, onExchangeAllButtonClick);
     resetForm(modalBuy, buyCloseButton, buySelect, buyForm, buyErrorMessageText, onModalSelectChange, onModalSubmit);
