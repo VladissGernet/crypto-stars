@@ -41,8 +41,14 @@ const addModalListeners = (sellerData, userBalances) => {
   };
   modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
   const onExchangeAllButtonClick = () => {
-    modalEnrollmentInput.value = balance.amount;
-    modalPaymentInput.value = balance.amount * exchangeRate;
+    if (userBalances.RUB < (balance.amount * exchangeRate)) {
+      modalEnrollmentInput.value = userBalances.RUB / exchangeRate;
+      modalPaymentInput.value = userBalances.RUB;
+    }
+    if (userBalances.RUB > (balance.amount * exchangeRate)) {
+      modalEnrollmentInput.value = balance.amount;
+      modalPaymentInput.value = balance.amount * exchangeRate;
+    }
   };
   modalBuyExchangeAll.addEventListener('click', onExchangeAllButtonClick);
   const onModalSelectChange = () => {
