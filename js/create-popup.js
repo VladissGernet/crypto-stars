@@ -3,6 +3,7 @@ import {mapPopupTitleWidth, classNameOfChangeButton, sellerIdClassName} from './
 import {addSpacesToNumber} from './util.js';
 
 const createPopup = (markerData) => {
+  const {id, balance, userName, exchangeRate, minAmount, isVerified, paymentMethods} = markerData;
   const popupElement = mapBaloonTemplate.cloneNode(true);
   const titleWrapper = popupElement.querySelector('.user-card__user-name');
   const title = titleWrapper.querySelector('span');
@@ -13,23 +14,23 @@ const createPopup = (markerData) => {
   const badgesList = popupElement.querySelector('.user-card__badges-list');
   const popupButton = popupElement.querySelector('button');
   popupElement.classList.add(sellerIdClassName);
-  popupElement.id = markerData.id;
+  popupElement.id = id;
   popupButton.classList.add(classNameOfChangeButton);
   const badge = badgesList.querySelector('.badge');
-  const {amount, currency} = markerData.balance;
+  const {amount, currency} = balance;
   titleWrapper.style.width = mapPopupTitleWidth;
-  title.textContent = markerData.userName;
+  title.textContent = userName;
   currencyValue.textContent = currency;
-  rate.textContent = `${addSpacesToNumber(markerData.exchangeRate)} ₽`;
-  const getMinAmount = () => addSpacesToNumber(markerData.minAmount * markerData.exchangeRate);
-  const getMaxAmount = () => addSpacesToNumber(amount * markerData.exchangeRate);
+  rate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
+  const getMinAmount = () => addSpacesToNumber(minAmount * exchangeRate);
+  const getMaxAmount = () => addSpacesToNumber(amount * exchangeRate);
   limit.textContent = `${getMinAmount()} ₽ – ${getMaxAmount()} ₽`;
-  const isSellerNotVerified = markerData.isVerified === false;
+  const isSellerNotVerified = isVerified === false;
   if (isSellerNotVerified) {
     verifiedIcon.remove();
   }
   const badgesListFragment = document.createDocumentFragment();
-  markerData.paymentMethods.forEach((paymentMethod) => {
+  paymentMethods.forEach((paymentMethod) => {
     const newBadge = badge.cloneNode();
     newBadge.textContent = paymentMethod.provider;
     badgesListFragment.appendChild(newBadge);
