@@ -34,11 +34,11 @@ const addModalListeners = (sellerData, userBalances) => {
   const pristine = initPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
   const onPaymentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
-      modalEnrollmentInput.value = addPointToNumber(modalPaymentInput.value / exchangeRate);
+      modalEnrollmentInput.value = modalPaymentInput.value / exchangeRate;
     });
     debouncedEnter();
   };
-  modalPaymentInput.addEventListener('change', onPaymentInputEnterNewValue);
+  modalPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
   const onEnrollmentInputEnterNewValue = () => {
     const debouncedEnter = debounce(() => {
       modalPaymentInput.value = addPointToNumber(modalEnrollmentInput.value * exchangeRate);
@@ -46,7 +46,7 @@ const addModalListeners = (sellerData, userBalances) => {
     });
     debouncedEnter();
   };
-  modalEnrollmentInput.addEventListener('change', onEnrollmentInputEnterNewValue);
+  modalEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
   const onExchangeAllButtonClick = () => {
     modalEnrollmentInput.value = balance.amount;
     modalPaymentInput.value = Math.floor(balance.amount * exchangeRate);
