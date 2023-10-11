@@ -69,7 +69,6 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       }
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === valueToOpenSellModal) {
-        modalSell.style.display = 'block';
         sellSendingContractorId.value = id;
         sellSendingExchangeRate.value = exchangeRate;
         sellSendingCurrency.value = 'KEKS';
@@ -79,6 +78,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         sellModalCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
         clearModalSelectOptions(sellModalSelect);
         fillPaymentMethods(serverUserData.paymentMethods, sellModalSelect);
+        modalSell.style.display = 'block';
       }
     }
   });
