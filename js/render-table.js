@@ -1,13 +1,6 @@
 import {noAdvertisementsContainer, tableBody, usersList, userTableRowTemplate} from './variables.js';
 import {initialFilterValue, changeButtonClassName} from './constants.js';
-
-const addSpacesToNumber = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-const transformCurrencyAmount = (currencyValue, rate, filter) => {
-  if (filter === 'seller') {
-    return addSpacesToNumber(currencyValue * rate);
-  }
-  return addSpacesToNumber(currencyValue);
-};
+import {transformCurrencyAmount} from './util.js';
 
 const renderTable = (data, filterValue = initialFilterValue) => {
   const isDataEmpty = data.length === 0;
@@ -58,4 +51,4 @@ const renderTable = (data, filterValue = initialFilterValue) => {
   }
 };
 
-export {renderTable, transformCurrencyAmount};
+export {renderTable};

@@ -1,4 +1,4 @@
-import {transformCurrencyAmount} from './render-table.js';
+import {transformCurrencyAmount} from './util.js';
 import {modalBuyForm, modalPaymentInput, modalSelect, passwordField} from './variables.js';
 import {pristineDefaultConfig} from './constants.js';
 

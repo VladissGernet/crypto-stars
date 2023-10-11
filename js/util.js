@@ -11,5 +11,20 @@ const onNumberInputKeydownCheckKey = (evt) => {
   }
 };
 const isEscapeKey = (evt) => evt.key === 'Escape';
+const addSpacesToNumber = (value) => {
+  const valueArray = value.toString().split('.');
+  const valueBeforePoint = valueArray[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  if (valueArray[1] !== undefined) {
+    const valueAfterPoint = valueArray[1];
+    return `${valueBeforePoint},${valueAfterPoint}`;
+  }
+  return valueBeforePoint;
+};
+const transformCurrencyAmount = (currencyValue, rate, filter) => {
+  if (filter === 'seller') {
+    return addSpacesToNumber(currencyValue * rate);
+  }
+  return addSpacesToNumber(currencyValue);
+};
 
-export {debounce, onNumberInputKeydownCheckKey, isEscapeKey};
+export {debounce, onNumberInputKeydownCheckKey, isEscapeKey, transformCurrencyAmount};

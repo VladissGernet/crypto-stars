@@ -16,8 +16,7 @@ import {
   receivingCurrency
 } from './variables.js';
 import {changeButtonClassName, modalZIndex, scrollLockClass} from './constants.js';
-import {transformCurrencyAmount} from './render-table.js';
-import {onNumberInputKeydownCheckKey} from './util.js';
+import {onNumberInputKeydownCheckKey, transformCurrencyAmount} from './util.js';
 import {
   getSelectedDataId,
   clearModalSelectOptions,
