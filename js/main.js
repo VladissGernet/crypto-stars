@@ -5,7 +5,6 @@ import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigati
 import {addModalWindowOpener} from './modal-window-opener.js';
 import {initMap} from './map-init.js';
 import {getUserBalancesObject} from './get-user-balances-object.js';
-import {addSpacesToNumber} from './util.js';
 
 let receivedData = [];
 getContractors()
@@ -19,7 +18,7 @@ getContractors()
       .then((userData) => {
         const userBalancesObject = getUserBalancesObject(userData);
         userCryptoBalance.textContent = userBalancesObject['KEKS'];
-        userFiatBalance.textContent = addSpacesToNumber(userBalancesObject['RUB']);
+        userFiatBalance.textContent = userBalancesObject['RUB'];
         userProfileName.textContent = userData.userName;
         addModalWindowOpener(receivedData, userData, userBalancesObject);
       });
