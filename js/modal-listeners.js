@@ -1,5 +1,4 @@
 import {
-  body,
   buyExchangeAllButton,
   modalBuy,
   buyContentContainer,
@@ -14,12 +13,10 @@ import {
   buyErrorMessageText,
   buySubmitButton
 } from './variables.js';
-import {scrollLockClass, initialModalSelectValue, defaultErrorMessageText} from './constants.js';
 import {debounce, isEscapeKey} from './util.js';
 import {initPristine} from './init-pristine.js';
-import {hideValidationMessage} from './validation-message.js';
 import {initSubmit} from './init-submit.js';
-import {resetPaymentListeners} from './close-modal-window.js';
+import {resetPaymentListeners, returnInitialView, resetForm} from './close-modal-window.js';
 
 const userCardNumberFieldInitialPlaceholder = contractorCardNumberField.placeholder;
 const addModalListeners = (sellerData, userBalances) => {
@@ -71,25 +68,12 @@ const addModalListeners = (sellerData, userBalances) => {
   buySelect.addEventListener('change', onModalSelectChange);
   let onCloseModalButtonClick = {};
   let onKeydownCloseModalWindow = {};
-  let onOutsideModalWindowClick = {};
+  let onOutsideWindowClick = {};
   let onModalSubmit = {};
-  const resetForm = (modal, closeButton, select, form, errorText, onSelectChange, onFormSubmit) => {
-    body.classList.remove(scrollLockClass);
-    modal.style.display = 'none';
-    modal.removeEventListener('mousedown', onOutsideModalWindowClick);
-    hideValidationMessage(buyErrorMessage);
-    hideValidationMessage(buySuccessMessage);
-    errorText.textContent = defaultErrorMessageText;
-    pristine.destroy();
-    document.removeEventListener('keydown', onKeydownCloseModalWindow);
-    closeButton.removeEventListener('click', onCloseModalButtonClick);
-    select.removeEventListener('change', onSelectChange);
-    select.selectedIndex = initialModalSelectValue;
-    form.removeEventListener('submit', onFormSubmit);
-  };
   const closeModalWindow = () => {
     resetPaymentListeners(buyPaymentInput, onPaymentEnterValue, buyEnrollmentInput, onEnrollmentEnterValue, buyExchangeAllButton, onExchangeAllButtonClick);
-    resetForm(modalBuy, buyCloseButton, buySelect, buyForm, buyErrorMessageText, onModalSelectChange, onModalSubmit);
+    returnInitialView(modalBuy, onOutsideWindowClick, buyErrorMessageText, buySelect, onModalSelectChange);
+    resetForm(onKeydownCloseModalWindow, buyCloseButton, onCloseModalButtonClick, buyForm, onModalSubmit, pristine);
     contractorCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
   };
   onKeydownCloseModalWindow = (event) => {
@@ -100,7 +84,7 @@ const addModalListeners = (sellerData, userBalances) => {
   onCloseModalButtonClick = () => {
     closeModalWindow();
   };
-  onOutsideModalWindowClick = (event) => {
+  onOutsideWindowClick = (event) => {
     const outsideErrorContainerClick = event.composedPath().includes(buyContentContainer) === false;
     if (outsideErrorContainerClick) {
       closeModalWindow();
@@ -110,7 +94,7 @@ const addModalListeners = (sellerData, userBalances) => {
     initSubmit(evt, pristine, buySubmitButton, buyErrorMessage, buySuccessMessage, buyErrorMessageText, closeModalWindow);
   };
   buyForm.addEventListener('submit', onModalSubmit);
-  modalBuy.addEventListener('mousedown', onOutsideModalWindowClick);
+  modalBuy.addEventListener('mousedown', onOutsideWindowClick);
   document.addEventListener('keydown', onKeydownCloseModalWindow);
   buyCloseButton.addEventListener('click', onCloseModalButtonClick);
 };
