@@ -2,15 +2,7 @@ import {
   body,
   main,
   modalBuy,
-  buyCashlimit,
-  buyRate,
-  buyUsernameWrapper,
   modalVerifiedIconCopy,
-  buyUserCryptoWalletField,
-  buySendingContractorId,
-  buySendingExchangeRate,
-  buySendingCurrency,
-  buyReceivingCurrency,
   buySellContainer,
   modalSell,
   toggleListMapContainer,
@@ -21,13 +13,10 @@ import {
   sellUsernameWrapper,
   selllRate,
   sellCashlimit,
-  buySelect,
   sellSelect,
   contractorCryptoWallet,
   sellErrorMessage,
   sellSuccessMessage,
-  buySuccessMessage,
-  buyErrorMessage,
 } from './variables.js';
 import {
   classNameOfChangeButton,
@@ -49,10 +38,9 @@ import {
   showModalWindow,
   fillServerData
 } from './modal-functions.js';
-import {addSellerModalListeners} from './seller-modal.js';
 import {hideValidationMessage} from './validation-message.js';
 import {addBuyerModal} from './buyer-modal.js';
-import {receivedData} from './main.js';
+import {openSellModal} from './open-sell-modal.js';
 
 const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => {
   main.addEventListener('click', (evt) => {
@@ -69,30 +57,10 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       body.classList.add(scrollLockClass);
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
       if (activeMapToggle.textContent === 'Карта' && activeButton.textContent === 'Продать') {
-        hideValidationMessage(buySuccessMessage);
-        hideValidationMessage(buyErrorMessage);
-        fillServerData(buySendingContractorId, id, buySendingExchangeRate, exchangeRate, buySendingCurrency, 'RUB', buyReceivingCurrency, 'KEKS');
-        fillUsernameWrapper(buyUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
-        buyRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
-        buyCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
-        clearModalSelectOptions(buySelect);
-        fillPaymentMethods(paymentMethods, buySelect);
-        showModalWindow(modalBuy);
-        buyUserCryptoWalletField.placeholder = serverUserData.wallet.address;
-        addSellerModalListeners(selectedData, userBalances);
+        openSellModal(id, exchangeRate, userName, isVerified, minCurrencyAmount, maxCurrencyAmount, paymentMethods, serverUserData, selectedData, userBalances);
       }
       if (filterValues[activeButton.textContent] === 'seller') {
-        hideValidationMessage(buySuccessMessage);
-        hideValidationMessage(buyErrorMessage);
-        fillServerData(buySendingContractorId, id, buySendingExchangeRate, exchangeRate, buySendingCurrency, 'RUB', buyReceivingCurrency, 'KEKS');
-        fillUsernameWrapper(buyUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
-        buyRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
-        buyCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
-        clearModalSelectOptions(buySelect);
-        fillPaymentMethods(paymentMethods, buySelect);
-        showModalWindow(modalBuy);
-        buyUserCryptoWalletField.placeholder = serverUserData.wallet.address;
-        addSellerModalListeners(selectedData, userBalances);
+        openSellModal(id, exchangeRate, userName, isVerified, minCurrencyAmount, maxCurrencyAmount, paymentMethods, serverUserData, selectedData, userBalances);
       }
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === filterValueToOpenSellModal) {
         hideValidationMessage(sellSuccessMessage);
