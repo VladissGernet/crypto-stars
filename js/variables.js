@@ -12,6 +12,8 @@ const mapContainer = main.querySelector('#map').closest('.container');
 const serverErrorContainer = main.querySelector('.message--server-error').closest('.container');
 const noAdvertisementsContainer = main.querySelector('.container--lightbackground');
 const userProfile = body.querySelector('.user-profile');
+const userCryptoBalance = body.querySelector('#user-crypto-balance');
+const userFiatBalance = body.querySelector('#user-fiat-balance');
 
 //Modal
 const modalBuy = body.querySelector('.modal--buy');
@@ -130,5 +132,7 @@ export {
   sellSubmitButton,
   sellErrorMessageText,
   sellPassword,
-  userProfile
+  userProfile,
+  userCryptoBalance,
+  userFiatBalance
 };
