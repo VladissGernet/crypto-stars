@@ -51,7 +51,7 @@ import {
 } from './modal-functions.js';
 import {addSellerModalListeners} from './seller-modal.js';
 import {hideValidationMessage} from './validation-message.js';
-import {addBuyerModal} from './add-buyer-modal.js';
+import {addBuyerModal} from './buyer-modal.js';
 
 const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => {
   main.addEventListener('click', (evt) => {
