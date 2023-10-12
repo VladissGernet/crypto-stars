@@ -11,6 +11,7 @@ import {
   sellExchangeAllCrypto,
   sellExchangeAllRub,
   sellForm,
+  sellPassword,
   sellPaymentInput,
   sellSelect,
   sellSubmitButton,
@@ -66,6 +67,7 @@ const addBuyerModal = (buyerData, userBalances, userDataArray) => {
     resetExchangeAllButton(sellExchangeAllCrypto, onModalSellExchangeAllButtonClick);
     returnInitialView(modalSell, onOutsideModalWindowClick, sellErrorMessage, sellSelect, onModalSelectChange);
     resetForm(onKeydownCloseModalWindow, sellCloseButton, onCloseModalButtonClick, sellForm, onModalSubmit, pristine);
+    sellPassword.value = '';
     sellExchangeAllRub.removeEventListener('click', onModalSellExchangeAllButtonClick);
   };
   onKeydownCloseModalWindow = (event) => {

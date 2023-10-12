@@ -13,7 +13,8 @@ import {
   buyErrorMessageText,
   buySubmitButton,
   sellPaymentInput,
-  sellEnrollmentInput
+  sellEnrollmentInput,
+  buyPasswordField
 } from './variables.js';
 import {debounce, isEscapeKey, onNumberInputKeydownCheckKey} from './util.js';
 import {initSellerPristine} from './pristine-validation.js';
@@ -66,6 +67,7 @@ const addSellerModalListeners = (sellerData, userBalances) => {
     resetExchangeAllButton(buyExchangeAllButton, onExchangeAllButtonClick);
     returnInitialView(modalBuy, onOutsideWindowClick, buyErrorMessageText, buySelect, onModalSelectChange);
     resetForm(onKeydownCloseModalWindow, buyCloseButton, onCloseModalButtonClick, buyForm, onModalSubmit, pristine);
+    buyPasswordField.value = '';
     contractorCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
   };
   onKeydownCloseModalWindow = (event) => {
