@@ -40,13 +40,13 @@ import {
   sellErrorMessageText,
   buySuccessMessage,
   buyErrorMessage,
-  sellPassword
+  sellPassword,
 } from './variables.js';
 import {
-  classNameOfChangeButton, defaultErrorMessageText,
+  classNameOfChangeButton,
   filterValues,
-  initialModalSelectValue,
-  modalZIndex, pristineDefaultConfig,
+  modalZIndex,
+  pristineDefaultConfig,
   scrollLockClass,
   sellerIdClassName,
   filterValueToOpenSellModal
@@ -68,6 +68,7 @@ import {
 import {addModalListeners} from './modal-listeners.js';
 import {hideValidationMessage} from './validation-message.js';
 import {initSubmit} from './init-submit.js';
+import {resetExchangeAllButton, resetForm, resetPaymentListeners, returnInitialView} from './close-modal-window.js';
 
 modalBuy.style.zIndex = modalZIndex;
 buyPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
@@ -182,24 +183,10 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         let onOutsideModalWindowClick = {};
         let onModalSubmit = {};
         const closeModalWindow = () => {
-          body.classList.remove(scrollLockClass);
-          modalSell.style.display = 'none';
-          sellPaymentInput.removeEventListener('input', onPaymentInputEnterNewValue);
-          sellEnrollmentInput.removeEventListener('input', onEnrollmentInputEnterNewValue);
-          sellExchangeAllCrypto.removeEventListener('click', onModalSellExchangeAllButtonClick);
-          document.removeEventListener('keydown', onKeydownCloseModalWindow);
-          sellCloseButton.removeEventListener('click', onCloseModalButtonClick);
-          modalSell.removeEventListener('mousedown', onOutsideModalWindowClick);
-          sellSelect.removeEventListener('change', onModalSelectChange);
-          sellSelect.selectedIndex = initialModalSelectValue;
-          sellPaymentInput.value = '';
-          sellEnrollmentInput.value = '';
-          pristine.destroy();
-          hideValidationMessage(sellErrorMessage);
-          hideValidationMessage(sellSuccessMessage);
-          sellForm.removeEventListener('submit', onModalSubmit);
-          sellErrorMessage.textContent = defaultErrorMessageText;
-
+          resetPaymentListeners(sellPaymentInput, onPaymentInputEnterNewValue, sellEnrollmentInput, onEnrollmentInputEnterNewValue);
+          resetExchangeAllButton(sellExchangeAllCrypto, onModalSellExchangeAllButtonClick);
+          returnInitialView(modalSell, onOutsideModalWindowClick, sellErrorMessage, sellSelect, onModalSelectChange);
+          resetForm(onKeydownCloseModalWindow, sellCloseButton, onCloseModalButtonClick, sellForm, onModalSubmit, pristine);
           sellExchangeAllRub.removeEventListener('click', onModalSellExchangeAllButtonClick);
         };
         onKeydownCloseModalWindow = (event) => {
