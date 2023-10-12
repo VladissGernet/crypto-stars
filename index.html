@@ -154,13 +154,6 @@
         </header>
         <main>
             <h1 class="visually-hidden">Пользователи биржи</h1>
-
-            <!--
-                В случае ошибки загрузки нужно показать .container с сообщением об ошибке
-                Остальные контейнеры нужно скрыть. Способ сокрытия подойдёт любой.
-                Для удобства обращения из JS, вы можете добавить контейнерам id
-                или уникальные классы
-            -->
             <div class="container" style="display: none">
                 <div class="message message--server-error">
                     <span class="message__icon">
@@ -181,7 +174,6 @@
                         <div class="tabs no-transition-global tabs--toggle-buy-sell" data-tabs="parent"
                             data-delay="300">
                             <div class="tabs__controls" data-tabs="controls">
-                                <!-- При переключении с продавцов на покупателей и обратно нужно выделить активный пункт .is-active -->
                                 <button class="tabs__control btn is-active" type="button"
                                     data-tabs="control">Купить</button>
                                 <button class="tabs__control btn" type="button" data-tabs="control">Продать</button>
@@ -198,7 +190,6 @@
                     <div class="users-nav__tabs">
                         <div class="tabs no-transition-global tabs--toggle-list-map" data-tabs="parent"
                             data-delay="300">
-                            <!-- При переключении с карты на список и обратно нужно выделить активный пункт .is-active -->
                             <div class="tabs__controls" data-tabs="controls">
                                 <button class="tabs__control btn is-active" type="button"
                                     data-tabs="control">Cписок</button>
@@ -207,8 +198,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- При переключении на карту блок .users-list нужно скрыть. Способ сокрытия подойдёт любой -->
                 <div class="users-list">
                     <table class="users-list__table tab-item active">
                         <thead class="users-list__table-head">
@@ -222,18 +211,10 @@
                             </tr>
                         </thead>
                         <tbody class="users-list__table-body">
-                            <!-- Записи в таблице строятся по шаблону #user-table-row__template -->
                         </tbody>
                     </table>
                 </div>
             </div>
-
-            <!--
-                При отсутствии данных (если пользователь применил жёсткие фильтры
-                или сервер вернул пустой массив данных) нужно отобразить данный контейнер.
-                Справедливо только для отображения типа "Список". В случае с картой
-                просто показывается пустая карта
-            -->
             <div class="container container--lightbackground" style="display: none">
                 <div class="message message--noresults"><span class="message__icon">
                         <svg width="60" height="60" aria-hidden="true">
@@ -242,21 +223,11 @@
                     <p class="message__paragraph">Нет подходящих объявлений</p>
                 </div>
             </div>
-
-            <!-- При переключении на карту нужно отобразить данный контейнер -->
             <div class="container" style="display: none">
                 <div class="map" id="map">
-                    <!--
-                        Карту нужно отрисовать в этот контейнер. Иконки для карты -
-                        img/pin.svg и img/pin-verified.svg для обычных пользователей
-                        и для верифицированных соответственно.
-
-                        Контент для балуна вы найдёте в шаблоне #map-baloon__template
-                    -->
                 </div>
             </div>
         </main>
-
         <footer class="footer">
             <div class="container"><span class="footer__logo">
                     <svg width="92" height="36" aria-hidden="true">
@@ -266,42 +237,17 @@
             </div>
         </footer>
     </div>
-
-    <!--
-        N.B.
-        В разметке мы приводим два отдельных попапа для продажи
-        и для покупки, но по своей сути они отличаются только порядком полей.
-        Поэтому вы можете свести всё к одному попапу и менять порядок при отрисовке
-        в зависимости от типа действия - покупка/продажа.
-        Это более сложный вариант, поэтому трезво оцените свои силы
-    -->
-
-    <!--
-        При открытии попапа данные нужно заменить на настоящие.
-        Для удобства обращения из JS, вы можете добавить обёрткам id
-        или уникальные классы там, где их нет, а также сами обёрки (используйте <span>)
-
-        Обратите внимание, что при открытии попапа также нужно убрать скролл с body,
-        для этого можете использовать класс "scroll-lock"
-    -->
     <div class="modal modal--buy" style="display: none;">
         <div class="modal__wrapper">
             <div class="modal__overlay" data-close-modal></div>
             <div class="modal__content">
                 <h2 class="modal__description">Покупка криптовалюты</h2>
-                <!-- Не забудьте указать верный action-атрибут -->
                 <form class="modal-buy" method="post" enctype="multipart/form-data" action="https://cryptostar.grading.pages.academy" autocomplete="off">
-                    <!--
-                        Обратите внимание, что всем полям для отправки на сервер нужно указать
-                        атрибуты name (их список вы найдёте в техзадании), а часть полей
-                        вообще отправляется скрытыми
-                    -->
                     <input type="hidden" name="type" value="BUY">
                     <input type="hidden" name="contractorId">
                     <input type="hidden" name="exchangeRate">
                     <input type="hidden" name="sendingCurrency">
                     <input type="hidden" name="receivingCurrency">
-
                     <div class="transaction-info">
                         <p class="transaction-info__item transaction-info__item--name"><span
                                 class="transaction-info__label">Пользователь</span><span class="transaction-info__data">
@@ -342,11 +288,6 @@
                     <div class="modal__container">
                         <div class="modal__select-wrapper modal__pristine">
                             <div class="select"><span>Плaтёжная система</span>
-                                <!--
-                                    При отрисовке в списке платёжных систем нужно отразить только те,
-                                    которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
-                                    остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
-                                -->
                                 <select id="modal--buy__select" name="paymentMethod">
                                     <option selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
@@ -358,7 +299,6 @@
                         </div>
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
-                                <!-- В случае, если выбрана оплата наличными, поле нужно оставить пустым -->
                                 <label><span class="custom-input__label">Номер банковской карты пользователя</span>
                                     <input id="contractor-card-number" type="number" placeholder="1234 5678 9012 3456"
                                            disabled>
@@ -376,21 +316,17 @@
                         <div class="modal__input-wrapper modal__input-wrapper--decorated modal__pristine">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Платёжный пароль</span>
-<!--                                    <input id="password" type="password" name="paymentPassword" value="123456" placeholder="Введите пароль">-->
-                                    <input id="buy-password" type="password" name="paymentPassword" value="180712"
-                                           placeholder="Введите пароль">
+                                    <input id="password" type="password" name="paymentPassword" value="123456" placeholder="Введите пароль">
                                 </label>
                             </div>
                         </div>
                         <button class="btn btn--green modal__submit" type="submit">Обменять
                         </button>
-                        <!-- Сообщение, которое нужно показать в случае неудачной отправки данных -->
                         <p class="modal__validation-message modal__validation-message--error">
                             <svg width="20" height="20" aria-hidden="true">
                                 <use xlink:href="#icon-error"></use>
                             </svg><span class="modal__validation-message--error-text">Ошибка заполнения формы</span>
                         </p>
-                        <!-- Сообщение, которое нужно показать в случае успешной отправки данных -->
                         <p class="modal__validation-message modal__validation-message--success">
                             <svg width="20" height="20" aria-hidden="true">
                                 <use xlink:href="#icon-success"></use>
@@ -406,15 +342,6 @@
             </div>
         </div>
     </div>
-
-    <!--
-        При открытии попапа данные нужно заменить на настоящие.
-        Для удобства обращения из JS, вы можете добавить обёрткам id
-        или уникальные классы там, где их нет, а также сами обёрки (используйте <span>)
-
-        Обратите внимание, что при открытии попапа также нужно убрать скролл с body,
-        для этого можете использовать класс "scroll-lock"
-    -->
     <div class="modal modal--sell" style="display: none;">
         <div class="modal__wrapper">
             <div class="modal__overlay" data-close-modal></div>
@@ -422,17 +349,11 @@
                 <h2 class="modal__description">Продажа криптовалюты</h2>
                 <!-- Не забудьте указать верный action-атрибут -->
                 <form class="modal-sell" method="post">
-                    <!--
-                        Обратите внимание, что всем полям для отправки на сервер нужно указать
-                        атрибуты name (их список вы найдёте в техзадании), а часть полей
-                        вообще отправляется скрытыми
-                    -->
                     <input type="hidden" name="type" value="SELL">
                     <input type="hidden" name="contractorId">
                     <input type="hidden" name="exchangeRate">
                     <input type="hidden" name="sendingCurrency">
                     <input type="hidden" name="receivingCurrency">
-
                     <div class="transaction-info">
                         <p class="transaction-info__item transaction-info__item--name">
                             <span class="transaction-info__label">Пользователь</span>
@@ -494,11 +415,6 @@
                         </div>
                         <div class="modal__select-wrapper modal__pristine">
                             <div class="select"><span>Плaтёжная система</span>
-                                <!--
-                                    При отрисовке в списке платёжных систем нужно отразить только те,
-                                    которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
-                                    остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
-                                -->
                                 <select id="modal--sell__select" name="paymentMethod">
                                     <option selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
@@ -510,7 +426,6 @@
                         </div>
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
-                                <!-- В случае, если выбрана оплата наличными, поле нужно оставить пустым -->
                                 <label><span class="custom-input__label">Номер банковской карты пользователя</span>
                                     <input id="user-card-number" type="number" placeholder="1234 5678 9012 3456"
                                            disabled>
@@ -520,21 +435,17 @@
                         <div class="modal__input-wrapper modal__input-wrapper--decorated modal__pristine">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Платёжный пароль</span>
-<!--                                    <input id="sell-password" type="password" placeholder="Введите пароль">-->
-                                    <input id="sell-password" name="paymentPassword" type="password" placeholder="Введите пароль"
-                                           value="180712">
+                                    <input id="sell-password" type="password" placeholder="Введите пароль">
                                 </label>
                             </div>
                         </div>
                         <button class="btn btn--green modal__submit" type="submit">Обменять
                         </button>
-                        <!-- Сообщение, которое нужно показать в случае неудачной отправки данных -->
                         <p class="modal__validation-message modal__validation-message--error">
                             <svg width="20" height="20" aria-hidden="true">
                                 <use xlink:href="#icon-error"></use>
                             </svg>Ошибка заполнения формы
                         </p>
-                        <!-- Сообщение, которое нужно показать в случае успешной отправки данных -->
                         <p class="modal__validation-message modal__validation-message--success">
                             <svg width="20" height="20" aria-hidden="true">
                                 <use xlink:href="#icon-success"></use>
@@ -550,16 +461,9 @@
             </div>
         </div>
     </div>
-
     <template id="user-table-row__template">
-        <!--
-            При клонировании данные нужно заменить на настоящие.
-            Для удобства обращения из JS, вы можете добавить обёрткам id
-            или уникальные классы там, где их нет, а также сами обёрки (используйте <span>)
-        -->
         <tr class="users-list__table-row">
             <td class="users-list__table-cell users-list__table-name">
-                <!-- Обратите внимание, что "звёздочка только" у верифицированных пользователей -->
                 <svg width="20" height="20" aria-hidden="true">
                     <use xlink:href="#icon-star"></use>
                 </svg>
@@ -584,14 +488,8 @@
     </template>
 
     <template id="map-baloon__template">
-        <!--
-            При клонировании данные нужно заменить на настоящие.
-            Для удобства обращения из JS, вы можете добавить обёрткам id
-            или уникальные классы там, где их нет, а также сами обёрки (используйте <span>)
-        -->
         <div class="user-card">
             <span class="user-card__user-name">
-                <!-- Обратите внимание, что "звёздочка только" у верифицированных пользователей -->
                 <svg width="20" height="20" aria-hidden="true">
                     <use xlink:href="#icon-star"></use>
                 </svg>
@@ -615,11 +513,8 @@
             </button>
         </div>
     </template>
-
     <script src="./leaflet/leaflet.js" type="module"></script>
     <script src="./pristine/pristine.min.js"></script>
     <script src="./js/main.js" type="module"></script>
-
 </body>
-
 </html>
