@@ -66,7 +66,7 @@ import {
   showModalWindow,
   initSelectChange
 } from './modal-functions.js';
-import {addModalListeners} from './modal-listeners.js';
+import {addSellerModalListeners} from './modal-listeners.js';
 import {hideValidationMessage} from './validation-message.js';
 import {initSubmit} from './init-submit.js';
 import {resetExchangeAllButton, resetForm, resetPaymentListeners, returnInitialView} from './close-modal-window.js';
@@ -103,13 +103,12 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         fillPaymentMethods(paymentMethods, buySelect);
         showModalWindow(modalBuy);
         buyUserCryptoWalletField.placeholder = serverUserData.wallet.address;
-        addModalListeners(selectedData, userBalances);
+        addSellerModalListeners(selectedData, userBalances);
       }
       const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === filterValueToOpenSellModal) {
         hideValidationMessage(sellSuccessMessage);
         hideValidationMessage(sellErrorMessage);
-
         const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
         const newMaxAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
         sellPaymentInput.required = true;

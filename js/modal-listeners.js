@@ -20,7 +20,7 @@ import {resetPaymentListeners, returnInitialView, resetForm, resetExchangeAllBut
 import {initSelectChange} from './modal-functions.js';
 
 const userCardNumberFieldInitialPlaceholder = contractorCardNumberField.placeholder;
-const addModalListeners = (sellerData, userBalances) => {
+const addSellerModalListeners = (sellerData, userBalances) => {
   const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;
   const pristine = initPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
   const onPaymentEnterValue = () => {
@@ -87,4 +87,4 @@ const addModalListeners = (sellerData, userBalances) => {
   buyCloseButton.addEventListener('click', onCloseModalButtonClick);
 };
 
-export {addModalListeners};
+export {addSellerModalListeners};
