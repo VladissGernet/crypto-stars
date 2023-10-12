@@ -45,6 +45,23 @@ const unblockSubmitButton = (submitButton) => {
   submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
 };
+const initSelectChange = (select, placeholderField, methodsArray) => {
+  const selectValue = select.value;
+  switch (selectValue) {
+    case 'Cash in person':
+      placeholderField.placeholder = '';
+      break;
+    default:
+      for (const paymentMethod of methodsArray) {
+        const providerName = paymentMethod.provider;
+        if (providerName === selectValue) {
+          placeholderField.placeholder = paymentMethod.accountNumber;
+          break;
+        }
+      }
+      break;
+  }
+};
 
 export {
   getSelectedDataId,
@@ -53,5 +70,6 @@ export {
   fillPaymentMethods,
   showModalWindow,
   blockSubmitButton,
-  unblockSubmitButton
+  unblockSubmitButton,
+  initSelectChange
 };

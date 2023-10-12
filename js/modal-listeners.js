@@ -17,6 +17,7 @@ import {debounce, isEscapeKey} from './util.js';
 import {initPristine} from './init-pristine.js';
 import {initSubmit} from './init-submit.js';
 import {resetPaymentListeners, returnInitialView, resetForm, resetExchangeAllButton} from './close-modal-window.js';
+import {initSelectChange} from './modal-functions.js';
 
 const userCardNumberFieldInitialPlaceholder = contractorCardNumberField.placeholder;
 const addModalListeners = (sellerData, userBalances) => {
@@ -49,21 +50,7 @@ const addModalListeners = (sellerData, userBalances) => {
   };
   buyExchangeAllButton.addEventListener('click', onExchangeAllButtonClick);
   const onModalSelectChange = () => {
-    const selectValue = buySelect.value;
-    switch (selectValue) {
-      case 'Cash in person':
-        contractorCardNumberField.placeholder = '';
-        break;
-      default:
-        for (const paymentMethod of paymentMethods) {
-          const providerName = paymentMethod.provider;
-          if (providerName === selectValue) {
-            contractorCardNumberField.placeholder = paymentMethod.accountNumber;
-            break;
-          }
-        }
-        break;
-    }
+    initSelectChange(buySelect, contractorCardNumberField, paymentMethods);
   };
   buySelect.addEventListener('change', onModalSelectChange);
   let onCloseModalButtonClick = {};

@@ -64,6 +64,7 @@ import {
   fillUsernameWrapper,
   fillPaymentMethods,
   showModalWindow,
+  initSelectChange
 } from './modal-functions.js';
 import {addModalListeners} from './modal-listeners.js';
 import {hideValidationMessage} from './validation-message.js';
@@ -108,6 +109,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === filterValueToOpenSellModal) {
         hideValidationMessage(sellSuccessMessage);
         hideValidationMessage(sellErrorMessage);
+
         const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
         const newMaxAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
         sellPaymentInput.required = true;
@@ -161,21 +163,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         sellExchangeAllCrypto.addEventListener('click', onModalSellExchangeAllButtonClick);
         sellExchangeAllRub.addEventListener('click', onModalSellExchangeAllButtonClick);
         const onModalSelectChange = () => {
-          const selectValue = sellSelect.value;
-          switch (selectValue) {
-            case 'Cash in person':
-              userCardNumber.placeholder = '';
-              break;
-            default:
-              for (const paymentMethod of serverUserData.paymentMethods) {
-                const providerName = paymentMethod.provider;
-                if (providerName === selectValue) {
-                  userCardNumber.placeholder = paymentMethod.accountNumber;
-                  break;
-                }
-              }
-              break;
-          }
+          initSelectChange(sellSelect, userCardNumber, serverUserData.paymentMethods);
         };
         sellSelect.addEventListener('change', onModalSelectChange);
         let onCloseModalButtonClick = {};
