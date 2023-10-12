@@ -20,7 +20,7 @@ import {resetExchangeAllButton, resetForm, resetPaymentListeners, returnInitialV
 import {initSubmit} from './init-submit.js';
 import {pristineDefaultConfig} from './constants.js';
 
-const addBuyerListeners = (buyerData, userBalances, userDataArray) => {
+const buyerModal = (buyerData, userBalances, userDataArray) => {
   const {exchangeRate, balance} = buyerData;
   const pristine = new Pristine(sellForm, pristineDefaultConfig, false);
   const checkSelect = () => sellSelect.selectedIndex;
@@ -91,4 +91,4 @@ const addBuyerListeners = (buyerData, userBalances, userDataArray) => {
   sellCloseButton.addEventListener('click', onCloseModalButtonClick);
 };
 
-export {addBuyerListeners};
+export {buyerModal};

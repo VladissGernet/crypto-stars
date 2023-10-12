@@ -55,9 +55,9 @@ import {
   showModalWindow,
   fillServerData
 } from './modal-functions.js';
-import {addSellerModalListeners} from './modal-listeners.js';
+import {addSellerModalListeners} from './seller-modal.js';
 import {hideValidationMessage} from './validation-message.js';
-import {addBuyerListeners} from './add-buyer-listeners.js';
+import {buyerModal} from './buyer-modal.js';
 
 modalBuy.style.zIndex = modalZIndex;
 buyPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
@@ -112,7 +112,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         fillPaymentMethods(serverUserData.paymentMethods, sellSelect);
         showModalWindow(modalSell);
         contractorCryptoWallet.placeholder = selectedData.wallet.address;
-        addBuyerListeners(selectedData, userBalances, serverUserData.paymentMethods);
+        buyerModal(selectedData, userBalances, serverUserData.paymentMethods);
       }
     }
   });
