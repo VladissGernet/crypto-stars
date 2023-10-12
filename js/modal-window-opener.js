@@ -52,11 +52,13 @@ import {
 import {addSellerModalListeners} from './seller-modal.js';
 import {hideValidationMessage} from './validation-message.js';
 import {addBuyerModal} from './buyer-modal.js';
+import {receivedData} from './main.js';
 
 const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => {
   main.addEventListener('click', (evt) => {
     const selectedElement = evt.target.closest(`.${classNameOfChangeButton}`);
     if (selectedElement !== null) {
+      modalBuy.style.zIndex = modalZIndex;
       evt.preventDefault();
       const selectedElementId = evt.target.closest(`.${sellerIdClassName}`).id;
       const selectedData = getSelectedDataId(contractorsData, selectedElementId);
@@ -65,8 +67,8 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       const maxCurrencyAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
       const activeButton = buySellContainer.querySelector('.is-active');
       body.classList.add(scrollLockClass);
-      if (filterValues[activeButton.textContent] === 'seller') {
-        modalBuy.style.zIndex = modalZIndex;
+      const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
+      if (activeMapToggle.textContent === 'Карта' && activeButton.textContent === 'Продать') {
         hideValidationMessage(buySuccessMessage);
         hideValidationMessage(buyErrorMessage);
         fillServerData(buySendingContractorId, id, buySendingExchangeRate, exchangeRate, buySendingCurrency, 'RUB', buyReceivingCurrency, 'KEKS');
@@ -79,7 +81,19 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         buyUserCryptoWalletField.placeholder = serverUserData.wallet.address;
         addSellerModalListeners(selectedData, userBalances);
       }
-      const activeMapToggle = toggleListMapContainer.querySelector('.is-active');
+      if (filterValues[activeButton.textContent] === 'seller') {
+        hideValidationMessage(buySuccessMessage);
+        hideValidationMessage(buyErrorMessage);
+        fillServerData(buySendingContractorId, id, buySendingExchangeRate, exchangeRate, buySendingCurrency, 'RUB', buyReceivingCurrency, 'KEKS');
+        fillUsernameWrapper(buyUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
+        buyRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
+        buyCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
+        clearModalSelectOptions(buySelect);
+        fillPaymentMethods(paymentMethods, buySelect);
+        showModalWindow(modalBuy);
+        buyUserCryptoWalletField.placeholder = serverUserData.wallet.address;
+        addSellerModalListeners(selectedData, userBalances);
+      }
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === filterValueToOpenSellModal) {
         hideValidationMessage(sellSuccessMessage);
         hideValidationMessage(sellErrorMessage);
