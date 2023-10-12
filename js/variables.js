@@ -14,6 +14,7 @@ const noAdvertisementsContainer = main.querySelector('.container--lightbackgroun
 const userProfile = body.querySelector('.user-profile');
 const userCryptoBalance = body.querySelector('#user-crypto-balance');
 const userFiatBalance = body.querySelector('#user-fiat-balance');
+const userProfileName = body.querySelector('.user-profile__name span');
 
 //Modal
 const modalBuy = body.querySelector('.modal--buy');
@@ -134,5 +135,6 @@ export {
   sellPassword,
   userProfile,
   userCryptoBalance,
-  userFiatBalance
+  userFiatBalance,
+  userProfileName
 };
