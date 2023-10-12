@@ -1,4 +1,4 @@
-import {debounce, isEscapeKey} from './util.js';
+import {debounce, isEscapeKey, transformCurrencyAmount} from './util.js';
 import {
   modalSell,
   sellCloseButton,
@@ -9,6 +9,7 @@ import {
   sellExchangeAllCrypto,
   sellExchangeAllRub,
   sellForm,
+  sellPassword,
   sellPaymentInput,
   sellSelect,
   sellSubmitButton,
@@ -20,8 +21,18 @@ import {resetExchangeAllButton, resetForm, resetPaymentListeners, returnInitialV
 import {initSubmit} from './init-submit.js';
 import {pristineDefaultConfig} from './constants.js';
 
-const buyerModal = (buyerData, userBalances, userDataArray) => {
-  const {exchangeRate, balance} = buyerData;
+const addBuyerModal = (buyerData, userBalances, userDataArray) => {
+  const {exchangeRate, minAmount, status, balance} = buyerData;
+  const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
+  const newMaxAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
+  sellPaymentInput.required = true;
+  sellPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
+  sellPaymentInput.min = minAmount / exchangeRate;
+  sellPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
+  sellPaymentInput.max = balance.amount / exchangeRate;
+  sellPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
+  sellPassword.required = true;
+  sellPassword.dataset.pristineRequiredMessage = 'Введите пароль.';
   const pristine = new Pristine(sellForm, pristineDefaultConfig, false);
   const checkSelect = () => sellSelect.selectedIndex;
   pristine.addValidator(sellSelect, checkSelect, 'Выберите платёжную систему.');
@@ -91,4 +102,4 @@ const buyerModal = (buyerData, userBalances, userDataArray) => {
   sellCloseButton.addEventListener('click', onCloseModalButtonClick);
 };
 
-export {buyerModal};
+export {addBuyerModal};

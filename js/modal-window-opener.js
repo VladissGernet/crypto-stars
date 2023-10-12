@@ -32,7 +32,6 @@ import {
   sellSuccessMessage,
   buySuccessMessage,
   buyErrorMessage,
-  sellPassword,
 } from './variables.js';
 import {
   classNameOfChangeButton,
@@ -57,7 +56,7 @@ import {
 } from './modal-functions.js';
 import {addSellerModalListeners} from './seller-modal.js';
 import {hideValidationMessage} from './validation-message.js';
-import {buyerModal} from './buyer-modal.js';
+import {addBuyerModal} from './add-buyer-modal.js';
 
 modalBuy.style.zIndex = modalZIndex;
 buyPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
@@ -94,16 +93,6 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       if (filterValues[activeButton.textContent] === 'buyer' && activeMapToggle.textContent === filterValueToOpenSellModal) {
         hideValidationMessage(sellSuccessMessage);
         hideValidationMessage(sellErrorMessage);
-        const newMinAmount = transformCurrencyAmount(minAmount, exchangeRate, status);
-        const newMaxAmount = transformCurrencyAmount(balance.amount, exchangeRate, status);
-        sellPaymentInput.required = true;
-        sellPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
-        sellPaymentInput.min = minAmount / exchangeRate;
-        sellPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
-        sellPaymentInput.max = balance.amount / exchangeRate;
-        sellPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
-        sellPassword.required = true;
-        sellPassword.dataset.pristineRequiredMessage = 'Введите пароль.';
         fillServerData(sellSendingContractorId, id, sellSendingExchangeRate, exchangeRate, sellSendingCurrency, 'KEKS', sellReceivingCurrency, 'RUB');
         fillUsernameWrapper(sellUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
         selllRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
@@ -112,7 +101,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         fillPaymentMethods(serverUserData.paymentMethods, sellSelect);
         showModalWindow(modalSell);
         contractorCryptoWallet.placeholder = selectedData.wallet.address;
-        buyerModal(selectedData, userBalances, serverUserData.paymentMethods);
+        addBuyerModal(selectedData, userBalances, serverUserData.paymentMethods);
       }
     }
   });
