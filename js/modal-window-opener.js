@@ -64,7 +64,8 @@ import {
   fillUsernameWrapper,
   fillPaymentMethods,
   showModalWindow,
-  initSelectChange
+  initSelectChange,
+  fillServerData
 } from './modal-functions.js';
 import {addSellerModalListeners} from './modal-listeners.js';
 import {hideValidationMessage} from './validation-message.js';
@@ -92,10 +93,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       if (filterValues[activeButton.textContent] === 'seller') {
         hideValidationMessage(buySuccessMessage);
         hideValidationMessage(buyErrorMessage);
-        buySendingContractorId.value = id;
-        buySendingExchangeRate.value = exchangeRate;
-        buySendingCurrency.value = 'RUB';
-        buyReceivingCurrency.value = 'KEKS';
+        fillServerData(buySendingContractorId, id, buySendingExchangeRate, exchangeRate, buySendingCurrency, 'RUB', buyReceivingCurrency, 'KEKS');
         fillUsernameWrapper(buyUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
         buyRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
         buyCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;
@@ -124,10 +122,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         pristine.addValidator(sellSelect, checkSelect, 'Выберите платёжную систему.');
         const checkUserRubWallet = () => ((userBalances.KEKS * exchangeRate) >= sellEnrollmentInput.value);
         pristine.addValidator(sellPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
-        sellSendingContractorId.value = id;
-        sellSendingExchangeRate.value = exchangeRate;
-        sellSendingCurrency.value = 'KEKS';
-        sellReceivingCurrency.value = 'RUB';
+        fillServerData(sellSendingContractorId, id, sellSendingExchangeRate, exchangeRate, sellSendingCurrency, 'KEKS', sellReceivingCurrency, 'RUB');
         fillUsernameWrapper(sellUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
         selllRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
         sellCashlimit.textContent = `${minCurrencyAmount} ₽ - ${maxCurrencyAmount} ₽`;

@@ -62,6 +62,12 @@ const initSelectChange = (select, placeholderField, methodsArray) => {
       break;
   }
 };
+const fillServerData = (idInput, id, rateInput, rate, sendingCurrency, sendingValue, receivingCurrency, receivingValue) => {
+  idInput.value = id;
+  rateInput.value = rate;
+  sendingCurrency.value = sendingValue;
+  receivingCurrency.value = receivingValue;
+};
 
 export {
   getSelectedDataId,
@@ -71,5 +77,6 @@ export {
   showModalWindow,
   blockSubmitButton,
   unblockSubmitButton,
-  initSelectChange
+  initSelectChange,
+  fillServerData
 };
