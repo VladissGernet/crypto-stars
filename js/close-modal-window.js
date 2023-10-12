@@ -2,12 +2,11 @@ import {body, buyErrorMessage, buySuccessMessage} from './variables.js';
 import {defaultErrorMessageText, initialModalSelectValue, scrollLockClass} from './constants.js';
 import {hideValidationMessage} from './validation-message.js';
 
-const resetPaymentListeners = (paymentInput, onPaymentInput, enrollmentInput, onEnrollmentInput, exchangeAll, onExchangeAllClick) => {
+const resetPaymentListeners = (paymentInput, onPaymentInput, enrollmentInput, onEnrollmentInput) => {
   paymentInput.removeEventListener('input', onPaymentInput);
   enrollmentInput.removeEventListener('input', onEnrollmentInput);
   paymentInput.value = '';
   enrollmentInput.value = '';
-  exchangeAll.removeEventListener('click', onExchangeAllClick);
 };
 const returnInitialView = (modal, onOutsideModalWindowClick, errorText, select, onSelectChange) => {
   body.classList.remove(scrollLockClass);
@@ -26,5 +25,8 @@ const resetForm = (onKeydownCloseModalWindow, closeButton, onCloseButtonClick, f
   form.removeEventListener('submit', onFormSubmit);
   pristineConstructor.destroy();
 };
+const resetExchangeAllButton = (exchangeAll, onExchangeAllClick) => {
+  exchangeAll.removeEventListener('click', onExchangeAllClick);
+};
 
-export {resetPaymentListeners, returnInitialView, resetForm};
+export {resetPaymentListeners, returnInitialView, resetForm, resetExchangeAllButton};

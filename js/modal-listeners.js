@@ -16,7 +16,7 @@ import {
 import {debounce, isEscapeKey} from './util.js';
 import {initPristine} from './init-pristine.js';
 import {initSubmit} from './init-submit.js';
-import {resetPaymentListeners, returnInitialView, resetForm} from './close-modal-window.js';
+import {resetPaymentListeners, returnInitialView, resetForm, resetExchangeAllButton} from './close-modal-window.js';
 
 const userCardNumberFieldInitialPlaceholder = contractorCardNumberField.placeholder;
 const addModalListeners = (sellerData, userBalances) => {
@@ -71,7 +71,8 @@ const addModalListeners = (sellerData, userBalances) => {
   let onOutsideWindowClick = {};
   let onModalSubmit = {};
   const closeModalWindow = () => {
-    resetPaymentListeners(buyPaymentInput, onPaymentEnterValue, buyEnrollmentInput, onEnrollmentEnterValue, buyExchangeAllButton, onExchangeAllButtonClick);
+    resetPaymentListeners(buyPaymentInput, onPaymentEnterValue, buyEnrollmentInput, onEnrollmentEnterValue);
+    resetExchangeAllButton(buyExchangeAllButton, onExchangeAllButtonClick);
     returnInitialView(modalBuy, onOutsideWindowClick, buyErrorMessageText, buySelect, onModalSelectChange);
     resetForm(onKeydownCloseModalWindow, buyCloseButton, onCloseModalButtonClick, buyForm, onModalSubmit, pristine);
     contractorCardNumberField.placeholder = userCardNumberFieldInitialPlaceholder;
