@@ -3,8 +3,6 @@ import {
   main,
   modalBuy,
   buyCashlimit,
-  buyEnrollmentInput,
-  buyPaymentInput,
   buyRate,
   buyUsernameWrapper,
   modalVerifiedIconCopy,
@@ -26,8 +24,6 @@ import {
   buySelect,
   sellSelect,
   contractorCryptoWallet,
-  sellPaymentInput,
-  sellEnrollmentInput,
   sellErrorMessage,
   sellSuccessMessage,
   buySuccessMessage,
@@ -43,7 +39,6 @@ import {
 } from './constants.js';
 import {
   addSpacesToNumber,
-  onNumberInputKeydownCheckKey,
   transformCurrencyAmount
 } from './util.js';
 import {
@@ -58,12 +53,6 @@ import {addSellerModalListeners} from './seller-modal.js';
 import {hideValidationMessage} from './validation-message.js';
 import {addBuyerModal} from './add-buyer-modal.js';
 
-modalBuy.style.zIndex = modalZIndex;
-buyPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
-buyEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
-sellPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
-sellEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
-
 const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => {
   main.addEventListener('click', (evt) => {
     const selectedElement = evt.target.closest(`.${classNameOfChangeButton}`);
@@ -77,6 +66,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
       const activeButton = buySellContainer.querySelector('.is-active');
       body.classList.add(scrollLockClass);
       if (filterValues[activeButton.textContent] === 'seller') {
+        modalBuy.style.zIndex = modalZIndex;
         hideValidationMessage(buySuccessMessage);
         hideValidationMessage(buyErrorMessage);
         fillServerData(buySendingContractorId, id, buySendingExchangeRate, exchangeRate, buySendingCurrency, 'RUB', buyReceivingCurrency, 'KEKS');

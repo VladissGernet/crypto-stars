@@ -11,14 +11,18 @@ import {
   buyErrorMessage,
   buySuccessMessage,
   buyErrorMessageText,
-  buySubmitButton
+  buySubmitButton,
+  sellPaymentInput,
+  sellEnrollmentInput
 } from './variables.js';
-import {debounce, isEscapeKey} from './util.js';
+import {debounce, isEscapeKey, onNumberInputKeydownCheckKey} from './util.js';
 import {initSellerPristine} from './pristine-validation.js';
 import {initSubmit} from './init-submit.js';
 import {resetPaymentListeners, returnInitialView, resetForm, resetExchangeAllButton} from './close-modal-window.js';
 import {initSelectChange} from './modal-functions.js';
 
+sellPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+sellEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 const userCardNumberFieldInitialPlaceholder = contractorCardNumberField.placeholder;
 const addSellerModalListeners = (sellerData, userBalances) => {
   const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;

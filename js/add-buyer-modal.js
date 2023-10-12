@@ -1,5 +1,7 @@
-import {debounce, isEscapeKey} from './util.js';
+import {debounce, isEscapeKey, onNumberInputKeydownCheckKey} from './util.js';
 import {
+  buyEnrollmentInput,
+  buyPaymentInput,
   modalSell,
   sellCloseButton,
   sellContentContainer,
@@ -20,6 +22,8 @@ import {resetExchangeAllButton, resetForm, resetPaymentListeners, returnInitialV
 import {initSubmit} from './init-submit.js';
 import {initBuyerPristine} from './pristine-validation.js';
 
+buyPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
+buyEnrollmentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
 const addBuyerModal = (buyerData, userBalances, userDataArray) => {
   const {exchangeRate, minAmount, status, balance} = buyerData;
   const pristine = initBuyerPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
