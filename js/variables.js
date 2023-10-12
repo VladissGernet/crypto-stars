@@ -11,6 +11,7 @@ const usersList = main.querySelector('.users-list');
 const mapContainer = main.querySelector('#map').closest('.container');
 const serverErrorContainer = main.querySelector('.message--server-error').closest('.container');
 const noAdvertisementsContainer = main.querySelector('.container--lightbackground');
+const userProfile = body.querySelector('.user-profile');
 
 //Modal
 const modalBuy = body.querySelector('.modal--buy');
@@ -128,5 +129,6 @@ export {
   sellContentContainer,
   sellSubmitButton,
   sellErrorMessageText,
-  sellPassword
+  sellPassword,
+  userProfile
 };

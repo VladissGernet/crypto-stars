@@ -1,5 +1,5 @@
 import {getContractors, getUserData, showContractorsLoadError} from './load-data.js';
-import {buySellContainer, toggleListMapContainer} from './variables.js';
+import {buySellContainer, toggleListMapContainer, userProfile} from './variables.js';
 import {renderTable} from './render-table.js';
 import {onNavigationButtonClick, onToggleListMapContainerClick} from './navigation-controls.js';
 import {addModalWindowOpener} from './modal-window-opener.js';
@@ -22,6 +22,7 @@ getContractors()
   })
   .catch(() => {
     showContractorsLoadError();
+    userProfile.style.display = 'none';
   });
 
 export {receivedData};
