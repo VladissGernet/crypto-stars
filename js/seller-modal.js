@@ -14,7 +14,7 @@ import {
   buySubmitButton
 } from './variables.js';
 import {debounce, isEscapeKey} from './util.js';
-import {pristineValidation} from './pristine-validation.js';
+import {initSellerPristine} from './pristine-validation.js';
 import {initSubmit} from './init-submit.js';
 import {resetPaymentListeners, returnInitialView, resetForm, resetExchangeAllButton} from './close-modal-window.js';
 import {initSelectChange} from './modal-functions.js';
@@ -22,7 +22,7 @@ import {initSelectChange} from './modal-functions.js';
 const userCardNumberFieldInitialPlaceholder = contractorCardNumberField.placeholder;
 const addSellerModalListeners = (sellerData, userBalances) => {
   const {exchangeRate, balance, paymentMethods, minAmount, status} = sellerData;
-  const pristine = pristineValidation(minAmount, balance.amount, exchangeRate, status, userBalances);
+  const pristine = initSellerPristine(minAmount, balance.amount, exchangeRate, status, userBalances);
   const onPaymentEnterValue = () => {
     const debouncedEnter = debounce(() => {
       buyEnrollmentInput.value = buyPaymentInput.value / exchangeRate;

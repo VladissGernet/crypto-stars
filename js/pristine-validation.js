@@ -22,7 +22,7 @@ const addGeneralPristinePart = (input, password, minimum, maximum, rate, userSta
   password.required = true;
   password.dataset.pristineRequiredMessage = 'Введите пароль.';
 };
-const pristineValidation = (minimum, maximum, rate, userStatus, userBalances) => {
+const initSellerPristine = (minimum, maximum, rate, userStatus, userBalances) => {
   addGeneralPristinePart(buyPaymentInput, buyPasswordField, minimum, maximum, rate, userStatus);
   buyPaymentInput.min = minimum * rate;
   buyPaymentInput.max = maximum * rate;
@@ -33,7 +33,7 @@ const pristineValidation = (minimum, maximum, rate, userStatus, userBalances) =>
   pristineConstructor.addValidator(buyPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
   return pristineConstructor;
 };
-const initSellerPristine = (minimum, maximum, rate, userStatus, userBalances) => {
+const initBuyerPristine = (minimum, maximum, rate, userStatus, userBalances) => {
   addGeneralPristinePart(sellPaymentInput, sellPassword, minimum, maximum, rate, userStatus);
   sellPaymentInput.min = minimum / rate;
   sellPaymentInput.max = maximum / rate;
@@ -45,4 +45,4 @@ const initSellerPristine = (minimum, maximum, rate, userStatus, userBalances) =>
   return pristineConstructor;
 };
 
-export {pristineValidation, initSellerPristine};
+export {initSellerPristine, initBuyerPristine};
