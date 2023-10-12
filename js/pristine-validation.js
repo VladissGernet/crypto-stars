@@ -12,15 +12,18 @@ import {
 } from './variables.js';
 import {pristineDefaultConfig} from './constants.js';
 
-const initPristine = (minimum, maximum, rate, userStatus, userBalances) => {
+const addGeneralPristinePart = (input, password, minimum, maximum, rate, userStatus) => {
   const newMinAmount = transformCurrencyAmount(minimum, rate, userStatus);
   const newMaxAmount = transformCurrencyAmount(maximum, rate, userStatus);
-  buyPaymentInput.required = true;
-  buyPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
-  buyPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
-  buyPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
-  buyPasswordField.required = true;
-  buyPasswordField.dataset.pristineRequiredMessage = 'Введите пароль.';
+  input.required = true;
+  input.dataset.pristineRequiredMessage = 'Введите сумму.';
+  input.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
+  input.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
+  password.required = true;
+  password.dataset.pristineRequiredMessage = 'Введите пароль.';
+};
+const pristineValidation = (minimum, maximum, rate, userStatus, userBalances) => {
+  addGeneralPristinePart(buyPaymentInput, buyPasswordField, minimum, maximum, rate, userStatus);
   buyPaymentInput.min = minimum * rate;
   buyPaymentInput.max = maximum * rate;
   const pristineConstructor = new Pristine(buyForm, pristineDefaultConfig, false);
@@ -31,14 +34,7 @@ const initPristine = (minimum, maximum, rate, userStatus, userBalances) => {
   return pristineConstructor;
 };
 const initSellerPristine = (minimum, maximum, rate, userStatus, userBalances) => {
-  const newMinAmount = transformCurrencyAmount(minimum, rate, userStatus);
-  const newMaxAmount = transformCurrencyAmount(maximum, rate, userStatus);
-  sellPaymentInput.required = true;
-  sellPaymentInput.dataset.pristineRequiredMessage = 'Введите сумму.';
-  sellPaymentInput.dataset.pristineMinMessage = `Минимальная сумма — ${newMinAmount} ₽`;
-  sellPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
-  sellPassword.required = true;
-  sellPassword.dataset.pristineRequiredMessage = 'Введите пароль.';
+  addGeneralPristinePart(sellPaymentInput, sellPassword, minimum, maximum, rate, userStatus);
   sellPaymentInput.min = minimum / rate;
   sellPaymentInput.max = maximum / rate;
   const pristineConstructor = new Pristine(sellForm, pristineDefaultConfig, false);
@@ -49,4 +45,4 @@ const initSellerPristine = (minimum, maximum, rate, userStatus, userBalances) =>
   return pristineConstructor;
 };
 
-export {initPristine, initSellerPristine};
+export {pristineValidation, initSellerPristine};

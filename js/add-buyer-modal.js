@@ -18,7 +18,7 @@ import {
 import {initSelectChange} from './modal-functions.js';
 import {resetExchangeAllButton, resetForm, resetPaymentListeners, returnInitialView} from './close-modal-window.js';
 import {initSubmit} from './init-submit.js';
-import {initSellerPristine} from './init-pristine.js';
+import {initSellerPristine} from './pristine-validation.js';
 
 const addBuyerModal = (buyerData, userBalances, userDataArray) => {
   const {exchangeRate, minAmount, status, balance} = buyerData;
