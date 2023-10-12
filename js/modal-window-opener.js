@@ -28,16 +28,8 @@ import {
   contractorCryptoWallet,
   sellPaymentInput,
   sellEnrollmentInput,
-  sellExchangeAllCrypto,
-  sellExchangeAllRub,
-  userCardNumber,
-  sellCloseButton,
   sellErrorMessage,
   sellSuccessMessage,
-  sellContentContainer,
-  sellForm,
-  sellSubmitButton,
-  sellErrorMessageText,
   buySuccessMessage,
   buyErrorMessage,
   sellPassword,
@@ -46,15 +38,12 @@ import {
   classNameOfChangeButton,
   filterValues,
   modalZIndex,
-  pristineDefaultConfig,
   scrollLockClass,
   sellerIdClassName,
   filterValueToOpenSellModal
 } from './constants.js';
 import {
   addSpacesToNumber,
-  debounce,
-  isEscapeKey,
   onNumberInputKeydownCheckKey,
   transformCurrencyAmount
 } from './util.js';
@@ -64,13 +53,11 @@ import {
   fillUsernameWrapper,
   fillPaymentMethods,
   showModalWindow,
-  initSelectChange,
   fillServerData
 } from './modal-functions.js';
 import {addSellerModalListeners} from './modal-listeners.js';
 import {hideValidationMessage} from './validation-message.js';
-import {initSubmit} from './init-submit.js';
-import {resetExchangeAllButton, resetForm, resetPaymentListeners, returnInitialView} from './close-modal-window.js';
+import {addBuyerListeners} from './add-buyer-listeners.js';
 
 modalBuy.style.zIndex = modalZIndex;
 buyPaymentInput.addEventListener('keydown', onNumberInputKeydownCheckKey);
@@ -117,11 +104,6 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         sellPaymentInput.dataset.pristineMaxMessage = `Максимальная сумма — ${newMaxAmount} ₽`;
         sellPassword.required = true;
         sellPassword.dataset.pristineRequiredMessage = 'Введите пароль.';
-        const pristine = new Pristine(sellForm, pristineDefaultConfig, false);
-        const checkSelect = () => sellSelect.selectedIndex;
-        pristine.addValidator(sellSelect, checkSelect, 'Выберите платёжную систему.');
-        const checkUserRubWallet = () => ((userBalances.KEKS * exchangeRate) >= sellEnrollmentInput.value);
-        pristine.addValidator(sellPaymentInput, checkUserRubWallet, 'У вас недостаточно средств.');
         fillServerData(sellSendingContractorId, id, sellSendingExchangeRate, exchangeRate, sellSendingCurrency, 'KEKS', sellReceivingCurrency, 'RUB');
         fillUsernameWrapper(sellUsernameWrapper, userName, isVerified, modalVerifiedIconCopy);
         selllRate.textContent = `${addSpacesToNumber(exchangeRate)} ₽`;
@@ -130,68 +112,7 @@ const addModalWindowOpener = (contractorsData, serverUserData, userBalances) => 
         fillPaymentMethods(serverUserData.paymentMethods, sellSelect);
         showModalWindow(modalSell);
         contractorCryptoWallet.placeholder = selectedData.wallet.address;
-        const onPaymentInputEnterNewValue = () => {
-          const debouncedEnter = debounce(() => {
-            sellEnrollmentInput.value = sellPaymentInput.value * exchangeRate;
-          });
-          debouncedEnter();
-        };
-        sellPaymentInput.addEventListener('input', onPaymentInputEnterNewValue);
-        const onEnrollmentInputEnterNewValue = () => {
-          const debouncedEnter = debounce(() => {
-            sellPaymentInput.value = sellEnrollmentInput.value / exchangeRate;
-          });
-          debouncedEnter();
-        };
-        sellEnrollmentInput.addEventListener('input', onEnrollmentInputEnterNewValue);
-        const onModalSellExchangeAllButtonClick = () => {
-          if ((userBalances.KEKS * exchangeRate) <= balance.amount) {
-            sellPaymentInput.value = userBalances.KEKS;
-            sellEnrollmentInput.value = userBalances.KEKS * exchangeRate;
-          }
-          if ((userBalances.KEKS * exchangeRate) > balance.amount) {
-            sellEnrollmentInput.value = balance.amount;
-            sellPaymentInput.value = balance.amount / exchangeRate;
-          }
-        };
-        sellExchangeAllCrypto.addEventListener('click', onModalSellExchangeAllButtonClick);
-        sellExchangeAllRub.addEventListener('click', onModalSellExchangeAllButtonClick);
-        const onModalSelectChange = () => {
-          initSelectChange(sellSelect, userCardNumber, serverUserData.paymentMethods);
-        };
-        sellSelect.addEventListener('change', onModalSelectChange);
-        let onCloseModalButtonClick = {};
-        let onKeydownCloseModalWindow = {};
-        let onOutsideModalWindowClick = {};
-        let onModalSubmit = {};
-        const closeModalWindow = () => {
-          resetPaymentListeners(sellPaymentInput, onPaymentInputEnterNewValue, sellEnrollmentInput, onEnrollmentInputEnterNewValue);
-          resetExchangeAllButton(sellExchangeAllCrypto, onModalSellExchangeAllButtonClick);
-          returnInitialView(modalSell, onOutsideModalWindowClick, sellErrorMessage, sellSelect, onModalSelectChange);
-          resetForm(onKeydownCloseModalWindow, sellCloseButton, onCloseModalButtonClick, sellForm, onModalSubmit, pristine);
-          sellExchangeAllRub.removeEventListener('click', onModalSellExchangeAllButtonClick);
-        };
-        onKeydownCloseModalWindow = (event) => {
-          if (isEscapeKey(event)) {
-            closeModalWindow();
-          }
-        };
-        onCloseModalButtonClick = () => {
-          closeModalWindow();
-        };
-        onOutsideModalWindowClick = (event) => {
-          const outsideErrorContainerClick = event.composedPath().includes(sellContentContainer) === false;
-          if (outsideErrorContainerClick) {
-            closeModalWindow();
-          }
-        };
-        onModalSubmit = (event) => {
-          initSubmit(event, pristine, sellSubmitButton, sellErrorMessage, sellSuccessMessage, sellErrorMessageText, closeModalWindow);
-        };
-        sellForm.addEventListener('submit', onModalSubmit);
-        modalSell.addEventListener('mousedown', onOutsideModalWindowClick);
-        document.addEventListener('keydown', onKeydownCloseModalWindow);
-        sellCloseButton.addEventListener('click', onCloseModalButtonClick);
+        addBuyerListeners(selectedData, userBalances, serverUserData.paymentMethods);
       }
     }
   });
